@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "The backend for our app",
   "main": "src/index.ts",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node --loader ts-node/esm ./src/graphql.ts"
+    "start": "npm run build && node dist",
+    "dev": "ts-node-dev --rs --no-notify --respawn --transpile-only src",
+    "prisma": "prisma format && prisma generate",
+    "postinstall": "npm run prisma && docker compose up --detach && npm run dev"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "2.4.1",
+    "ts-node-dev": "1.1.8",
     "prisma": "~3.3.0"
   },
   "author": "",

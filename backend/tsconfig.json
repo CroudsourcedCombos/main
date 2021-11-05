@@ -1,14 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "rootDir": "src",
-    "outDir": "dist/",
+    "target": "ES2019",
+    "lib": [
+      "ES2019"
+    ],
+    "module": "commonjs",
     "strict": true,
-    "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "dist",
+    "plugins": [],
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ],
+    "experimentalDecorators": true,
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": ["es2018", "esnext.asynciterable"]
-  }
-}
+    "strictPropertyInitialization": false
+  },
+  "include": [
+    "src",
+  ]}

@@ -4,11 +4,13 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 generator typegraphql {
   provider = "typegraphql-prisma"
+  output   = "../src/generatedGraphql"
 }
 
 model Post {
@@ -28,10 +30,55 @@ model Profile {
   user   User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+enum Rating {
+  high
+  medium
+  low
+}
+
+model Review {
+  id           Int      @id @default(autoincrement())
+  rating       Rating
+  text         String
+  userId       Int
+  creationDate DateTime
+  editDate     DateTime
+  author       User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  foodId       Int
+  food         Food     @relation(fields: [foodId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum Location {
+  UCLA
+}
+
+enum FoodCategory {
+  soda
+  sandwich
+  pizza
+  salad
+}
+
+model Food {
+  id            Int          @id @default(autoincrement())
+  reviews       Review[]
+  images        String[]
+  location      Location
+  type          FoodCategory
+  usersWithFavs User[]       @relation("usersWithFavs")
+  usersWantTry  User[]       @relation("usersWantTry")
+}
+
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
-  posts   Post[]
-  profile Profile?
+  id            Int      @id @default(autoincrement())
+  // We don't need the firebase ID to be accessable over the API
+  /// @TypeGraphQL.omit(output: true, input: true)
+  firebaseId    String   @unique
+  name          String?  @db.VarChar(255)
+  email         String   @unique @db.VarChar(255) // May not need it, firebase might handle
+  posts         Post[]
+  reviews       Review[]
+  profile       Profile?
+  favoritesList Food[]   @relation("usersWithFavs")
+  toTryList     Food[]   @relation("usersWantTry")
 }

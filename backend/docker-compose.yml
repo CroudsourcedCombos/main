@@ -2,8 +2,11 @@ version: "3.9"
 services:
   db:
     ports:
-      - "5432:5452"
+      - "5432:543c2"
     restart: always
     environment:
-      POSTGRES_PASSWORD: TestingPasswd
-    image: postgres:14.0-alpine
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    volumes: 
+      - ./pgdata:/var/lib/postgresql/data
+    image: postgres:14-alpine
