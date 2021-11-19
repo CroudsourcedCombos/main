@@ -8,6 +8,8 @@
     "start": "npm run build && node dist",
     "dev": "ts-node-dev --rs --no-notify --respawn --transpile-only src",
     "prisma": "prisma format && prisma generate",
+    "seed": "ts-node ./prisma/seed.ts",
+    "reset-seed": "npx prisma migrate reset --force && prisma db push --accept-data-loss && npm run seed",
     "postinstall": "npm run prisma && docker compose up --detach && npm run dev"
   },
   "repository": {
