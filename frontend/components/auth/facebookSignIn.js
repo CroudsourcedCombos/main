@@ -1,7 +1,7 @@
 import { Button, Typography, Box, Link } from '@material-ui/core'
 
 import { getAuth, signInWithPopup, FacebookAuthProvider} from 'firebase/auth'
-import Firebase from '../config/firebase'
+import Firebase from '../../config/firebase'
 
 const facebookStyles = {
   facebookContainer: {
