@@ -27,8 +27,9 @@ export default function AddReview() {
   const [reviewText, setreviewText] = React.useState("Controlled");
 
   const handleChange = (event) => {
-    setValue(event.target.reviewText);
+    setreviewText(event.target.reviewText);
   };
+  
 
   return (
     <>

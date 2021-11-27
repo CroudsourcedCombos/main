@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+// import {NavLink} from "react-router-dom";
 
 const pages = ['Flavors', 'Menu', 'Add Review', 'Sign In/Up'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -97,6 +98,7 @@ const ResponsiveAppBar = () => {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                // component={Link} to="/sign-in"
               >
                 {page}
               </Button>
