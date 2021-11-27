@@ -15,8 +15,6 @@ export function AuthenticatedUserProvider({ children }) {
     const unsubscribeAuth = auth.onAuthStateChanged(async authenticatedUser => {
       try {
         await (authenticatedUser ? setUser(authenticatedUser) : setUser(null))
-        console.log(user)
-        // setIsLoading(false)
       } catch (error) {
         console.error(error)
       }
