@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import * as React from "react";
+// import * as React from "react";
 import styles from "../styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
@@ -21,14 +21,16 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
+import { useState } from "react";
 
 export default function AddReview() {
-  const [value, setValue] = React.useState(2);
-  const [reviewText, setreviewText] = React.useState("Controlled");
+  const [value, setValue] = useState(2);
+  const [reviewText, setreviewText] = useState("Controlled");
 
   const handleChange = (event) => {
-    setValue(event.target.reviewText);
+    setreviewText(event.target.reviewText);
   };
+
 
   return (
     <>
