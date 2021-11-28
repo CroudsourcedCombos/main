@@ -24,7 +24,7 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/foodCheckboxes";
 
-export default function AddReview() {
+export default function SignedOut() {
   const [value, setValue] = useState(2);
   const [reviewText, setreviewText] = useState("Controlled");
 
@@ -35,7 +35,9 @@ export default function AddReview() {
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+        <ResponsiveAppBar></ResponsiveAppBar>
+
+
     </>
   );
 }
