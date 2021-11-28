@@ -5,7 +5,8 @@ import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import ResponsiveAppBar from "../components/navbar";
 import { styled } from "@mui/material/styles";
-import { DataGrid } from '@mui/x-data-grid';
+import { TableRow } from '@mui/material';
+import { DataGrid} from '@mui/x-data-grid';
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -21,39 +22,23 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
-
+import { SODAS } from '../constants/soda';
 export default function Sodadex() {
+  const drinks = ["Coke", "Fanta", "Sprite"];
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'basedrink',
-      headerName: 'Soda Base',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'variant',
+      field: 'drink',
       headerName: 'Soda Flavor',
-      width: 150,
+      width: 850,
       editable: false,
     },
-    {
-      field: 'rating',
-      headerName: 'Rating',
-      type: 'number',
-      width: 110,
-      editable: true,
-    },
   ];
-  
-  const rows = [
-    { id: 1, basedrink: 'Coke', variant: 'Cherry', rating: 5 },
-    { id: 2, basedrink: 'Coke', variant: 'Lemon', rating: 0 },
-  ];
+const rows = SODAS;
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar />
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <Card style={{ width: "75%" }}>
           <CardHeader
@@ -81,7 +66,8 @@ export default function Sodadex() {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
-                //disableSelectionOnClick
+                disableSelectionOnClick
+                checkboxSelection
             />
     </div>
           </CardContent>
