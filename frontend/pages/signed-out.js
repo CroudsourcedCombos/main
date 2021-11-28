@@ -20,9 +20,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/foodCheckboxes";
+import { Box } from "@mui/system";
 
 export default function SignedOut() {
   const [value, setValue] = useState(2);
@@ -36,7 +37,15 @@ export default function SignedOut() {
   return (
     <>
         <ResponsiveAppBar></ResponsiveAppBar>
-
+        <Container maxWidth = "xl" sx = { {display: "flex", justifyContent: "space-between"}}>
+                <Container sx = { {display: "flex", justifyContent: "center", backgroundColor: "red", margin: "20px"}}>
+                    sandwhiches
+                </Container>
+                <Container sx = { {display: "flex", justifyContent: "center", backgroundColor: "blue", margin: "20px"}}>
+                    drinks
+                </Container>
+        </Container>
+        
 
     </>
   );
