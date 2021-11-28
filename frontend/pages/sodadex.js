@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -23,18 +24,38 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 import { SODAS } from '../constants/soda';
+
+const drinks = ["Coke", "Fanta", "Sprite"];
+const columns = [
+  { field: 'id', headerName: 'ID', width: 90 },
+  {
+    field: 'drink',
+    headerName: 'Soda Flavor',
+    width: 500,
+    editable: false,
+  },
+  {
+    field: 'hasTried',
+    headerName: 'Have you tried it?',
+    width: 300,
+    editable: false,
+  },
+];
+
+
 export default function Sodadex() {
-  const drinks = ["Coke", "Fanta", "Sprite"];
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'drink',
-      headerName: 'Soda Flavor',
-      width: 850,
-      editable: false,
-    },
-  ];
-const rows = SODAS;
+  // const [selectionModel, setSelectionModel] = useState([]);
+  const [rows, setRows] = useState(SODAS);
+
+  function getHasTriedIndices() {
+    console.log('tried indices', rows)
+    const indices = []
+    for (let x = 0; x < rows.length; x += 1) {
+      const row = rows[x]
+      if (row.hasTried) indices.push(x)
+    }
+    return indices
+  }
 
   return (
     <>
@@ -68,6 +89,17 @@ const rows = SODAS;
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
                 checkboxSelection
+                selectionModel={getHasTriedIndices()}
+                hideFooterSelectedRowCount
+                onSelectionModelChange={(ids) => {
+                  console.log(ids)
+                for (const id of ids) {
+                  rows[id].hasTried = true;
+                }
+                setRows(rows);
+               }
+            }
+          
             />
     </div>
           </CardContent>
