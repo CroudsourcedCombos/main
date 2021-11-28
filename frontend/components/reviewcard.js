@@ -17,13 +17,13 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard() {
+export default function ReviewCard() {
     const [Rating, setRating] = React.useState(0);
     const [Category, setCategory] = React.useState("Sandwhich");
     const [Ingredients, setIngredients] = React.useState([])
   
     return (
-    <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex", alignContent: "space-between"}}>
+    <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex"}}>
       <Container sx = {{width: "20%"}}>
         <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -39,10 +39,8 @@ export default function BasicCard() {
               Ingredients
           </CardContent>
       </Container>
-      <Container sx = {{width: "20%", display: "flex", alignContent: "center"}}>
-        <CardActions>
-            <Button size="small">See Full Review</Button>
-        </CardActions>
+      <Container sx = {{width: "20%", display: "flex", alignItems: "center"}}>
+        Image?
       </Container>
       
     </Card>
