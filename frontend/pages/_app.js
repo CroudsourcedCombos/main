@@ -1,7 +1,13 @@
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import { AuthenticatedUserProvider } from '../context/AuthenticatedUserContext'
+import { useEffect } from 'react'
+
+// Give app access to the authenticated user
+function Application({ Component, pageProps }) {
+  return <AuthenticatedUserProvider>
+    <Component {...pageProps} />
+  </AuthenticatedUserProvider>
 }
 
-export default MyApp
+export default Application
