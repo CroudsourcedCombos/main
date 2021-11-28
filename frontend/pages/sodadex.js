@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 export default function Sodadex() {
   return (
     <div className={styles.container}>
-      <h1>Hello World</h1>
+      <h1>Sodadex</h1>
     </div>
   )
 }
