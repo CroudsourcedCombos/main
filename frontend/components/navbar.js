@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 // import {NavLink} from "react-router-dom";
 // import {Link} from "react-router-dom";
 import Link from "@material-ui/core";
+import { useAuth } from '../context/AuthenticatedUserContext'
 
 const pages = ["Flavors", "Menu", "Add Review", "Sign In/Up"];
 const pageRoutes = ["flavors", "menu", "add-review", "sign-in"]
@@ -37,6 +38,19 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const { user, setUser } = useAuth()
+  const getProfilePicture = () => {
+    if (user) return user.photoURL
+    else return "/static/images/avatar/2.jpg"
+  }
+
+  console.log(user)
+
+  const getUsername = () => {
+    if (user) return user.displayName
+    else return "Joe Bruin"
+  }
 
   return (
     <AppBar position="static">
@@ -116,7 +130,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={getUsername()} src={getProfilePicture()} />
               </IconButton>
             </Tooltip>
             <Menu
