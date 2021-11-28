@@ -30,16 +30,30 @@ export default function ReviewCard() {
             Rated
             </Typography>
             <Typography variant="h2" component="div">
-            9
+            {Rating}
             </Typography>
         </CardContent>
       </Container>
-      <Container sx = {{width: "65%"}}>
+      <Container sx = {{width: "60%"}}>
           <CardContent>
-              Ingredients
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                {Category}
+            </Typography>
+            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                Bread: Whole Wheat
+            </Typography>
+            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                Cheese: Provolone
+            </Typography>
+            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                Toppings: Tomato
+            </Typography>
+            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                Sauce: Mayo
+            </Typography>
           </CardContent>
       </Container>
-      <Container sx = {{width: "20%", display: "flex", alignItems: "center"}}>
+      <Container sx = {{width: "20%", display: "flex", alignItems: "center", justifyContent: "center"}}>
         Image?
       </Container>
       
