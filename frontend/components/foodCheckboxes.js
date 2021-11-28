@@ -7,17 +7,51 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 
-export default function CheckboxesGroup() {
-  const Bread = ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"]
-  const Cheese = ["Cheddar Cheese", "Mozzarella Cheese", "Provolone Cheese", "Vegan Cheddar Cheese", "None"]
-  const Toppings = ["Avocado Pulp", "Bacon", "Black Forest Ham", "Egg Salad", "Grilled Rosemary Chicken Breast", 
-    "Pepperoni", "Prosciutto", "Roast Beef", "Turkey"];
-  const Add_Ons=["Baby Spinach", "Cucumber", "Mixed Peppers", "Pepperoncini", "Pickles", "Red Onion", "Romaine Lettuce",
-    "Sliced Black Olives", "Sliced Jalepeno", "Tomatoes"];
-  const Spreads_and_Condiments =["Balsamic Vinegar", "Mayonnaise", "Mustard", "Olive Oil", "Olive Salad", "Pesto Sauce",
-    "Red Wine Vinegar", "Sun Dried Tomato Pesto"]
-  
+const Foods = {
+  BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
+  CHEESES: [
+    "Cheddar Cheese",
+    "Mozzarella Cheese",
+    "Provolone Cheese",
+    "Vegan Cheddar Cheese",
+    "None",
+  ],
+  TOPPINGS: [
+    "Avocado Pulp",
+    "Bacon",
+    "Black Forest Ham",
+    "Egg Salad",
+    "Grilled Rosemary Chicken Breast",
+    "Pepperoni",
+    "Prosciutto",
+    "Roast Beef",
+    "Turkey",
+  ],
+  ADD_ONS: [
+    "Baby Spinach",
+    "Cucumber",
+    "Mixed Peppers",
+    "Pepperoncini",
+    "Pickles",
+    "Red Onion",
+    "Romaine Lettuce",
+    "Sliced Black Olives",
+    "Sliced Jalepeno",
+    "Tomatoes",
+  ],
+  SPREADS: [
+    "Balsamic Vinegar",
+    "Mayonnaise",
+    "Mustard",
+    "Olive Oil",
+    "Olive Salad",
+    "Pesto Sauce",
+    "Red Wine Vinegar",
+    "Sun Dried Tomato Pesto",
+  ],
+};
 
+export default function CheckboxesGroup() {
   const [state, setState] = React.useState({
     Avocado_Pulp: true,
     Bacon: false,
@@ -37,30 +71,34 @@ export default function CheckboxesGroup() {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-        <FormLabel component="legend">Assign responsibility</FormLabel>
+      <FormControl
+        required
+        error={error}
+        component="fieldset"
+        sx={{ m: 3 }}
+        variant="standard"
+      >
+        <FormLabel component="legend">Pick One</FormLabel>
         <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={Avocado_Pulp} onChange={handleChange} name="Avocado_Pulp" />
-            }
-            label="Avocado_Pulp Gray"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={Bacon} onChange={handleChange} name="Bacon" />
-            }
-            label="Bacon Killian"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={Black_Forest_Ham} onChange={handleChange} name="Black_Forest_Ham" />
-            }
-            label="Black_Forest_Ham Llorca"
-          />
+          {Foods.BREADS.map((bread, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={bread}
+                    onChange={handleChange}
+                    name={bread}
+                  />
+                }
+                label={bread}
+              />
+            );
+          })}
         </FormGroup>
-        <FormHelperText>Be careful</FormHelperText>
-      </FormControl> */}
+        <FormHelperText>You can display an error</FormHelperText>
+      </FormControl>
+
       <FormControl
         required
         error={error}
@@ -70,33 +108,102 @@ export default function CheckboxesGroup() {
       >
         <FormLabel component="legend">Pick two</FormLabel>
         <FormGroup>
-          {}
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={Avocado_Pulp}
-                onChange={handleChange}
-                name="Avocado_Pulp"
+          {Foods.CHEESES.map((bread, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={bread}
+                    onChange={handleChange}
+                    name={bread}
+                  />
+                }
+                label={bread}
               />
-            }
-            label="Avocado_Pulp"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={Bacon} onChange={handleChange} name="Bacon" />
-            }
-            label="Bacon"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={Black_Forest_Ham}
-                onChange={handleChange}
-                name="Black_Forest_Ham"
+            );
+          })}
+        </FormGroup>
+        <FormHelperText>You can display an error</FormHelperText>
+      </FormControl>
+      <FormControl
+        required
+        error={error}
+        component="fieldset"
+        sx={{ m: 3 }}
+        variant="standard"
+      >
+        <FormLabel component="legend">Choose Up to Two</FormLabel>
+        <FormGroup>
+          {Foods.TOPPINGS.map((bread, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={bread}
+                    onChange={handleChange}
+                    name={bread}
+                  />
+                }
+                label={bread}
               />
-            }
-            label="Black_Forest_Ham"
-          />
+            );
+          })}
+        </FormGroup>
+        <FormHelperText>You can display an error</FormHelperText>
+      </FormControl>
+      <FormControl
+        required
+        error={error}
+        component="fieldset"
+        sx={{ m: 3 }}
+        variant="standard"
+      >
+        <FormLabel component="legend">Choose Up To Three</FormLabel>
+        <FormGroup>
+          {Foods.ADD_ONS.map((bread, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={bread}
+                    onChange={handleChange}
+                    name={bread}
+                  />
+                }
+                label={bread}
+              />
+            );
+          })}
+        </FormGroup>
+        <FormHelperText>You can display an error</FormHelperText>
+      </FormControl>
+      <FormControl
+        required
+        error={error}
+        component="fieldset"
+        sx={{ m: 3 }}
+        variant="standard"
+      >
+        <FormLabel component="legend">Pick two</FormLabel>
+        <FormGroup>
+          {Foods.SPREADS.map((bread, index) => {
+            return (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={bread}
+                    onChange={handleChange}
+                    name={bread}
+                  />
+                }
+                label={bread}
+              />
+            );
+          })}
         </FormGroup>
         <FormHelperText>You can display an error</FormHelperText>
       </FormControl>
