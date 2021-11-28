@@ -8,16 +8,48 @@ import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import Avatar from "@mui/material/Avatar";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+const Pizza = {
+  TOPPINGS: [
+    'Bacon',
+    'Black Forest Ham',
+    'Grilled Rosemary Chicken Breast',
+    'Italian Sausage',
+    'Pepperoni',
+    'Smoked Salmon',
+    'Vegan Sausage',
+    'None',
+  ],
+  CHEESES: [
+    'Mozzarella Cheese',
+    'Mozzarella Cheese, Fontina Cheese, Parmesan, Gruyere Cheese',
+    'Vegan Mozzarella Cheese',
+    'No Cheese',
+  ],
+  SAUCES: [
+    'BBQ Sauce',
+    'Bechamel Sauce',
+    'Buffalo Sauce',
+    'Dill & Shallot Cream Cheese',
+    'Pesto Sauce',
+    'Smoked Tomato Sauce',
+    'Spicy Marinara Sauce',
+    'No Sauce',
+  ],
+  ADD_ONS: [
+    'Basil',
+    'Mixed Peppers',
+    'Mushroom',
+    'Pineapple',
+    'Ranch Dressing',
+    'Red Onion',
+    'Sliced Black Olives',
+    'Sliced Jalapeño',
+    'Tomato',
+  ],
+}
 
-export default function ReviewCard() {
+
+export default function ReviewCard(props) {
     const [Rating, setRating] = React.useState(0);
     const [Category, setCategory] = React.useState("Sandwhich");
     const [Ingredients, setIngredients] = React.useState([])
@@ -37,20 +69,14 @@ export default function ReviewCard() {
       <Container sx = {{width: "60%"}}>
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {Category}
+                {props.type}
             </Typography>
-            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                Bread: Whole Wheat
-            </Typography>
-            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                Cheese: Provolone
-            </Typography>
-            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                Toppings: Tomato
-            </Typography>
-            <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                Sauce: Mayo
-            </Typography>
+            
+            {Object.entries(Pizza).map((ingredient, choice) => (
+              <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                {ingredient[0]} : {ingredient[1][choice]}
+              </Typography>
+            ))}
           </CardContent>
       </Container>
       <Container sx = {{width: "20%", display: "flex", alignItems: "center", justifyContent: "center"}}>
@@ -60,3 +86,5 @@ export default function ReviewCard() {
     </Card>
   );
 }
+
+

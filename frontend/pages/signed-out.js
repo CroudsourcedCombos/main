@@ -24,7 +24,7 @@ import { Button, Container } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/foodCheckboxes";
 import { Box } from "@mui/system";
-import  ReviewCard  from "../components/reviewcard";
+import  ReviewCard  from "../components/reviewcard.js";
 
 export default function SignedOut() {
   const [value, setValue] = useState(2);
@@ -41,7 +41,7 @@ export default function SignedOut() {
         <ResponsiveAppBar></ResponsiveAppBar>
         <Container maxWidth = "xl" sx = { {display: "flex", justifyContent: "space-between"}}>
                 <Container sx = { { width: "60%", margin: "10px"}}>
-                    <ReviewCard></ReviewCard>
+                    <ReviewCard type = "Pizza" ></ReviewCard>
                     <ReviewCard></ReviewCard>
                     <ReviewCard></ReviewCard>
                 </Container>
