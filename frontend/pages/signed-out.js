@@ -48,6 +48,25 @@ const dataset = [
       sauce: ["sundried tomato pesto"],
     }
   },
+  {
+    score: 7,
+    category: 'Salad',
+    ingredients: {
+      greens: "baby spinach",
+      protein: "chicken",
+      toppings: ["goat cheese", "olives", "garbanzo beans"],
+      dressing: "ranch"
+    }
+  },
+  {
+    score: 4,
+    category: 'Coffee',
+    ingredients: {
+      type: "french press",
+      milk: "none",
+      sugar: "2 packets",
+    }
+  },
 ]
 
 export default function SignedOut() {
@@ -66,8 +85,11 @@ export default function SignedOut() {
         <Container maxWidth = "xl" sx = { {display: "flex", justifyContent: "space-between"}}>
                 <Container sx = { { width: "60%", margin: "10px"}}>
                     <ReviewCard {...dataset[0]} />
+                    <ReviewCard {...dataset[1]} />
+                    <ReviewCard {...dataset[2]} />
                 </Container>
                 <Container sx = { {width: "40%", margin: "10px"}}>
+                    <ReviewCard {...dataset[3]} />
                 </Container>
         </Container>
         
