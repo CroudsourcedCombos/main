@@ -8,52 +8,20 @@ import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import Avatar from "@mui/material/Avatar";
 
-const Pizza = {
-  TOPPINGS: [
-    'Bacon',
-    'Black Forest Ham',
-    'Grilled Rosemary Chicken Breast',
-    'Italian Sausage',
-    'Pepperoni',
-    'Smoked Salmon',
-    'Vegan Sausage',
-    'None',
-  ],
-  CHEESES: [
-    'Mozzarella Cheese',
-    'Mozzarella Cheese, Fontina Cheese, Parmesan, Gruyere Cheese',
-    'Vegan Mozzarella Cheese',
-    'No Cheese',
-  ],
-  SAUCES: [
-    'BBQ Sauce',
-    'Bechamel Sauce',
-    'Buffalo Sauce',
-    'Dill & Shallot Cream Cheese',
-    'Pesto Sauce',
-    'Smoked Tomato Sauce',
-    'Spicy Marinara Sauce',
-    'No Sauce',
-  ],
-  ADD_ONS: [
-    'Basil',
-    'Mixed Peppers',
-    'Mushroom',
-    'Pineapple',
-    'Ranch Dressing',
-    'Red Onion',
-    'Sliced Black Olives',
-    'Sliced Jalapeño',
-    'Tomato',
-  ],
-}
 
 
-export default function ReviewCard(props) {
-    const [Rating, setRating] = React.useState(0);
-    const [Category, setCategory] = React.useState("Sandwhich");
-    const [Ingredients, setIngredients] = React.useState([])
-  
+
+export default function ReviewCard({ score, category, ingredients }) {
+    const keys = Object.keys(ingredients)
+    const values = Object.values(ingredients)
+    
+    for (let i = 0; i < values.length; i++){
+      if (Array.isArray(values[i])){
+        console.log("inside if")
+        values[i] = (values[i]).join(", ");
+      };
+    }
+    
     return (
     <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex"}}>
       <Container sx = {{width: "20%"}}>
@@ -62,21 +30,23 @@ export default function ReviewCard(props) {
             Rated
             </Typography>
             <Typography variant="h2" component="div">
-            {Rating}
+            {score}
             </Typography>
         </CardContent>
       </Container>
       <Container sx = {{width: "60%"}}>
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {props.type}
+              {category}
             </Typography>
             
-            {Object.entries(Pizza).map((ingredient, choice) => (
+            {keys.map((key, index) => (
               <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                {ingredient[0]} : {ingredient[1][choice]}
+                {key} : {values[index]}
               </Typography>
             ))}
+            
+            
           </CardContent>
       </Container>
       <Container sx = {{width: "20%", display: "flex", alignItems: "center", justifyContent: "center"}}>

@@ -26,6 +26,30 @@ import CheckboxesGroup from "../components/foodCheckboxes";
 import { Box } from "@mui/system";
 import  ReviewCard  from "../components/reviewcard.js";
 
+
+const dataset = [
+  {
+    score: 10,
+    category: 'Sandwich',
+    ingredients: {
+      bread: "sourdough",
+      cheese: ["provolone"],
+      toppings: ["tomato", "lettuce"],
+      sauce: ["mayo", "sundried tomato pesto"],
+    }
+  },
+  {
+    score: 2,
+    category: 'Sub',
+    ingredients: {
+      bread: "torpedo hoagie",
+      cheese: ["swiss"],
+      toppings: ["onion"],
+      sauce: ["sundried tomato pesto"],
+    }
+  },
+]
+
 export default function SignedOut() {
   const [value, setValue] = useState(2);
   const [reviewText, setreviewText] = useState("Controlled");
@@ -41,14 +65,9 @@ export default function SignedOut() {
         <ResponsiveAppBar></ResponsiveAppBar>
         <Container maxWidth = "xl" sx = { {display: "flex", justifyContent: "space-between"}}>
                 <Container sx = { { width: "60%", margin: "10px"}}>
-                    <ReviewCard type = "Pizza" ></ReviewCard>
-                    <ReviewCard></ReviewCard>
-                    <ReviewCard></ReviewCard>
+                    <ReviewCard {...dataset[0]} />
                 </Container>
                 <Container sx = { {width: "40%", margin: "10px"}}>
-                    <ReviewCard></ReviewCard>
-                    <ReviewCard></ReviewCard>
-                    <ReviewCard></ReviewCard>
                 </Container>
         </Container>
         
