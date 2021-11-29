@@ -1,14 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# About
 
-## Getting Started
+CrowdSourced Combos is a web app designed for UCLA students to share reviews o their favorite sandwich and drink combinations from The Study!
 
-First, run the development server:
+The frontend uses Material UI components with Next.js. 
 
+# Getting Started
+
+## Prerequisites
+
+You must have the latest version of [NodeJS](https://nodejs.org/en/) installed for this project to work.
+
+## Installation
+
+Run the following commands:
 ```bash
-npm run dev
-# or
-yarn dev
+git clone https://github.com/CroudsourcedCombos/frontend
+cd frontend
+npx next build
+npm install
 ```
+to set up the repository.
+
+Add a new file `.env.local` and add required environment variables (see `.env.example` for reference) to successfully build the project.
+
+## Running
+
+To run the development server: `npm run dev`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
