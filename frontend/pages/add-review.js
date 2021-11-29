@@ -22,6 +22,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import CheckboxesGroup from "../components/foodCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
@@ -39,9 +40,7 @@ export default function AddReview() {
         <Card style={{ width: "75%" }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
-              </Avatar>
+              <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
             }
             action={
               <IconButton aria-label="settings">
@@ -95,6 +94,7 @@ export default function AddReview() {
                 // style={{padding: '10px 10px 10px 10px'}}
               />
             </div>
+            <CheckboxesGroup></CheckboxesGroup>
           </CardContent>
           <div
             style={{

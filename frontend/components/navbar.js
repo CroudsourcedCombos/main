@@ -15,8 +15,8 @@ import MenuItem from "@mui/material/MenuItem";
 // import {Link} from "react-router-dom";
 import Link from "@material-ui/core";
 
-const pages = ["Flavors", "Menu", "Add Review", "Sign In/Up"];
-const pageRoutes = ["flavors", "menu", "add-review", "sign-in"]
+const pages = ["Add Review", "Flavors", "Menu", "Sign In/Up"];
+const pageRoutes = ["add-review", "flavors", "menu", "sign-in"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
@@ -26,17 +26,11 @@ const ResponsiveAppBar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar position="static">
@@ -51,8 +45,34 @@ const ResponsiveAppBar = () => {
             Crowdsourced Combos
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none"} }}
+          >
+            LOGO
+          </Typography>
+          
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "right"}}>
+            {pages.map((page, index) => (
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  // component={Link}
+                  // to="/sign-in"
+                  key={page}
+
+                  href={pageRoutes[index]}
+                >
+                  {page}
+                </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+          <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -85,59 +105,6 @@ const ResponsiveAppBar = () => {
                   <Typography textAlign="center" justifyContent="right">
                     {page}
                   </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  // component={Link}
-                  // to="/sign-in"
-                  key={page}
-
-                  href={pageRoutes[index]}
-                >
-                  {page}
-                </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
