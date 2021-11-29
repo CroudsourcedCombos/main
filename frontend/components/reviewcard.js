@@ -8,18 +8,21 @@ import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import Avatar from "@mui/material/Avatar";
 
-
-
-
 export default function ReviewCard({ score, category, ingredients }) {
-    const keys = Object.keys(ingredients)
-    const values = Object.values(ingredients)
-    
-    for (let i = 0; i < values.length; i++){
-      if (Array.isArray(values[i])){
-        console.log("inside if")
-        values[i] = (values[i]).join(", ");
-      };
+    // Format ingredients to be all strings
+    function formatIngredient(ingredients) {
+      // If it's an array, format it
+      if (Array.isArray(ingredients)) return titleCase(ingredients.join(', '))
+      // Otherwise yield it directly
+      else return titleCase(ingredients)
+    }
+
+    // Title case any strings
+    // TO-DO: Move this to be shared across multiple components
+    function titleCase(str) {
+      const words = str.split(/\s+/)
+      const titleCaseArr = words.map(substr => substr[0].toUpperCase() + substr.slice(1))
+      return titleCaseArr.join(' ')
     }
     
     return (
@@ -40,11 +43,10 @@ export default function ReviewCard({ score, category, ingredients }) {
               {category}
             </Typography>
             
-            {keys.map((key, index) => (
-              <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                {key} : {values[index]}
-              </Typography>
-            ))}
+            {Object.keys(ingredients).map((key, index) => (<Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                {titleCase(key)}: {formatIngredient(ingredients[key])}
+              </Typography>)
+            )}
             
             
           </CardContent>
@@ -56,5 +58,3 @@ export default function ReviewCard({ score, category, ingredients }) {
     </Card>
   );
 }
-
-
