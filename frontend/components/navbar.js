@@ -15,8 +15,8 @@ import MenuItem from "@mui/material/MenuItem";
 // import {Link} from "react-router-dom";
 import Link from "@material-ui/core";
 
-const pages = ["Flavors", "Menu", "Sign In/Up"];
-const pageRoutes = ["flavors", "menu", "sign-in"]
+const pages = ["Add Review", "Flavors", "Menu", "Sign In/Up"];
+const pageRoutes = ["add-review", "flavors", "menu", "sign-in"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
