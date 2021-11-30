@@ -20,12 +20,20 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/sandwichCheckboxes";
+import { Box } from "@mui/system";
+
+import {
+  Button,
+  ToggleButtonGroup,
+  ToggleButton,
+  autocompleteClasses,
+} from "@mui/material";
 
 import { useAuth } from "../context/AuthenticatedUserContext";
 import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
+import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
@@ -44,6 +52,14 @@ export default function AddReview() {
   const getUsername = () => {
     if (user) return user.displayName;
     else return "Joe Bruin";
+  };
+
+  const [SandOrPizza, setSandOrPizza] = useState("sandwich");
+
+  const handleChangeSandOrPizza = (event, newSelectionSandOrPizza) => {
+    if (newSelectionSandOrPizza !== null)
+      setSandOrPizza(newSelectionSandOrPizza);
+    console.log(newSelectionSandOrPizza);
   };
 
   return (
@@ -105,8 +121,26 @@ export default function AddReview() {
                 // style={{padding: '10px 10px 10px 10px'}}
               />
             </div>
-            {/* <CheckboxesGroup></CheckboxesGroup> */}
-            <PizzaCheckboxesGroup></PizzaCheckboxesGroup>
+            <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+              <ToggleButtonGroup
+                // color="primary"
+                value={SandOrPizza}
+                exclusive
+                onChange={handleChangeSandOrPizza}
+              >
+                <ToggleButton value="sandwich">Sandwich</ToggleButton>
+                <ToggleButton value="pizza">Pizza</ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            <div>
+              {SandOrPizza == "sandwich" ? (
+                <SandwichCheckboxesGroup></SandwichCheckboxesGroup>
+              ) : null}
+              {SandOrPizza == "pizza" ? (
+                <PizzaCheckboxesGroup></PizzaCheckboxesGroup>
+              ) : null}
+            </div>
+            {/* <PizzaCheckboxesGroup></PizzaCheckboxesGroup> */}
           </CardContent>
           <div
             style={{
