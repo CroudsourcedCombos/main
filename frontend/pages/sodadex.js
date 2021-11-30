@@ -37,7 +37,7 @@ const renderAddReviewButton = (params) => {
                   console.log("Review Button clicked.")
               }}
           >
-              Post Review
+              {false?"Saved":"Update"}
           </Button>
       </strong>
   )
@@ -47,36 +47,59 @@ return(
   <Rating
   name="simple-controlled"
   size="medium"
+  onChange={handleReviewChange}
   />
   )
 }
 
+const renderReviewText = (params) => {
+  return(
+    <TextField
+      id="outlined-multiline-flexible"
+      fullWidth
+      multiline
+      minRows={1}
+      maxRows={3}
+      variant="filled"
+  />
+  )
+}
+const handleReviewChange = (params)=>{
+
+}
 const drinks = ["Coke", "Fanta", "Sprite"];
 const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'id', headerName: 'ID', width: 50 },
   {
     field: 'drink',
     headerName: 'Soda Flavor',
-    width: 300,
+    width: 200,
     editable: false,
   },
   {
     field: 'hasTriedDisp',
     headerName: 'Have you tried it?',
-    width: 200,
+    width: 150,
     editable: false,
   },
   {
-    field: 'review',
+    field: 'rating',
     headerName: 'Your Rating',
-    width:200,
+    width:150,
     renderCell: renderReviewStars,
+    disableClickEventBubbling: true,  
+  },  
+  {
+    field: 'review',
+    headerName: 'Your comments',
+    width:300,
+    renderCell: renderReviewText,
     disableClickEventBubbling: true,  
   },  
   {
     field: 'postButton',
     headerName: '',
-    width:200,
+    width:100,
     renderCell: renderAddReviewButton,
     disableClickEventBubbling: true,  
   },  
