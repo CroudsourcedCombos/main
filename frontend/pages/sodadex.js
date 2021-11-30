@@ -25,20 +25,25 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 import { SODAS } from '../constants/soda';
 
-const renderAddReviewButton = (params) => {
+const renderAddReviewButton = ({ row, id }, rows, setRows) => {
   return (
       <strong>
           <Button
               variant="contained"
-              color="error"
+              color={row.ifUpdated?"primary":"error"}
               size="small"
               style={{ marginLeft: 16 }}
               onClick={() => {
-                console.log(params);
-                  console.log("Review Button clicked.")
+                // Update the row update status
+                row.ifUpdated = true;
+                // Make a copy of the rows, update the row to what was passed in
+                //const rowCopy = [...rows];
+                //rowCopy[id] = row;
+                // Set the news state
+                //setRows(rowCopy);
               }}
           >
-              {false?"Saved":"Update"}
+              {row.ifUpdated?"Saved":"Update"}
           </Button>
       </strong>
   )
@@ -53,14 +58,16 @@ return(
   value={row.rating}
   onChange={(event) => {
     // Update the row rating
-    row.rating = event.target.value
-
+    row.rating = event.target.value;
+    row.ifUpdated = false;
+    row.hasTried = true;
+    row.hasTriedDisp = "Yes";
     // Make a copy of the rows, update the row to what was passed in
-    const rowCopy = [...rows]
-    rowCopy[id] = row
+    const rowCopy = [...rows];
+    rowCopy[id] = row;
 
     // Set the news state
-    setRows(rowCopy)
+    setRows(rowCopy);
   }}
   />
   )
@@ -77,6 +84,14 @@ const renderReviewText = (params) => {
       variant="filled"
   />
   )
+}
+const handleUpdateChange = ({ row, id }, rows, setRows)=>{
+  console.log("Review Button clicked.")
+  row.ifUpdated = true;
+  const rowCopy = [...rows];
+  rowCopy[id] = row;
+  // Set the news state
+  setRows(rowCopy);
 }
 const handleReviewChange = ({ row, id }, rows, setRows, value)=>{
   // Make a copy of the rows, update the row to what was passed in
@@ -101,7 +116,7 @@ function generateRowsFromSodas() {
     // Set defaults for row for these properties
     row.rating = '0'
     row.comment = ''
-    row.ifUpdated = false
+    row.ifUpdated = true
     return row
   })
 
