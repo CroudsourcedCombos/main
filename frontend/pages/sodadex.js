@@ -25,6 +25,24 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 import { SODAS } from '../constants/soda';
 
+const renderAddReviewButton = (params) => {
+  return (
+      <strong>
+          <Button
+              variant="contained"
+              color="error"
+              size="small"
+              style={{ marginLeft: 16 }}
+              onClick={() => {
+                  console.log("Review Button clicked.")
+              }}
+          >
+              Add a Review
+          </Button>
+      </strong>
+  )
+}
+
 const drinks = ["Coke", "Fanta", "Sprite"];
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -37,9 +55,16 @@ const columns = [
   {
     field: 'hasTriedDisp',
     headerName: 'Have you tried it?',
-    width: 300,
+    width: 200,
     editable: false,
   },
+  {
+    field: 'col5',
+    headerName: 'Update',
+    width:200,
+    renderCell: renderAddReviewButton,
+    disableClickEventBubbling: true,  
+  },  
 ];
 
 
