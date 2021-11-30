@@ -22,7 +22,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button, Container } from "@mui/material";
 import { useState } from "react";
-import CheckboxesGroup from "../components/foodCheckboxes";
+import CheckboxesGroup from "../components/sandwichCheckboxes";
 import { Box } from "@mui/system";
 import ReviewCard from "../components/reviewcard.js";
 

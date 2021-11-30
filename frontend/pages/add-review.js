@@ -22,9 +22,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 import { useState } from "react";
-import CheckboxesGroup from "../components/foodCheckboxes";
+import CheckboxesGroup from "../components/sandwichCheckboxes";
 
 import { useAuth } from "../context/AuthenticatedUserContext";
+import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
@@ -104,7 +105,8 @@ export default function AddReview() {
                 // style={{padding: '10px 10px 10px 10px'}}
               />
             </div>
-            <CheckboxesGroup></CheckboxesGroup>
+            {/* <CheckboxesGroup></CheckboxesGroup> */}
+            <PizzaCheckboxesGroup></PizzaCheckboxesGroup>
           </CardContent>
           <div
             style={{

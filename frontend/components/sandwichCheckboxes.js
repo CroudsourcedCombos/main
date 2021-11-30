@@ -62,7 +62,7 @@ const ReviewRequirements = {
   spreads: [0, 2],
 };
 
-export default function CheckboxesGroup() {
+export default function SandwichCheckboxesGroup() {
   const [state, setState] = useState({
     breads: [],
     cheeses: [],
@@ -108,10 +108,6 @@ export default function CheckboxesGroup() {
   function checkExists(type, target) {
     return state[type].includes(target);
   }
-
-  // const { Avocado_Pulp, Bacon, Black_Forest_Ham } = state;
-  // const error =
-  //   [Avocado_Pulp, Bacon, Black_Forest_Ham].filter((v) => v).length !== 2;
 
   return (
     <Box sx={{ display: "flex" }}>
