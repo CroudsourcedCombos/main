@@ -8,10 +8,16 @@ import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 
 export default function ReviewCard({ score, category, ingredients }) {
-    // Format ingredients to be all strings
+  
+    const [IsLiked, setIsLiked] = React.useState(false)
+    const [AddedToList, setAddedToList] = React.useState(false)
+  
+  // Format ingredients to be all strings
     function formatIngredient(ingredients) {
       // If it's an array, format it
       if (Array.isArray(ingredients)) return titleCase(ingredients.join(', '))
@@ -56,11 +62,11 @@ export default function ReviewCard({ score, category, ingredients }) {
           </CardContent>
       </Container>
       <Container sx = {{width: "20%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-        <Button>
-          <FavoriteIcon></FavoriteIcon>
+        <Button onClick = {() => {setIsLiked(!IsLiked)}}>
+          {IsLiked ? <FavoriteIcon></FavoriteIcon> : <FavoriteBorderIcon></FavoriteBorderIcon>}
         </Button>
-        <Button>
-          <PlaylistAddIcon></PlaylistAddIcon>
+        <Button onClick = {() => {setAddedToList(!AddedToList)}}>
+          {AddedToList ? <PlaylistAddCheckIcon></PlaylistAddCheckIcon> : <PlaylistAddIcon></PlaylistAddIcon>}
         </Button>
       </Container>
       
