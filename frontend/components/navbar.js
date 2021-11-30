@@ -14,28 +14,35 @@ import MenuItem from "@mui/material/MenuItem";
 // import {NavLink} from "react-router-dom";
 // import {Link} from "react-router-dom";
 import Link from "@material-ui/core";
+import { useAuth } from "../context/AuthenticatedUserContext";
 
-const pages = ["Flavors", "Menu", "Add Review", "Sign In/Up", "Sodadex"];
-const pageRoutes = ["flavors", "menu", "add-review", "sign-in", "sodadex"]
+const pages = ["Add Review", "Soda", "Menu", "Sign In/Up"];
+const pageRoutes = ["add-review", "sodadex", "menu", "sign-in"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const ResponsiveAppBar = () => {
+const NavigationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const { user, setUser } = useAuth();
+  const getProfilePicture = () => {
+    if (user) return user.photoURL;
+    else return "/static/images/avatar/2.jpg";
+  };
+
+  console.log(user);
+
+  const getUsername = () => {
+    if (user) return user.displayName;
+    else return "Joe Bruin";
   };
 
   return (
@@ -51,7 +58,37 @@ const ResponsiveAppBar = () => {
             Crowdsourced Combos
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+          >
+            LOGO
+          </Typography>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "right",
+            }}
+          >
+            {pages.map((page, index) => (
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "white", display: "block" }}
+                // component={Link}
+                // to="/sign-in"
+                key={page}
+                href={pageRoutes[index]}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          {/* <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -88,35 +125,37 @@ const ResponsiveAppBar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-          <Typography
+          </Box> */}
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
             LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          </Typography> */}
+          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, index) => (
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  // component={Link}
-                  // to="/sign-in"
-                  key={page}
-
-                  href={pageRoutes[index]}
-                >
-                  {page}
-                </Button>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "white", display: "block" }}
+                // component={Link}
+                // to="/sign-in"
+                key={page}
+                href={pageRoutes[index]}
+              >
+                {page}
+              </Button>
             ))}
-          </Box>
+          </Box> */}
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
+              <IconButton
+                // onClick={handleOpenUserMenu}
+                sx={{ p: 0 }}
+              >
+                <Avatar alt={getUsername()} src={getProfilePicture()} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -133,10 +172,11 @@ const ResponsiveAppBar = () => {
                 horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              // onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                <MenuItem key={setting} 
+                onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -147,4 +187,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default NavigationBar;

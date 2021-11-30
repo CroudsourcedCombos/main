@@ -34,6 +34,7 @@ const renderAddReviewButton = (params) => {
               size="small"
               style={{ marginLeft: 16 }}
               onClick={() => {
+                console.log(params);
                   console.log("Review Button clicked.")
               }}
           >
@@ -105,18 +106,33 @@ const columns = [
   },  
 ];
 
+function generateRowsFromSodas() {
+  // Go through and change each hasTried to yes or no
+  let rows = SODAS.map(row => {
+    row.hasTriedDisp = row.hasTried ? 'Yes' : 'No'
+    return row
+  })
+
+  // Add state for each of the rating numbers, comments, and ifUpdated
+  rows = rows.map(row => {
+    // Set defaults for row for these properties
+    row.rating = 0
+    row.comment = ''
+    row.ifUpdated = false
+    return row
+  })
+
+  return rows
+}
+
 
 export default function Sodadex() {
   // const [selectionModel, setSelectionModel] = useState([]);
-  const [rows, setRows] = useState(
-    SODAS.map(row => {
-    row.hasTriedDisp = row.hasTried ? 'Yes' : 'No'
-      return row
-    })
-  )
+  const [rows, setRows] = useState(generateRowsFromSodas)
+  console.log(rows);
 
   function getHasTriedIndices() {
-    console.log('tried indices', rows)
+    // console.log('tried indices', rows)
     const indices = []
     for (let x = 0; x < rows.length; x += 1) {
       const row = rows[x]

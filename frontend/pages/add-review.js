@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
-import ResponsiveAppBar from "../components/navbar";
+import NavigationBar from "../components/navbar";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -20,35 +20,61 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@mui/material";
 import { useState } from "react";
+import CheckboxesGroup from "../components/sandwichCheckboxes";
+import { Box } from "@mui/system";
+
+import {
+  Button,
+  ToggleButtonGroup,
+  ToggleButton,
+  autocompleteClasses,
+} from "@mui/material";
+
+import { useAuth } from "../context/AuthenticatedUserContext";
+import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
+import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
-  const [reviewText, setreviewText] = useState("Controlled");
+  const [reviewText, setReviewText] = useState("Controlled");
 
   const handleChange = (event) => {
-    setreviewText(event.target.reviewText);
+    setReviewText(event.target.reviewText);
   };
 
+  const { user, setUser } = useAuth();
+  const getProfilePicture = () => {
+    if (user) return user.photoURL;
+    else return "/static/images/avatar/2.jpg";
+  };
+
+  const getUsername = () => {
+    if (user) return user.displayName;
+    else return "Joe Bruin";
+  };
+
+  const [SandOrPizza, setSandOrPizza] = useState("sandwich");
+
+  const handleChangeSandOrPizza = (event, newSelectionSandOrPizza) => {
+    if (newSelectionSandOrPizza !== null)
+      setSandOrPizza(newSelectionSandOrPizza);
+    console.log(newSelectionSandOrPizza);
+  };
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
-      <div style={{display: 'flex', justifyContent: 'center'}}>
+      <NavigationBar />
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{ width: "75%" }}>
           <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
-              </Avatar>
-            }
+            avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
             action={
               <IconButton aria-label="settings">
                 <MoreVertIcon />
               </IconButton>
             }
-            title="Username"
+            title={getUsername()}
             subheader="Posting publicly"
             paddingBottom="2px"
           />
@@ -65,7 +91,7 @@ export default function AddReview() {
                 }}
               />
             </div>
-            <div style={{paddingTop: '8px', paddingBottom: '8px'}}>
+            <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
               <TextField
                 id="filled-input-static"
                 label="Food Item"
@@ -80,7 +106,7 @@ export default function AddReview() {
               />
             </div>
 
-            <div style={{paddingTop: '8px'}}>
+            <div style={{ paddingTop: "8px" }}>
               <TextField
                 id="outlined-multiline-flexible"
                 label="Share rating details"
@@ -95,6 +121,26 @@ export default function AddReview() {
                 // style={{padding: '10px 10px 10px 10px'}}
               />
             </div>
+            <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+              <ToggleButtonGroup
+                // color="primary"
+                value={SandOrPizza}
+                exclusive
+                onChange={handleChangeSandOrPizza}
+              >
+                <ToggleButton value="sandwich">Sandwich</ToggleButton>
+                <ToggleButton value="pizza">Pizza</ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            <div>
+              {SandOrPizza == "sandwich" ? (
+                <SandwichCheckboxesGroup></SandwichCheckboxesGroup>
+              ) : null}
+              {SandOrPizza == "pizza" ? (
+                <PizzaCheckboxesGroup></PizzaCheckboxesGroup>
+              ) : null}
+            </div>
+            {/* <PizzaCheckboxesGroup></PizzaCheckboxesGroup> */}
           </CardContent>
           <div
             style={{

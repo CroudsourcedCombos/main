@@ -6,10 +6,13 @@ import { Typography, Box, Link, Button } from '@material-ui/core'
 
 import FacebookLogin from '../components/auth/facebookSignIn'
 import GoogleLogin from '../components/auth/googleSignIn'
+import NavigationBar from '../components/navbar'
 
 export default function SignIn() {
   return (
+    
     <Box align="center">
+      <NavigationBar></NavigationBar>
       {/* Page title */}
       <Typography variant="h3">Login</Typography>
       <Typography variant="subtitle1">

@@ -1,0 +1,15 @@
+{
+  "name": "Local GraphQl Server",
+  "extensions": {
+    "endpoints": {
+      "dev-server": {
+        "url": "http://localhost:4000/",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  },
+  "schemaPath": "./schema.graphql"
+}
