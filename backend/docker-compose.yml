@@ -1,12 +1,27 @@
 version: "3.9"
 services:
+  backend:
+    build: .
+    restart: always
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql://postgres:secret@database:5432/cc"
+    links:
+      - "db:database"
   db:
+    # Keep the ports exposed for development and local testing, as well as for
+    # if we ever need to connect directly with another prisma instance for
+    # migrations and such
     ports:
       - "5432:5432"
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
-    volumes: 
+      POSTGRES_DB: cc
+    volumes:
       - ./pgdata:/var/lib/postgresql/data
     image: postgres:14-alpine

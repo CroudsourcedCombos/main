@@ -5,12 +5,12 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist",
+    "start": "node dist",
     "dev": "ts-node-dev --rs --no-notify --respawn --transpile-only src",
     "prisma": "prisma format && prisma generate",
     "seed": "ts-node ./prisma/seed.ts",
     "reset-seed": "npx prisma migrate reset --force && prisma db push --accept-data-loss && npm run seed",
-    "postinstall": "npm run prisma && docker compose up --detach && npm run dev"
+    "postinstall": "npm run prisma"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.12.0",
     "reflect-metadata": "^0.1.13",
-    "ts-node": "10.4.0",
     "type-graphql": "^1.1.1",
     "typegraphql-prisma": "0.16.3",
     "typescript": "^4.4.4"
@@ -38,6 +37,7 @@
     "eslint-config-prettier": "^8.3.0",
     "prettier": "2.4.1",
     "ts-node-dev": "1.1.8",
+    "ts-node": "10.4.0",
     "prisma": "~3.3.0"
   },
   "author": "",
