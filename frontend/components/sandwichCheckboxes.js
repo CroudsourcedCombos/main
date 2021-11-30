@@ -118,7 +118,7 @@ export default function SandwichCheckboxesGroup() {
         sx={{ m: 3 }}
         variant="standard"
       >
-        <FormLabel component="legend">Pick One</FormLabel>
+        <FormLabel component="legend">Choose One</FormLabel>
         <FormGroup>
           {Foods.BREADS.map((bread, index) => {
             return (
@@ -147,7 +147,7 @@ export default function SandwichCheckboxesGroup() {
         sx={{ m: 3 }}
         variant="standard"
       >
-        <FormLabel component="legend">Pick Two</FormLabel>
+        <FormLabel component="legend">Choose Up To One</FormLabel>
         <FormGroup>
           {Foods.CHEESES.map((cheeses, index) => {
             return (
@@ -228,7 +228,7 @@ export default function SandwichCheckboxesGroup() {
         sx={{ m: 3 }}
         variant="standard"
       >
-        <FormLabel component="legend">Pick Two</FormLabel>
+        <FormLabel component="legend">Choose Up To Two</FormLabel>
         <FormGroup>
           {Foods.SPREADS.map((spreads, index) => {
             return (

@@ -54,6 +54,11 @@ export default function AddReview() {
     else return "Joe Bruin";
   };
 
+  // post = () => {
+  //   if (!errors)
+
+  // }
+
   const [SandOrPizza, setSandOrPizza] = useState("sandwich");
 
   const handleChangeSandOrPizza = (event, newSelectionSandOrPizza) => {
@@ -65,7 +70,7 @@ export default function AddReview() {
   return (
     <>
       <NavigationBar />
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
         <Card style={{ width: "75%" }}>
           <CardHeader
             avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
@@ -150,7 +155,7 @@ export default function AddReview() {
               paddingBottom: "16px",
             }}
           >
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick="{post}">
               Post
             </Button>
           </div>
