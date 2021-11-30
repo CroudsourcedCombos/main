@@ -43,12 +43,25 @@ const renderAddReviewButton = (params) => {
       </strong>
   )
 }
-const renderReviewStars = (params) => {
+const renderReviewStars = ({ row, id }, rows, setRows) => {
+  // console.log('params :>> ', params);
+  // const { row, id } = params
 return(
   <Rating
   name="simple-controlled"
   size="medium"
-  onChange={handleReviewChange}
+  value={row.rating}
+  onChange={(event) => {
+    // Update the row rating
+    row.rating = event.target.value
+
+    // Make a copy of the rows, update the row to what was passed in
+    const rowCopy = [...rows]
+    rowCopy[id] = row
+
+    // Set the news state
+    setRows(rowCopy)
+  }}
   />
   )
 }
@@ -65,46 +78,16 @@ const renderReviewText = (params) => {
   />
   )
 }
-const handleReviewChange = (params)=>{
+const handleReviewChange = ({ row, id }, rows, setRows, value)=>{
+  // Make a copy of the rows, update the row to what was passed in
+  const copyRows = [...rows]
+  copyRows[id] = row
 
+  console.log(row);
+  // Update state of rows
+  setRows(copyRows)
 }
 const drinks = ["Coke", "Fanta", "Sprite"];
-const columns = [
-  { field: 'id', headerName: 'ID', width: 50 },
-  {
-    field: 'drink',
-    headerName: 'Soda Flavor',
-    width: 200,
-    editable: false,
-  },
-  {
-    field: 'hasTriedDisp',
-    headerName: 'Have you tried it?',
-    width: 150,
-    editable: false,
-  },
-  {
-    field: 'rating',
-    headerName: 'Your Rating',
-    width:150,
-    renderCell: renderReviewStars,
-    disableClickEventBubbling: true,  
-  },  
-  {
-    field: 'review',
-    headerName: 'Your comments',
-    width:300,
-    renderCell: renderReviewText,
-    disableClickEventBubbling: true,  
-  },  
-  {
-    field: 'postButton',
-    headerName: '',
-    width:100,
-    renderCell: renderAddReviewButton,
-    disableClickEventBubbling: true,  
-  },  
-];
 
 function generateRowsFromSodas() {
   // Go through and change each hasTried to yes or no
@@ -116,7 +99,7 @@ function generateRowsFromSodas() {
   // Add state for each of the rating numbers, comments, and ifUpdated
   rows = rows.map(row => {
     // Set defaults for row for these properties
-    row.rating = 0
+    row.rating = '0'
     row.comment = ''
     row.ifUpdated = false
     return row
@@ -129,10 +112,45 @@ function generateRowsFromSodas() {
 export default function Sodadex() {
   // const [selectionModel, setSelectionModel] = useState([]);
   const [rows, setRows] = useState(generateRowsFromSodas)
-  console.log(rows);
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 50 },
+    {
+      field: 'drink',
+      headerName: 'Soda Flavor',
+      width: 200,
+      editable: false,
+    },
+    {
+      field: 'hasTriedDisp',
+      headerName: 'Have you tried it?',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'rating',
+      headerName: 'Your Rating',
+      width: 150,
+      renderCell: params => renderReviewStars(params, rows, setRows),
+      disableClickEventBubbling: true,
+    },
+    {
+      field: 'review',
+      headerName: 'Your comments',
+      width: 300,
+      renderCell: renderReviewText,
+      disableClickEventBubbling: true,
+    },
+    {
+      field: 'postButton',
+      headerName: '',
+      width: 100,
+      renderCell: renderAddReviewButton,
+      disableClickEventBubbling: true,
+    },
+  ]
 
   function getHasTriedIndices() {
-    // console.log('tried indices', rows)
     const indices = []
     for (let x = 0; x < rows.length; x += 1) {
       const row = rows[x]
