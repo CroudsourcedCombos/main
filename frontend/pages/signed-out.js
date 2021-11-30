@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
-import ResponsiveAppBar from "../components/navbar";
+import NavigationBar from "../components/navbar";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -24,50 +24,49 @@ import { Button, Container } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/foodCheckboxes";
 import { Box } from "@mui/system";
-import  ReviewCard  from "../components/reviewcard.js";
-
+import ReviewCard from "../components/reviewcard.js";
 
 const dataset = [
   {
     score: 10,
-    category: 'Sandwich',
+    category: "Sandwich",
     ingredients: {
       bread: "sourdough",
       cheese: ["provolone"],
       toppings: ["tomato", "lettuce"],
       sauce: ["mayo", "sundried tomato pesto"],
-    }
+    },
   },
   {
     score: 2,
-    category: 'Sub',
+    category: "Sub",
     ingredients: {
       bread: "torpedo hoagie",
       cheese: ["swiss"],
       toppings: ["onion"],
       sauce: ["sundried tomato pesto"],
-    }
+    },
   },
   {
     score: 7,
-    category: 'Salad',
+    category: "Salad",
     ingredients: {
       greens: "baby spinach",
       protein: "chicken",
       toppings: ["goat cheese", "olives", "garbanzo beans"],
-      dressing: "ranch"
-    }
+      dressing: "ranch",
+    },
   },
   {
     score: 4,
-    category: 'Coffee',
+    category: "Coffee",
     ingredients: {
       type: "french press",
       milk: "none",
       sugar: "2 packets",
-    }
+    },
   },
-]
+];
 
 export default function SignedOut() {
   const [value, setValue] = useState(2);
@@ -77,23 +76,22 @@ export default function SignedOut() {
     setreviewText(event.target.reviewText);
   };
 
-  
-
   return (
     <>
-        <ResponsiveAppBar></ResponsiveAppBar>
-        <Container maxWidth = "xl" sx = { {display: "flex", justifyContent: "space-between"}}>
-                <Container sx = { { width: "60%", margin: "10px"}}>
-                    <ReviewCard {...dataset[0]} />
-                    <ReviewCard {...dataset[1]} />
-                    <ReviewCard {...dataset[2]} />
-                </Container>
-                <Container sx = { {width: "40%", margin: "10px"}}>
-                    <ReviewCard {...dataset[3]} />
-                </Container>
+      <NavigationBar></NavigationBar>
+      <Container
+        maxWidth="xl"
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Container sx={{ width: "60%", margin: "10px" }}>
+          <ReviewCard {...dataset[0]} />
+          <ReviewCard {...dataset[1]} />
+          <ReviewCard {...dataset[2]} />
         </Container>
-        
-
+        <Container sx={{ width: "40%", margin: "10px" }}>
+          <ReviewCard {...dataset[3]} />
+        </Container>
+      </Container>
     </>
   );
 }

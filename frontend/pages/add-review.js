@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
-import ResponsiveAppBar from "../components/navbar";
+import NavigationBar from "../components/navbar";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -24,38 +24,34 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/foodCheckboxes";
 
-import { useAuth } from '../context/AuthenticatedUserContext'
+import { useAuth } from "../context/AuthenticatedUserContext";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
   const [reviewText, setReviewText] = useState("Controlled");
 
-  
   const handleChange = (event) => {
     setReviewText(event.target.reviewText);
   };
 
-
-  const { user, setUser } = useAuth()
+  const { user, setUser } = useAuth();
   const getProfilePicture = () => {
-    if (user) return user.photoURL
-    else return "/static/images/avatar/2.jpg"
-  }
+    if (user) return user.photoURL;
+    else return "/static/images/avatar/2.jpg";
+  };
 
   const getUsername = () => {
-    if (user) return user.displayName
-    else return "Joe Bruin"
-  }
+    if (user) return user.displayName;
+    else return "Joe Bruin";
+  };
 
   return (
     <>
-      <ResponsiveAppBar />
-      <div style={{display: 'flex', justifyContent: 'center'}}>
+      <NavigationBar />
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{ width: "75%" }}>
           <CardHeader
-            avatar={
-              <Avatar alt={getUsername()} src={getProfilePicture()} />
-            }
+            avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
             action={
               <IconButton aria-label="settings">
                 <MoreVertIcon />
@@ -78,7 +74,7 @@ export default function AddReview() {
                 }}
               />
             </div>
-            <div style={{paddingTop: '8px', paddingBottom: '8px'}}>
+            <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
               <TextField
                 id="filled-input-static"
                 label="Food Item"
@@ -93,7 +89,7 @@ export default function AddReview() {
               />
             </div>
 
-            <div style={{paddingTop: '8px'}}>
+            <div style={{ paddingTop: "8px" }}>
               <TextField
                 id="outlined-multiline-flexible"
                 label="Share rating details"
