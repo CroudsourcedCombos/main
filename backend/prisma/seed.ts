@@ -2,18 +2,11 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 async function main() {
-  const pizza_1 = await prisma.food.create({
+  const sandwich_1 = await prisma.food.create({
     data: {
       location: "UCLA",
-      type: "pizza",
-      name: "Pepperoni",
-    },
-  })
-  const pizza_2 = await prisma.food.create({
-    data: {
-      location: "UCLA",
-      type: "pizza",
-      name: "Cheese",
+      type: "sandwich",
+      name: "sand+WVPRRENNP",
     },
   })
 
@@ -21,7 +14,7 @@ async function main() {
     data: {
       location: "UCLA",
       type: "soda",
-      name: "Sprite Mango",
+      name: "2",
     },
   })
 
@@ -42,7 +35,7 @@ async function main() {
           rating: 0,
           food: {
             connect: {
-              id: pizza_1.id
+              id: sandwich_1.id
             }
           },
           text: "ReviewText",
@@ -54,7 +47,7 @@ async function main() {
             id: soda_1.id
           },
           {
-            id: pizza_1.id
+            id: sandwich_1.id
           }
         ],
       },
@@ -78,7 +71,7 @@ async function main() {
           rating: 1,
           food: {
             connect: {
-              id: pizza_1.id
+              id: sandwich_1.id
             }
           },
           text: "ReviewText",
@@ -87,23 +80,20 @@ async function main() {
       favoritesList: {
         connect: [
           {
-            id: pizza_1.id,
-          },
-          {
-            id: pizza_2.id
+            id: sandwich_1.id,
           }
         ],
       },
       toTryList: {
         connectOrCreate: {
           where: {
-            name: "Sprite Mango",
+            name: "2",
           },
           create: {
             location: "UCLA",
             type: "soda",
-            name: "Sprite Mango",
-          },
+            name: "2",
+          }
         },
       },
     },

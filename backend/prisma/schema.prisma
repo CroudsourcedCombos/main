@@ -45,7 +45,7 @@ enum FoodCategory {
 
 model Food {
   id            Int          @id @default(autoincrement())
-  name          String @unique
+  name          String       @unique
   reviews       Review[]
   images        String[]
   location      Location     @default(UCLA)
@@ -56,8 +56,6 @@ model Food {
 
 model User {
   id            Int      @id @default(autoincrement())
-  // We don't need the firebase ID to be accessable over the API
-  /// @TypeGraphQL.omit(output: true, input: true)
   firebaseId    String   @unique
   name          String?  @db.VarChar(255)
   email         String   @unique @db.VarChar(255) // May not need it, firebase might handle

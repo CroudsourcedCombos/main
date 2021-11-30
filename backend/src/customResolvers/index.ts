@@ -1,5 +1,14 @@
-import { Args, Ctx, FieldResolver, Query, Resolver, Root } from "type-graphql"
-import { FindManyReviewArgs, Food } from "../generatedGraphql"
+import {
+  Args,
+  ArgsType,
+  Ctx,
+  Field,
+  FieldResolver,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql"
+import { FindManyReviewArgs, Food, Review } from "../generatedGraphql"
 import { Context } from "../types"
 
 @Resolver((of) => Food)
@@ -13,8 +22,8 @@ class CustomFoodResolver {
       by: ["foodId"],
       where: {
         foodId: {
-          equals: food.id
-        }
+          equals: food.id,
+        },
       },
       _avg: {
         rating: true,
@@ -49,16 +58,43 @@ class CustomFoodResolver {
     })
 
     const foodIds = reviews.map((review) => review.foodId)
-    console.log(reviews)
-    const foods = await prisma.food.findMany({
+    return await prisma.food.findMany({
       where: {
         id: {
           in: foodIds,
         },
       },
     })
-    return foods
   }
 }
 
-export const CustomResolvers = [CustomFoodResolver]
+@ArgsType()
+class SearchReviewsArgs extends FindManyReviewArgs {
+  @Field()
+  search: string
+}
+
+@Resolver((of) => Review)
+class CustomReviewResolver {
+  @Query((_returns) => [Review])
+  async searchReviews(
+    @Args() args: SearchReviewsArgs,
+    @Ctx() { prisma }: Context
+  ) {
+    return await prisma.review.findMany({
+      where: {
+        ...args.where,
+        text: {
+          search: args.search,
+        },
+      },
+      orderBy: args.orderBy,
+      cursor: args.cursor,
+      distinct: args.distinct,
+      skip: args.skip,
+      take: args.take,
+    })
+  }
+}
+
+export const CustomResolvers = [CustomFoodResolver, CustomReviewResolver]
