@@ -37,9 +37,17 @@ const renderAddReviewButton = (params) => {
                   console.log("Review Button clicked.")
               }}
           >
-              Add a Review
+              Post Review
           </Button>
       </strong>
+  )
+}
+const renderReviewStars = (params) => {
+return(
+  <Rating
+  name="simple-controlled"
+  size="medium"
+  />
   )
 }
 
@@ -49,7 +57,7 @@ const columns = [
   {
     field: 'drink',
     headerName: 'Soda Flavor',
-    width: 500,
+    width: 300,
     editable: false,
   },
   {
@@ -59,8 +67,15 @@ const columns = [
     editable: false,
   },
   {
-    field: 'col5',
-    headerName: 'Update',
+    field: 'review',
+    headerName: 'Your Rating',
+    width:200,
+    renderCell: renderReviewStars,
+    disableClickEventBubbling: true,  
+  },  
+  {
+    field: 'postButton',
+    headerName: '',
     width:200,
     renderCell: renderAddReviewButton,
     disableClickEventBubbling: true,  
