@@ -1,4 +1,5 @@
-import * as React from "react";
+// import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
@@ -6,6 +7,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
+import { StarRateRounded } from "@material-ui/icons";
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -51,23 +53,64 @@ const Foods = {
   ],
 };
 
+const ReviewRequirements = {
+  breads: [1, 1],
+  cheeses: [0, 1],
+  toppings: [0, 2],
+  add_ons: [0, 3],
+  spreads: [0, 2],
+};
+
 export default function CheckboxesGroup() {
-  const [state, setState] = React.useState({
-    Avocado_Pulp: true,
-    Bacon: false,
-    Black_Forest_Ham: false,
+  const [state, setState] = useState({
+    breads: [],
+    cheeses: [],
+    toppings: [],
+    add_ons: [],
+    spreads: [],
+  });
+  const [error, setError] = useState({
+    breads: "You must pick at least 1 bread.",
+    cheeses: "",
+    toppings: "",
+    add_ons: "",
+    spreads: "",
   });
 
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-    });
+  const handleChange = (event, type) => {
+    // If it's already in the object, then remove the matching ingredient
+    const copy = { ...state };
+    if (copy[type].includes(event.target.name)) {
+      copy[type] = copy[type].filter(
+        (ingredient) => ingredient !== event.target.name
+      );
+    }
+
+    // Otherwise push it to the object
+    else copy[type].push(event.target.name);
+
+    // Check if the length is between min and max
+    const [min, max] = ReviewRequirements[type];
+    const len = copy[type].length;
+
+    // Set the error based on if it's lower than min or higher than max
+    const errCopy = { ...error };
+    if (len < min) errCopy[type] = `You must pick at least ${min} ${type}.`;
+    else if (len > max) errCopy[type] = `You can pick up to ${max} ${type}.`;
+    else errCopy[type] = ``;
+
+    setState(copy);
+    setError(errCopy);
+    // console.log(copy)
   };
 
-  const { Avocado_Pulp, Bacon, Black_Forest_Ham } = state;
-  const error =
-    [Avocado_Pulp, Bacon, Black_Forest_Ham].filter((v) => v).length !== 2;
+  function checkExists(type, target) {
+    return state[type].includes(target);
+  }
+
+  // const { Avocado_Pulp, Bacon, Black_Forest_Ham } = state;
+  // const error =
+  //   [Avocado_Pulp, Bacon, Black_Forest_Ham].filter((v) => v).length !== 2;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -86,8 +129,8 @@ export default function CheckboxesGroup() {
                 key={index}
                 control={
                   <Checkbox
-                    checked={bread}
-                    onChange={handleChange}
+                    checked={checkExists("breads", bread)}
+                    onChange={(event) => handleChange(event, "breads")}
                     name={bread}
                   />
                 }
@@ -96,7 +139,7 @@ export default function CheckboxesGroup() {
             );
           })}
         </FormGroup>
-        <FormHelperText>You can display an error</FormHelperText>
+        <FormHelperText>{error["breads"]}</FormHelperText>
       </FormControl>
 
       <FormControl
@@ -106,25 +149,25 @@ export default function CheckboxesGroup() {
         sx={{ m: 3 }}
         variant="standard"
       >
-        <FormLabel component="legend">Pick two</FormLabel>
+        <FormLabel component="legend">Pick Two</FormLabel>
         <FormGroup>
-          {Foods.CHEESES.map((bread, index) => {
+          {Foods.CHEESES.map((cheeses, index) => {
             return (
               <FormControlLabel
                 key={index}
                 control={
                   <Checkbox
-                    checked={bread}
-                    onChange={handleChange}
-                    name={bread}
+                    checked={checkExists("cheeses", cheeses)}
+                    onChange={(event) => handleChange(event, "cheeses")}
+                    name={cheeses}
                   />
                 }
-                label={bread}
+                label={cheeses}
               />
             );
           })}
         </FormGroup>
-        <FormHelperText>You can display an error</FormHelperText>
+        <FormHelperText>{error["cheeses"]}</FormHelperText>
       </FormControl>
       <FormControl
         required
@@ -135,23 +178,23 @@ export default function CheckboxesGroup() {
       >
         <FormLabel component="legend">Choose Up to Two</FormLabel>
         <FormGroup>
-          {Foods.TOPPINGS.map((bread, index) => {
+          {Foods.TOPPINGS.map((toppings, index) => {
             return (
               <FormControlLabel
                 key={index}
                 control={
                   <Checkbox
-                    checked={bread}
-                    onChange={handleChange}
-                    name={bread}
+                    checked={checkExists("toppings", toppings)}
+                    onChange={(event) => handleChange(event, "toppings")}
+                    name={toppings}
                   />
                 }
-                label={bread}
+                label={toppings}
               />
             );
           })}
         </FormGroup>
-        <FormHelperText>You can display an error</FormHelperText>
+        <FormHelperText>{error["toppings"]}</FormHelperText>
       </FormControl>
       <FormControl
         required
@@ -162,23 +205,23 @@ export default function CheckboxesGroup() {
       >
         <FormLabel component="legend">Choose Up To Three</FormLabel>
         <FormGroup>
-          {Foods.ADD_ONS.map((bread, index) => {
+          {Foods.ADD_ONS.map((add_ons, index) => {
             return (
               <FormControlLabel
                 key={index}
                 control={
                   <Checkbox
-                    checked={bread}
-                    onChange={handleChange}
-                    name={bread}
+                    checked={checkExists("add_ons", add_ons)}
+                    onChange={(event) => handleChange(event, "add_ons")}
+                    name={add_ons}
                   />
                 }
-                label={bread}
+                label={add_ons}
               />
             );
           })}
         </FormGroup>
-        <FormHelperText>You can display an error</FormHelperText>
+        <FormHelperText>{error["add_ons"]}</FormHelperText>
       </FormControl>
       <FormControl
         required
@@ -187,25 +230,25 @@ export default function CheckboxesGroup() {
         sx={{ m: 3 }}
         variant="standard"
       >
-        <FormLabel component="legend">Pick two</FormLabel>
+        <FormLabel component="legend">Pick Two</FormLabel>
         <FormGroup>
-          {Foods.SPREADS.map((bread, index) => {
+          {Foods.SPREADS.map((spreads, index) => {
             return (
               <FormControlLabel
                 key={index}
                 control={
                   <Checkbox
-                    checked={bread}
-                    onChange={handleChange}
-                    name={bread}
+                    checked={checkExists("spreads",  spreads)}
+                    onChange={(event) => handleChange(event, "spreads")}
+                    name={ spreads }
                   />
                 }
-                label={bread}
+                label={ spreads }
               />
             );
           })}
         </FormGroup>
-        <FormHelperText>You can display an error</FormHelperText>
+        <FormHelperText>{error["spreads"]}</FormHelperText>
       </FormControl>
     </Box>
   );
