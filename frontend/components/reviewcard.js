@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import Avatar from "@mui/material/Avatar";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 export default function ReviewCard({ score, category, ingredients }) {
     // Format ingredients to be all strings
@@ -27,16 +29,18 @@ export default function ReviewCard({ score, category, ingredients }) {
     
     return (
     <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex"}}>
-      <Container sx = {{width: "20%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-        <CardContent>
-            <Typography sx={{ fontSize: 14, display: "flex", justifyContent: "center"}} color="text.secondary" gutterBottom>
-            Rated
-            </Typography>
-            <Typography variant="h2" component="div">
-            {score}
-            </Typography>
-        </CardContent>
-      </Container>
+      
+      <Container sx = {{width: "20%",display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <CardContent>
+              <Typography sx={{ fontSize: 14, display: "flex", justifyContent: "center"}} color="text.secondary" gutterBottom>
+              Rated
+              </Typography>
+              <Typography variant="h2" component="div">
+              {score}
+              </Typography>
+          </CardContent>
+        </Container>
+      
       <Container sx = {{width: "60%"}}>
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -51,8 +55,13 @@ export default function ReviewCard({ score, category, ingredients }) {
             
           </CardContent>
       </Container>
-      <Container sx = {{width: "20%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-        Image?
+      <Container sx = {{width: "20%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+        <Button>
+          <FavoriteIcon></FavoriteIcon>
+        </Button>
+        <Button>
+          <PlaylistAddIcon></PlaylistAddIcon>
+        </Button>
       </Container>
       
     </Card>
