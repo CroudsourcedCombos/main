@@ -27,9 +27,9 @@ export default function ReviewCard({ score, category, ingredients }) {
     
     return (
     <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex"}}>
-      <Container sx = {{width: "20%"}}>
+      <Container sx = {{width: "20%", display: "flex", justifyContent: "center", alignItems: "center"}}>
         <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            <Typography sx={{ fontSize: 14, display: "flex", justifyContent: "center"}} color="text.secondary" gutterBottom>
             Rated
             </Typography>
             <Typography variant="h2" component="div">
@@ -43,8 +43,8 @@ export default function ReviewCard({ score, category, ingredients }) {
               {category}
             </Typography>
             
-            {Object.keys(ingredients).map((key, index) => (<Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                {titleCase(key)}: {formatIngredient(ingredients[key])}
+            {Object.keys(ingredients).map((key) => (<Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+                {titleCase(key)}: <strong>{formatIngredient(ingredients[key])}</strong>
               </Typography>)
             )}
             
