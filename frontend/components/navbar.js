@@ -16,8 +16,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "@material-ui/core";
 import { useAuth } from '../context/AuthenticatedUserContext'
 
-const pages = ["Flavors", "Menu", "Add Review", "Sign In/Up"];
-const pageRoutes = ["flavors", "menu", "add-review", "sign-in"]
+const pages = ["Add Review", "Flavors", "Menu", "Sign In/Up"];
+const pageRoutes = ["add-review", "flavors", "menu", "sign-in"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
@@ -27,17 +27,11 @@ const ResponsiveAppBar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   const { user, setUser } = useAuth()
   const getProfilePicture = () => {
@@ -65,8 +59,34 @@ const ResponsiveAppBar = () => {
             Crowdsourced Combos
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none"} }}
+          >
+            LOGO
+          </Typography>
+          
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "right"}}>
+            {pages.map((page, index) => (
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  // component={Link}
+                  // to="/sign-in"
+                  key={page}
+
+                  href={pageRoutes[index]}
+                >
+                  {page}
+                </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+          <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -156,6 +176,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
+
         </Toolbar>
       </Container>
     </AppBar>

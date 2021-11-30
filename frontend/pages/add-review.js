@@ -26,6 +26,7 @@ import CheckboxesGroup from "../components/foodCheckboxes";
 
 import { useAuth } from '../context/AuthenticatedUserContext'
 
+
 export default function AddReview() {
   const [value, setValue] = useState(2);
   const [reviewText, setReviewText] = useState("Controlled");
@@ -55,6 +56,7 @@ export default function AddReview() {
           <CardHeader
             avatar={
               <Avatar alt={getUsername()} src={getProfilePicture()} />
+
             }
             action={
               <IconButton aria-label="settings">
