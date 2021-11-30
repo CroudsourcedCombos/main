@@ -35,7 +35,7 @@ const columns = [
     editable: false,
   },
   {
-    field: 'hasTried',
+    field: 'hasTriedDisp',
     headerName: 'Have you tried it?',
     width: 300,
     editable: false,
@@ -45,7 +45,12 @@ const columns = [
 
 export default function Sodadex() {
   // const [selectionModel, setSelectionModel] = useState([]);
-  const [rows, setRows] = useState(SODAS);
+  const [rows, setRows] = useState(
+    SODAS.map(row => {
+    row.hasTriedDisp = row.hasTried ? 'Yes' : 'No'
+      return row
+    })
+  )
 
   function getHasTriedIndices() {
     console.log('tried indices', rows)
@@ -91,17 +96,18 @@ export default function Sodadex() {
                 checkboxSelection
                 selectionModel={getHasTriedIndices()}
                 hideFooterSelectedRowCount
-                onSelectionModelChange={(ids) => {
-                  console.log(ids)
-                for (const id of ids) {
-                  rows[id].hasTried = true;
+                onSelectionModelChange={
+                  (ids) => {
+                    console.log(ids)
+                    for (const id of ids) {
+                      rows[id].hasTried = true;
+                      rows[id].hasTriedDisp = 'Yes';
+                    }
+                    setRows(rows);
+                  }
                 }
-                setRows(rows);
-               }
-            }
-          
-            />
-    </div>
+              />
+            </div>
           </CardContent>
           <div
             style={{
