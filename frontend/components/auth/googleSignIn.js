@@ -1,55 +1,22 @@
-import GoogleButton from "react-google-button";
-import {Button, Typography, Box} from "@material-ui/core";
-import Image from "next/image";
+import React from 'react'
+import SignInButton from './signInButton'
 
-import Firebase from "../../config/firebase";
-import {getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
-import {client} from "../../apolo-client";
-import {gql} from "@apollo/client";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import Firebase from '../../config/firebase'
 
-const auth = getAuth(Firebase);
-const provider = new GoogleAuthProvider();
-
-const googleStyles = {
-  googleContainer: {
-    backgroundColor: "#FFF",
-    color: "black",
-    textTransform: "none",
-    border: "1px solid gray",
-    width: 240,
-  },
-};
-
-const signInButtonStyle = {
-  width: 220,
-  // height: 60,
-};
-
-export default function GoogleLogin({isSignUp = false}) {
+export default function GoogleSignIn({ onClick, isSignIn, style={} }) {
   return (
-    <Box style={signInButtonStyle}>
-      <Button
-        style={googleStyles.googleContainer}
-        onClick={() => _loginWithGoogle()}
-      >
-        {/*  */}
-        <Image
-          src="/google-logo.png"
-          alt="Google logo"
-          width="32"
-          height="32"
-        />
-
-        {/* Google image */}
-        <Typography style={{paddingLeft: 8}}>
-          Sign {isSignUp ? "up" : "in"} with Google
-        </Typography>
-      </Button>
-    </Box>
-  );
-
-  // return <GoogleButton style={{ width: 240 }} onClick={() => _loginWithGoogle()} />
+    <SignInButton
+      type="google"
+      onClick={_loginWithGoogle}
+      isSignIn={isSignIn}
+      style={style}
+    />
+  )
 }
+
+const auth = getAuth(Firebase)
+const provider = new GoogleAuthProvider()
 
 // Log into google with pop up
 async function _loginWithGoogle() {
