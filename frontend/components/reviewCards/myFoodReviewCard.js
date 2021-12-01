@@ -1,37 +1,11 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import { CardHeader } from "@mui/material";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
-import Modal from "@mui/material/Modal";
-import ModalReviewCard from "../modal/ModalReviewCard";
-import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function MyFoodReviewCard({ score, category, ingredients }) {
-  const [IsLiked, setIsLiked] = React.useState(false);
-  const [AddedToList, setAddedToList] = React.useState(false);
-
   // Format ingredients to be all strings
   function formatIngredient(ingredients) {
     // If it's an array, format it
