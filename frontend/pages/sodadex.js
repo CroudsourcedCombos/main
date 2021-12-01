@@ -76,6 +76,8 @@ const renderAddReviewButton = ({
                                  row,
                                  id
                                }, rows, uid, setRows, createSodaReview) => {
+  if (row.server)
+    return <p>Already Reviewed</p>
   return (
     <strong>
       <Button
@@ -86,11 +88,11 @@ const renderAddReviewButton = ({
         onClick={() => {
           // Update the row update status
           row.ifUpdated = true;
+          row.server = true
           const rowCopy = [...rows];
           rowCopy[id] = row;
           // Set the news state
           setRows(rowCopy);
-          console.log({row})
           createSodaReview({
             variables: {
               soda_id: row.id.toString(),
@@ -147,9 +149,9 @@ const renderReviewText = ({row, id}, rows, setRows) => {
       multiline
       minRows={1}
       maxRows={3}
+      value={row.reviewText}
       disabled={!row.hasTried}
       onChange={(event) => {
-        console.log({target: event.target})
         // Update the row rating
         if (row.rating !== 0) {
           row.reviewText = event.target.value;
@@ -176,7 +178,6 @@ function generateRowsFromSodas(sodaData) {
     return row;
   });
 
-  console.log({sodaData})
   if (sodaData !== undefined)
     // Go through and update this based on the sodaData
     sodaData["reviews"].forEach((sodaDatum) => {
@@ -184,6 +185,7 @@ function generateRowsFromSodas(sodaData) {
       rows[sodaDatum['food']['name']].hasTriedDisp = "Yes"
       rows[sodaDatum['food']['name']].hasTried = true
       rows[sodaDatum['food']['name']].reviewText = sodaDatum['text']
+      rows[sodaDatum['food']['name']].server = true
     })
 
   return rows;
@@ -205,43 +207,6 @@ function SodaDexComponent({user}) {
 
   const [rows, setRows] = useState(generateRowsFromSodas);
 
-
-  const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    {
-      field: "drink",
-      headerName: "Soda Flavor",
-      width: 200,
-      editable: false,
-    },
-    {
-      field: "hasTriedDisp",
-      headerName: "Have you tried it?",
-      width: 150,
-      editable: false,
-    },
-    {
-      field: "rating",
-      headerName: "Your Rating",
-      width: 150,
-      renderCell: (params) => renderReviewStars(params, rows, setRows),
-      disableClickEventBubbling: true,
-    },
-    {
-      field: "review",
-      headerName: "Your comments",
-      width: 300,
-      renderCell: (params) => renderReviewText(params, rows, setRows),
-      disableClickEventBubbling: true,
-    },
-    {
-      field: "postButton",
-      headerName: "",
-      width: 100,
-      renderCell: (params) => renderAddReviewButton(params, rows, setRows),
-      disableClickEventBubbling: true,
-    },
-  ];
   useEffect(() => {
     client.query({
       variables: {
@@ -253,7 +218,6 @@ function SodaDexComponent({user}) {
     )
   }, [user.uid])
 
-  console.log(user)
   let columns = []
   if (user)
     columns = [
@@ -287,7 +251,7 @@ function SodaDexComponent({user}) {
       {
         field: "postButton",
         headerName: "",
-        width: 100,
+        width: 150,
         renderCell: (params) => renderAddReviewButton(params, rows, user.uid, setRows, createSodaReview),
         disableClickEventBubbling: true,
       },
@@ -333,11 +297,11 @@ function SodaDexComponent({user}) {
                 <p>Explore new flavors. Track your favorite combos!</p>
               </header>
             </div>
-            <div style={{height: 400, width: "100%"}}>
+            <div style={{height: 640, width: "100%"}}>
               <DataGrid
                 rows={rows}
                 columns={columns}
-                pageSize={5}
+                pageSize={10}
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
                 disablecheckboxSelection
