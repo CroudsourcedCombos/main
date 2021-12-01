@@ -1,35 +1,76 @@
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import TextField from "@mui/material/TextField";
-import ResponsiveAppBar from "../components/navbar";
-import SignInButton from "../components/signInButton"
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@mui/material";
-import Head from 'next/head';
-import { Google,FacebookOutlined } from '@mui/icons-material';
+import React, { useEffect, useState, useRef } from 'react'
+
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
+
+// import SignInButton from '../components/auth/signInButton'
+import GoogleSignIn from '../components/auth/googleSignIn'
+import FacebookSignIn from '../components/auth/facebookSignIn'
+
 export default function SignUp() {
   return (
-    <>
-      <ResponsiveAppBar />
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-        <Card>
-          <CardContent style={{ paddingTop: "50px",paddingBottom: "50px", justifyContent: 'center', width: "300px"}}>
-          <SignInButton type="google"  isSignIn="false"  onClick={()=>console.log('test')} />
-          <SignInButton type="facebook" isSignIn="false" />
-          </CardContent>
-        </Card>
-      </div>
-    </>
+    <div className="login">
+      <Grid
+        className="login__card"
+        container
+        spacing={0}
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        boxShadow={1}
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          style={{
+            width: 'max-content',
+            height: 'auto',
+            backgroundColor: 'white',
+            padding: 'min(24px, 10vh) min(92px, 10vw)',
+            borderRadius: '8px',
+          }}
+        >
+          <Typography
+            variant="h3"
+            component="h1"
+            onClick={() => 'test'}
+            style={{ textAlign: 'center' }}
+          >
+            Sign Up
+          </Typography>
+          <GoogleSignIn
+            isSignIn={false}
+            style={{ marginTop: 10, marginBottom: 5 }}
+          />
+          <FacebookSignIn
+            isSignIn={false}
+            style={{ marginTop: 5, marginBottom: 10 }}
+          />
+          <Grid>
+            <Typography
+              align="center"
+              variant="body1"
+              color="textSecondary"
+              component="p"
+            >
+              Already have an account? <Link href="/sign-in">Sign in</Link>!
+            </Typography>
+            <Typography
+              align="center"
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
+              Continue as a guest <Link href="/">here</Link>.
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </div>
   )
 }

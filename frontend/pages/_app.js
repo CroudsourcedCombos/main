@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/login.css'
 
 import {AuthenticatedUserProvider} from '../context/AuthenticatedUserContext'
 import {ApolloProvider} from "@apollo/client";
