@@ -3,8 +3,11 @@ import SignInButton from './signInButton'
 
 import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
+import { useRouter } from 'next/router'
 
 export default function FacebookSignIn({ isSignIn, style = {} }) {
+  const router = useRouter()
+
   return <SignInButton type="facebook" onClick={_loginWithFacebook} isSignIn={isSignIn} style={style} />
 }
 
@@ -18,11 +21,12 @@ async function _loginWithFacebook() {
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = FacebookAuthProvider.credentialFromResult(result)
       if (credential == null) return /* Throw some error */
-      
+
       const token = credential.accessToken
       const user = result.user
 
-      console.log(user)
+      // Redirect to main page
+      router.push('/')
     })
     .catch(error => {
       // Handle Errors here.

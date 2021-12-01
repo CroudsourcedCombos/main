@@ -4,11 +4,15 @@ import SignInButton from './signInButton'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
 
+import { useRouter } from 'next/router'
+
 export default function GoogleSignIn({ isSignIn, style={} }) {
+  const router = useRouter()
+  
   return (
     <SignInButton
       type="google"
-      onClick={_loginWithGoogle}
+      onClick={() => _loginWithGoogle(router)}
       isSignIn={isSignIn}
       style={style}
     />
@@ -19,7 +23,7 @@ const auth = getAuth(Firebase)
 const provider = new GoogleAuthProvider()
 
 // Log into google with pop up
-async function _loginWithGoogle() {
+async function _loginWithGoogle(router) {
   signInWithPopup(auth, provider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -32,6 +36,11 @@ async function _loginWithGoogle() {
 
     const token = credential.accessToken;
     const user = result.user;
+    
+    // Redirect to main page
+    router.push('/')
+
+    /*
     client.mutate({
       mutation: gql`
           mutation CreateUser($name: String!, $email: String!, $firebaseId: String!) {
@@ -60,8 +69,9 @@ async function _loginWithGoogle() {
         firebaseId: result.user.uid
       }
     }).then((resp) => {
-      console.log(resp)
+      // console.log(resp)
     }).catch((e) => console.error(e));
+    */
   })
   .catch((error) => {
     // Handle Errors here.
