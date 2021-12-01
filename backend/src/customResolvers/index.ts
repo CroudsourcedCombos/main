@@ -188,7 +188,7 @@ class CustomFoodResolver {
 
 @ArgsType()
 class SearchReviewsArgs extends FindManyReviewArgs {
-  @Field()
+  @Field({ nullable: true })
   search: string
 }
 
@@ -203,7 +203,7 @@ class CustomReviewResolver {
       where: {
         ...args.where,
         text: {
-          search: args.search.replace(/\W/g, ""),
+          search: args.search?.replace(/\W/g, ""),
         },
       },
       orderBy: args.orderBy,
