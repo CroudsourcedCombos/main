@@ -8,7 +8,18 @@ import Link from '@material-ui/core/Link'
 import GoogleSignIn from '../components/auth/googleSignIn'
 import FacebookSignIn from '../components/auth/facebookSignIn'
 
-export default function SignUp() {
+import { useRouter } from 'next/router'
+import { useAuth } from '../context/AuthenticatedUserContext'
+
+export default function SignIn() {
+  const router = useRouter()
+  const { user, setUser } = useAuth()
+
+  // If the user is signed in, send them to main page
+  useEffect(() => {
+    if (user) router.push('/')
+  }, [user])
+
   return (
     <div className="login">
       <Grid
