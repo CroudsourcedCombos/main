@@ -45,17 +45,28 @@ export default function SignUp() {
           </Typography>
           <GoogleSignIn
             isSignIn={false}
-            onClick={() => console.log('Google')}
             style={{ marginTop: 10, marginBottom: 5 }}
           />
           <FacebookSignIn
             isSignIn={false}
-            onClick={() => console.log('Facebook')}
             style={{ marginTop: 5, marginBottom: 10 }}
           />
           <Grid>
-            <Typography variant="body1" color="textSecondary" component="p">
-              Don't have an account? <Link href="/sign-in">Sign in</Link>!
+            <Typography
+              align="center"
+              variant="body1"
+              color="textSecondary"
+              component="p"
+            >
+              Already have an account? <Link href="/sign-in">Sign in</Link>!
+            </Typography>
+            <Typography
+              align="center"
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
+              Continue as a guest <Link href="/">here</Link>.
             </Typography>
           </Grid>
         </Grid>
