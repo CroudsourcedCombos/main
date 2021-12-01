@@ -81,7 +81,7 @@ const NavigationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
             <Link style={styles.navbarLink} href="/">
               Crowdsourced Combos
@@ -119,7 +119,7 @@ const NavigationBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, paddingLeft: 4 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt={getUsername()} src={getProfilePicture()} />
@@ -160,6 +160,6 @@ const NavigationBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
-  )
+  );
 };
 export default NavigationBar;
