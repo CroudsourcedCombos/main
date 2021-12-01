@@ -15,12 +15,14 @@ import MenuItem from "@mui/material/MenuItem";
 // import {Link} from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import { useAuth } from "../context/AuthenticatedUserContext";
+import { useRouter } from "next/router";
 
 import { _signOut } from "./auth/signOut";
 
-const pages = ["Add Review", "Soda", "Menu", "Sign In/Up"];
-const pageRoutes = ["add-review", "sodadex", "menu", "sign-in"];
-const settings = ["Logout"]; // "Profile", "Account", "Dashboard", 
+
+// const settings = ["Logout"]; // "Profile", "Account", "Dashboard", 
+const PAGES = ['Add Review', 'Soda', 'Menu', 'Sign In/Up']
+const PAGE_ROUTES = ['add-review', 'sodadex', 'menu', 'sign-in']
 
 const styles = {
   navbarLink: {
@@ -29,9 +31,21 @@ const styles = {
   }
 }
 
+
 const NavigationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { user, setUser } = useAuth()
+  const router = useRouter()
+
+  // We want settings to dynamically update if signed in or not
+
+  const settings = [user ? 'Sign Out' : 'Sign In']
+
+  // If the user is signed in, then no sign in/up option
+  // TO-DO: Refactor this with useRef?
+  const pages = user ? PAGES.slice(0, PAGES.length - 1) : PAGES
+  const pageRoutes = user ? PAGE_ROUTES.slice(0, PAGE_ROUTES.length - 1) : PAGE_ROUTES 
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -49,8 +63,6 @@ const NavigationBar = () => {
     setAnchorElUser(null)
   }
 
-  const { user, setUser } = useAuth();
-  console.log(user)
   const getProfilePicture = () => {
     if (user) return user.photoURL;
     else return "/static/images/avatar/2.jpg";
@@ -136,7 +148,10 @@ const NavigationBar = () => {
                 <MenuItem key={setting} 
                 onClick={() => {
                   handleCloseNavMenu()
-                  _signOut()
+
+                  // Choose the appropriate action based on if signing in or out
+                  if (setting === 'Sign Out') _signOut()
+                  else router.push('/sign-in')
                 }}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
