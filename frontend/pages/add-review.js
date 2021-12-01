@@ -43,6 +43,8 @@ export default function AddReview() {
     console.log(newSelectionSandOrPizza);
   };
 
+  
+
   return (
     <>
       <NavigationBar/>
@@ -109,7 +111,7 @@ export default function AddReview() {
                 <SandwichCheckboxesGroup reviewText={reviewText} rating={value}/>
               ) : null}
               {SandOrPizza === "pizza" ? (
-                <PizzaCheckboxesGroup/>
+                <PizzaCheckboxesGroup reviewText={reviewText} rating={value}/>
               ) : null}
             </div>
           </CardContent>
