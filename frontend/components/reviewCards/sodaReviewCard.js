@@ -9,7 +9,18 @@ export default function SodaReviewCard({ score, category, id, comment }) {
   const data = SODAS[id];
 
   return (
-    <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex" }}>
+    <Card
+      sx={{
+        width: "100%",
+        border: "1",
+        margin: "10px",
+        display: "flex",
+        "& > *": {
+          paddingRight: "5px",
+          paddingLeft: "5px",
+        },
+      }}
+    >
       <Container sx={{ width: "40%" }}>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

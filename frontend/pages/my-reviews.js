@@ -23,7 +23,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button, Container } from "@mui/material";
 import { Box } from "@mui/system";
-import ReviewCard from "../components/reviewcard.js";
+import MyFoodReviewCard from "../components/reviewCards/myFoodReviewCard";
 import SodaReviewCard from "../components/reviewCards/sodaReviewCard";
 import { useAuth } from "../context/AuthenticatedUserContext";
 
@@ -113,8 +113,8 @@ export default function myReviews({ user }) {
         avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
         display="flex"
         justifyContent="center"
-        title={getUsername()}
-        subheader="My Reviews:"
+        title="My Reviews:"
+        //subheader="getUsername()"
         paddingBottom="2px"
       />
       <Container
@@ -122,9 +122,9 @@ export default function myReviews({ user }) {
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <Container sx={{ width: "50%", margin: "10px" }}>
-          <ReviewCard {...foods[0]} />
-          <ReviewCard {...foods[1]} />
-          <ReviewCard {...foods[2]} />
+          <MyFoodReviewCard {...foods[0]} />
+          <MyFoodReviewCard {...foods[1]} />
+          <MyFoodReviewCard {...foods[2]} />
         </Container>
         <Container sx={{ width: "50%", margin: "10px" }}>
           <SodaReviewCard {...drinks[0]} />
