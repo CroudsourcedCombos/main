@@ -54,8 +54,8 @@ const SampleModalReviews = [
 
 
 function ModalReviewCard({username, profilePic, stars, reviewText}) {
-  return (<div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
-        <Card sx = {{width : "80%"}}>
+  return (<div style={{ display: "flex", justifyContent: "center", padding: '8px' }}>
+        <Card sx = {{width : "100%"}}>
           <CardHeader
             avatar={<Avatar alt={username} src={profilePic} />}
             title={username}
@@ -92,15 +92,14 @@ function ModalReview() {
   return (
     <div>
       <Button onClick={handleOpen}>All Reviews</Button>
-      <Container sx = {{display: "flex", alignItems: "center"}}>
+      {/* <Container> */}
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        sx = {{width: "80%"}}
       >
-        <Container sx = {{maxHeight: '100%', overflow : "auto", }}>
+        <Container sx = {{maxHeight: '100%', overflow : "auto", width: "70%"}}>
         <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard>
@@ -109,7 +108,7 @@ function ModalReview() {
         <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
         </Container>
       </Modal>
-      </Container>
+      {/* </Container> */}
     </div>
   );
 }
