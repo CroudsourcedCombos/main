@@ -18,7 +18,7 @@ export default function SignUp() {
   // If the user is signed in, send them to main page
   useEffect(() => {
     if (user) router.push('/')
-  }, [user])
+  }, [router, user])
 
   return (
     <div className="login">
