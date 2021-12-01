@@ -14,12 +14,30 @@ const GET_REVIEWS = gql`
             name
             type
             overall_rating
+            reviews {
+                id
+                author {
+                    id
+                    name
+                }
+                rating
+                text
+            }
         }
         topOther: topFoods(where: {food: {is: {type: {equals: $current_food_type}}}}) {
             id
             name
             type
             overall_rating
+            reviews {
+                id
+                author {
+                    id
+                    name
+                }
+                rating
+                text
+            }
         }
     }
 `
@@ -29,7 +47,8 @@ export default function Index() {
     variables: {
       current_food_type: "sandwich"
     },
-    fetchPolicy: "cache-and-network"
+    fetchPolicy: "cache-and-network",
+    pollInterval: 5
   });
 
   if (loading)
@@ -44,9 +63,6 @@ export default function Index() {
         </Container>
       </>
     )
-
-  console.log({data})
-
   return (
     <>
       <NavigationBar/>

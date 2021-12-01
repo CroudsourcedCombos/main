@@ -1,49 +1,30 @@
-import Head from "next/head";
-import Image from "next/image";
 // import * as React from "react";
-import styles from "../styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import NavigationBar from "../components/navbar";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
-import CheckboxesGroup from "../components/sandwichCheckboxes";
-import { Box } from "@mui/system";
-
-import {
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  autocompleteClasses,
-} from "@mui/material";
-
-import { useAuth } from "../context/AuthenticatedUserContext";
-import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
+import {useState} from "react";
 import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
+
+import {ToggleButton, ToggleButtonGroup,} from "@mui/material";
+
+import {useAuth} from "../context/AuthenticatedUserContext";
+import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
   const [reviewText, setReviewText] = useState("");
 
   const handleChange = (event) => {
-    setReviewText(event.target.reviewText);
+    setReviewText(event.target.value);
   };
 
-  const { user, setUser } = useAuth();
+  const {user, setUser} = useAuth();
   const getProfilePicture = () => {
     if (user) return user.photoURL;
     else return "/static/images/avatar/2.jpg";
@@ -53,8 +34,6 @@ export default function AddReview() {
     if (user) return user.displayName;
     else return "Joe Bruin";
   };
-
-
 
   const [SandOrPizza, setSandOrPizza] = useState("sandwich");
 
@@ -66,14 +45,15 @@ export default function AddReview() {
 
   return (
     <>
-      <NavigationBar />
-      <div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
-        <Card style={{ width: "75%" }}>
+      <NavigationBar/>
+      <div
+        style={{display: "flex", justifyContent: "center", paddingTop: '8px'}}>
+        <Card style={{width: "75%"}}>
           <CardHeader
-            avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
+            avatar={<Avatar alt={getUsername()} src={getProfilePicture()}/>}
             action={
               <IconButton aria-label="settings">
-                <MoreVertIcon />
+                <MoreVertIcon/>
               </IconButton>
             }
             title={getUsername()}
@@ -81,7 +61,7 @@ export default function AddReview() {
             paddingBottom="2px"
           />
 
-          <CardContent style={{ paddingTop: "0px" }}>
+          <CardContent style={{paddingTop: "0px"}}>
             <div>
               <Rating
                 name="simple-controlled"
@@ -93,22 +73,8 @@ export default function AddReview() {
                 }}
               />
             </div>
-            <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
-              <TextField
-                id="filled-input-static"
-                label="Food Item"
-                // multiline
-                fullWidth
-                minRows={1}
-                maxRows={2}
-                reviewText={reviewText}
-                onChange={handleChange}
-                variant="filled"
-                paddingBottom="4px"
-              />
-            </div>
 
-            <div style={{ paddingTop: "8px" }}>
+            <div style={{paddingTop: "8px"}}>
               <TextField
                 id="outlined-multiline-flexible"
                 label="Share rating details"
@@ -123,7 +89,11 @@ export default function AddReview() {
                 // style={{padding: '10px 10px 10px 10px'}}
               />
             </div>
-            <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+            <div style={{
+              display: "flex",
+              justifyContent: 'center',
+              paddingTop: '16px'
+            }}>
               <ToggleButtonGroup
                 // color="primary"
                 value={SandOrPizza}
@@ -135,16 +105,16 @@ export default function AddReview() {
               </ToggleButtonGroup>
             </div>
             <div>
-              {SandOrPizza == "sandwich" ? (
-                <SandwichCheckboxesGroup></SandwichCheckboxesGroup>
+              {SandOrPizza === "sandwich" ? (
+                <SandwichCheckboxesGroup reviewText={reviewText} rating={value}/>
               ) : null}
-              {SandOrPizza == "pizza" ? (
-                <PizzaCheckboxesGroup></PizzaCheckboxesGroup>
+              {SandOrPizza === "pizza" ? (
+                <PizzaCheckboxesGroup/>
               ) : null}
             </div>
             {/* <PizzaCheckboxesGroup></PizzaCheckboxesGroup> */}
           </CardContent>
-          
+
         </Card>
       </div>
     </>
