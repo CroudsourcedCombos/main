@@ -24,30 +24,46 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import CheckboxesGroup from "../components/foodCheckboxes";
 
+import { useAuth } from '../context/AuthenticatedUserContext'
+
+
 export default function AddReview() {
   const [value, setValue] = useState(2);
-  const [reviewText, setreviewText] = useState("Controlled");
+  const [reviewText, setReviewText] = useState("Controlled");
 
+  
   const handleChange = (event) => {
-    setreviewText(event.target.reviewText);
+    setReviewText(event.target.reviewText);
   };
 
 
+  const { user, setUser } = useAuth()
+  const getProfilePicture = () => {
+    if (user) return user.photoURL
+    else return "/static/images/avatar/2.jpg"
+  }
+
+  const getUsername = () => {
+    if (user) return user.displayName
+    else return "Joe Bruin"
+  }
+
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar />
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <Card style={{ width: "75%" }}>
           <CardHeader
             avatar={
-              <Avatar alt="John Doe" src="/static/images/avatar/2.jpg" />
+              <Avatar alt={getUsername()} src={getProfilePicture()} />
+
             }
             action={
               <IconButton aria-label="settings">
                 <MoreVertIcon />
               </IconButton>
             }
-            title="Username"
+            title={getUsername()}
             subheader="Posting publicly"
             paddingBottom="2px"
           />
