@@ -69,6 +69,7 @@ export default function AddReview() {
       <NavigationBar />
       <div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
         <Card style={{ width: "75%" }}>
+          
           <CardHeader
             avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
             action={
@@ -142,7 +143,6 @@ export default function AddReview() {
                 <PizzaCheckboxesGroup></PizzaCheckboxesGroup>
               ) : null}
             </div>
-            {/* <PizzaCheckboxesGroup></PizzaCheckboxesGroup> */}
           </CardContent>
           
         </Card>

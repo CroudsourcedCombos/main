@@ -52,17 +52,20 @@ export default function Index() {
         sx={{display: "flex", justifyContent: "space-between"}}
       >
         <Container sx={{width: "60%", margin: "10px"}}>
-          {data["topOther"].map((datum) => {
+
+          {/* data["topOther"].map((datum) => {
             return <FoodReviewCard key={datum["id"]} category={datum["type"]}
                                    score={datum["overall_rating"]} name={datum["name"]}/>
-          })}
+          })} */}
+
         </Container>
         <Container sx={{width: "40%", margin: "10px"}}>
-          {data["topSoda"].map((datum) => {
+          {/* {data["topSoda"].map((datum) => {
             return <SodaReviewCard key={datum["id"]} category={datum["type"]}
                                    score={datum["overall_rating"]}
                                    id={datum["name"]}/>
-          })}        </Container>
+          })}         */}
+          </Container>
       </Container>
     </>
   );

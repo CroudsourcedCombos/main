@@ -119,19 +119,16 @@ export default function SandwichCheckboxesGroup() {
     // if (!errors)
     const errCopy = { ...error };
 
-    const hasNonEmptyStrings = Object.values(errCopy).filter(
-      (x) => x.length > 0
-    ).length > 0;
+    const hasNonEmptyStrings =
+      Object.values(errCopy).filter((x) => x.length > 0).length > 0;
 
-    if(hasNonEmptyStrings)
-      console.log("errors, will not stringify")
-    else
-      {
-        console.log("no errors")
-        const copy = { ... state}
-        const reviewDataStr = JSON.stringify(copy);
-        console.log(reviewDataStr);
-      }
+    if (hasNonEmptyStrings) console.log("errors, will not stringify");
+    else {
+      console.log("no errors");
+      const copy = { ...state };
+      const reviewDataStr = JSON.stringify(copy);
+      console.log(reviewDataStr);
+    }
   };
 
   return (

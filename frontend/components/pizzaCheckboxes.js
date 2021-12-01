@@ -103,7 +103,6 @@ export default function PizzaCheckboxesGroup() {
   function checkExists(type, target) {
     return state[type].includes(target);
   }
-<<<<<<< HEAD
   const post = () => {
     // if (!errors)
     const errCopy = { ...error };
@@ -122,8 +121,6 @@ export default function PizzaCheckboxesGroup() {
         console.log(reviewDataStr);
       }
   };
-=======
->>>>>>> sidp
 
   return (
     <>
@@ -246,19 +243,11 @@ export default function PizzaCheckboxesGroup() {
             paddingBottom: "16px",
           }}
         >
-<<<<<<< HEAD
           <Button size="small" color="primary" onClick={post}>
-=======
-          <Button size="small" color="primary" onClick="{post}">
->>>>>>> sidp
             Post
           </Button>
         </div>
       </Box>
     </>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> sidp
