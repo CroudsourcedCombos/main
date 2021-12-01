@@ -24,6 +24,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 import { SODAS } from '../constants/soda';
+import { useAuth } from "../context/AuthenticatedUserContext";
 
 const renderAddReviewButton = ({ row, id }, rows, setRows) => {
   return (
@@ -58,6 +59,7 @@ return(
   value={row.rating}
   onChange={(event) => {
     // Update the row rating
+    //if()
     row.rating = event.target.value;
     row.ifUpdated = false;
     row.hasTried = true;
@@ -73,7 +75,8 @@ return(
   )
 }
 
-const renderReviewText = (params) => {
+const renderReviewText = ({ row, id }, rows, setRows) => {
+  const [reviewText, setReviewText] = useState("Controlled");
   return(
     <TextField
       id="outlined-multiline-flexible"
@@ -82,25 +85,20 @@ const renderReviewText = (params) => {
       minRows={1}
       maxRows={3}
       variant="filled"
+      reviewText={reviewText}
+      onChange={(event) => {
+        // Update the row rating
+        setReviewText(event.target.reviewText);
+        row.ifUpdated = false;
+        row.hasTried = true;
+        row.hasTriedDisp = "Yes";
+        // Make a copy of the rows, update the row to what was passed in
+        //const rowCopy = {...rows};
+        //rowCopy[id] = row;
+        //setRows(rowCopy);
+      }}
   />
   )
-}
-const handleUpdateChange = ({ row, id }, rows, setRows)=>{
-  console.log("Review Button clicked.")
-  row.ifUpdated = true;
-  const rowCopy = [...rows];
-  rowCopy[id] = row;
-  // Set the news state
-  setRows(rowCopy);
-}
-const handleReviewChange = ({ row, id }, rows, setRows, value)=>{
-  // Make a copy of the rows, update the row to what was passed in
-  const copyRows = [...rows]
-  copyRows[id] = row
-
-  console.log(row);
-  // Update state of rows
-  setRows(copyRows)
 }
 const drinks = ["Coke", "Fanta", "Sprite"];
 
@@ -126,6 +124,17 @@ function generateRowsFromSodas() {
 
 export default function Sodadex() {
   // const [selectionModel, setSelectionModel] = useState([]);
+  const { user, setUser } = useAuth();
+  const getProfilePicture = () => {
+    if (user) return user.photoURL;
+    else return "/static/images/avatar/2.jpg";
+  };
+
+  const getUsername = () => {
+    if (user) return user.displayName;
+    else return "Joe Bruin";
+  };
+
   const [rows, setRows] = useState(generateRowsFromSodas)
 
   const columns = [
@@ -179,13 +188,15 @@ export default function Sodadex() {
       <ResponsiveAppBar />
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <Card style={{ width: "75%" }}>
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                T
-              </Avatar>
+        <CardHeader
+            avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
             }
-            title="Username here"
+            title={getUsername()}
+            subheader="Posting publicly"
             paddingBottom="2px"
           />
 
