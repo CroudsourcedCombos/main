@@ -1,94 +1,83 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import ResponsiveAppBar from "../components/navbar";
-import {Button} from "@mui/material";
-import {DataGrid} from "@mui/x-data-grid";
+import { Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {SODAS} from "../constants/soda";
-import {useAuth} from "../context/AuthenticatedUserContext";
-import {gql, useMutation} from "@apollo/client";
-import {client} from "../apolo-client";
-
+import { SODAS } from "../constants/soda";
+import { useAuth } from "../context/AuthenticatedUserContext";
+import { gql, useMutation } from "@apollo/client";
+import { client } from "../apolo-client";
 
 const CREATE_SODA_REVIEW = gql`
-    mutation WriteSoda($soda_id: String!, $firebase_id: String!, $rating: Int!,
-        $comment: String) {
-        createReview(data: {
-            food: {
-                connectOrCreate: {
-                    where: {
-                        name: $soda_id
-                    }
-                    create: {
-                        name: $soda_id
-                        type: soda,
-                    }
-                }
-            }
-            author: {
-                connect: {
-                    firebaseId: $firebase_id
-                }
-            }
-            rating: $rating
-            text: $comment
-        }) {
-            food {
-                id
-            }
+  mutation WriteSoda(
+    $soda_id: String!
+    $firebase_id: String!
+    $rating: Int!
+    $comment: String
+  ) {
+    createReview(
+      data: {
+        food: {
+          connectOrCreate: {
+            where: { name: $soda_id }
+            create: { name: $soda_id, type: soda }
+          }
         }
-    }`
+        author: { connect: { firebaseId: $firebase_id } }
+        rating: $rating
+        text: $comment
+      }
+    ) {
+      food {
+        id
+      }
+    }
+  }
+`;
 
 const GET_SODAS = gql`
-    query GetSoda($firebase_id: String!) {
-        reviews(where: {
-            author: {
-                is: {
-                    firebaseId: {
-                        equals: $firebase_id
-                    }
-                }
-            }
-            food: {
-                is: {
-                    type: {
-                        equals: soda
-                    }
-                }
-            }
-        }) {
-            food {
-                name
-            }
-            rating
-            text
-        }
+  query GetSoda($firebase_id: String!) {
+    reviews(
+      where: {
+        author: { is: { firebaseId: { equals: $firebase_id } } }
+        food: { is: { type: { equals: soda } } }
+      }
+    ) {
+      food {
+        name
+      }
+      rating
+      text
     }
-`
+  }
+`;
 
-const renderAddReviewButton = ({
-                                 row,
-                                 id
-                               }, rows, uid, setRows, createSodaReview) => {
-  if (row.server)
-    return <p>Already Reviewed</p>
+const renderAddReviewButton = (
+  { row, id },
+  rows,
+  uid,
+  setRows,
+  createSodaReview
+) => {
+  if (row.server) return <p>Already Reviewed</p>;
   return (
     <strong>
       <Button
         variant="contained"
         color={row.ifUpdated ? "primary" : "error"}
         size="small"
-        style={{marginLeft: 16}}
+        style={{ marginLeft: 16 }}
         onClick={() => {
           // Update the row update status
           row.ifUpdated = true;
-          row.server = true
+          row.server = true;
           const rowCopy = [...rows];
           rowCopy[id] = row;
           // Set the news state
@@ -98,11 +87,11 @@ const renderAddReviewButton = ({
               soda_id: row.id.toString(),
               firebase_id: uid,
               rating: parseInt(row.rating),
-              comment: row.reviewText
-            }
+              comment: row.reviewText,
+            },
           })
             .then((event) => console.log(event))
-            .catch((e) => console.error(e))
+            .catch((e) => console.error(e));
         }}
       >
         {row.ifUpdated ? "Saved" : "Update"}
@@ -110,7 +99,7 @@ const renderAddReviewButton = ({
     </strong>
   );
 };
-const renderReviewStars = ({row, id}, rows, setRows) => {
+const renderReviewStars = ({ row, id }, rows, setRows) => {
   return (
     <Rating
       name="simple-controlled"
@@ -140,7 +129,7 @@ const renderReviewStars = ({row, id}, rows, setRows) => {
   );
 };
 
-const renderReviewText = ({row, id}, rows, setRows) => {
+const renderReviewText = ({ row, id }, rows, setRows) => {
   //const [reviewText, setReviewText] = useState("");
   return (
     <TextField
@@ -181,19 +170,19 @@ function generateRowsFromSodas(sodaData) {
   if (sodaData !== undefined)
     // Go through and update this based on the sodaData
     sodaData["reviews"].forEach((sodaDatum) => {
-      rows[sodaDatum['food']['name']].rating = sodaDatum['rating']
-      rows[sodaDatum['food']['name']].hasTriedDisp = "Yes"
-      rows[sodaDatum['food']['name']].hasTried = true
-      rows[sodaDatum['food']['name']].reviewText = sodaDatum['text']
-      rows[sodaDatum['food']['name']].server = true
-    })
+      rows[sodaDatum["food"]["name"]].rating = sodaDatum["rating"];
+      rows[sodaDatum["food"]["name"]].hasTriedDisp = "Yes";
+      rows[sodaDatum["food"]["name"]].hasTried = true;
+      rows[sodaDatum["food"]["name"]].reviewText = sodaDatum["text"];
+      rows[sodaDatum["food"]["name"]].server = true;
+    });
 
   return rows;
 }
 
-function SodaDexComponent({user}) {
+function SodaDexComponent({ user }) {
   // const [selectionModel, setSelectionModel] = useState([]);
-  const [createSodaReview] = useMutation(CREATE_SODA_REVIEW)
+  const [createSodaReview] = useMutation(CREATE_SODA_REVIEW);
 
   const getProfilePicture = () => {
     if (user) return user.photoURL;
@@ -208,20 +197,20 @@ function SodaDexComponent({user}) {
   const [rows, setRows] = useState(generateRowsFromSodas);
 
   useEffect(() => {
-    client.query({
-      variables: {
-        firebase_id: user.uid
-      },
-      query: GET_SODAS
-    }).then(
-      (data) => setRows(generateRowsFromSodas(data["data"]))
-    )
-  }, [user.uid])
+    client
+      .query({
+        variables: {
+          firebase_id: user.uid,
+        },
+        query: GET_SODAS,
+      })
+      .then((data) => setRows(generateRowsFromSodas(data["data"])));
+  }, [user.uid]);
 
-  let columns = []
+  let columns = [];
   if (user)
     columns = [
-      {field: "id", headerName: "ID", width: 50},
+      { field: "id", headerName: "ID", width: 50 },
       {
         field: "drink",
         headerName: "Soda Flavor",
@@ -252,7 +241,14 @@ function SodaDexComponent({user}) {
         field: "postButton",
         headerName: "",
         width: 150,
-        renderCell: (params) => renderAddReviewButton(params, rows, user.uid, setRows, createSodaReview),
+        renderCell: (params) =>
+          renderAddReviewButton(
+            params,
+            rows,
+            user.uid,
+            setRows,
+            createSodaReview
+          ),
         disableClickEventBubbling: true,
       },
     ];
@@ -268,14 +264,14 @@ function SodaDexComponent({user}) {
 
   return (
     <>
-      <ResponsiveAppBar/>
-      <div style={{display: "flex", justifyContent: "center"}}>
-        <Card style={{width: "75%"}}>
+      <ResponsiveAppBar />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Card style={{ width: "75%" }}>
           <CardHeader
-            avatar={<Avatar alt={getUsername()} src={getProfilePicture()}/>}
+            avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
             action={
               <IconButton aria-label="settings">
-                <MoreVertIcon/>
+                <MoreVertIcon />
               </IconButton>
             }
             title={getUsername()}
@@ -283,8 +279,8 @@ function SodaDexComponent({user}) {
             paddingBottom="2px"
           />
 
-          <CardContent style={{paddingTop: "0px"}}>
-            <div/>
+          <CardContent style={{ paddingTop: "0px" }}>
+            <div />
             <div
               style={{
                 paddingTop: "8px",
@@ -297,7 +293,7 @@ function SodaDexComponent({user}) {
                 <p>Explore new flavors. Track your favorite combos!</p>
               </header>
             </div>
-            <div style={{height: 640, width: "100%"}}>
+            <div style={{ height: 640, width: "100%" }}>
               <DataGrid
                 rows={rows}
                 columns={columns}
@@ -331,12 +327,10 @@ function SodaDexComponent({user}) {
       </div>
     </>
   );
-
 }
 
 export default function Sodadex() {
-  const {user, setUser} = useAuth();
-  if (user)
-    return <SodaDexComponent user={user}/>
-  return <div/>
+  const { user, setUser } = useAuth();
+  if (user) return <SodaDexComponent user={user} />;
+  return <div />;
 }
