@@ -4,6 +4,8 @@ import SignInButton from './signInButton'
 import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
 import { useRouter } from 'next/router'
+import {client} from "../../apolo-client";
+import {gql} from "@apollo/client";
 
 export default function FacebookSignIn({ isSignIn, style = {} }) {
   const router = useRouter()
@@ -25,7 +27,39 @@ async function _loginWithFacebook() {
       const token = credential.accessToken
       const user = result.user
 
-      // Redirect to main page
+    client.mutate({
+      mutation: gql`
+          mutation CreateUser($name: String!, $email: String!, $firebaseId: String!) {
+              upsertUser(
+                  where:{
+                      firebaseId: $firebaseId
+                  },
+                  create: {
+                      name: $name,
+                      email: $email,
+                      firebaseId: $firebaseId
+                  },
+                  update: {
+                      name: {
+                          set: $name
+                      }
+                  }) {
+                  id
+                  name
+                  email
+              }
+          }        `,
+      variables: {
+        name: result.user.displayName,
+        email: result.user.email,
+        firebaseId: result.user.uid
+      }
+    }).then((resp) => {
+      // console.log(resp)
+    }).catch((e) => console.error(e));
+
+
+    // Redirect to main page
       router.push('/')
     })
     .catch(error => {
