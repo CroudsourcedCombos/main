@@ -37,7 +37,7 @@ import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
-  const [reviewText, setReviewText] = useState("Controlled");
+  const [reviewText, setReviewText] = useState("");
 
   const handleChange = (event) => {
     setReviewText(event.target.reviewText);
