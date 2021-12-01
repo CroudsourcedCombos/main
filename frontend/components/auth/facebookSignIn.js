@@ -4,7 +4,7 @@ import SignInButton from './signInButton'
 import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
 
-export default function FacebookSignIn({ onClick, isSignIn, style = {} }) {
+export default function FacebookSignIn({ isSignIn, style = {} }) {
   return <SignInButton type="facebook" onClick={_loginWithFacebook} isSignIn={isSignIn} style={style} />
 }
 

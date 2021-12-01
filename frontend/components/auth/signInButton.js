@@ -1,5 +1,6 @@
-import { Button } from '@mui/material'
-import { Google, FacebookOutlined } from '@mui/icons-material'
+import Button from '@mui/material/Button'
+import Google from '@mui/icons-material/Google'
+import FacebookOutlined from '@mui/icons-material/FacebookOutlined'
 
 export default function SignInButton({ type, isSignIn, onClick, style = {} }) {
   if (type != 'facebook' && type != 'google') return

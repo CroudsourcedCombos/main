@@ -4,7 +4,7 @@ import SignInButton from './signInButton'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
 
-export default function GoogleSignIn({ onClick, isSignIn, style={} }) {
+export default function GoogleSignIn({ isSignIn, style={} }) {
   return (
     <SignInButton
       type="google"
