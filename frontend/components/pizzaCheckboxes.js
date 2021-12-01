@@ -9,47 +9,48 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
+import { Button } from "@mui/material";
 // import PIZZAS from "../constants/pizza"
 
 const PIZZAS = {
   TOPPINGS: [
-    'Bacon',
-    'Black Forest Ham',
-    'Grilled Rosemary Chicken Breast',
-    'Italian Sausage',
-    'Pepperoni',
-    'Smoked Salmon',
-    'Vegan Sausage',
-    'None',
+    "Bacon",
+    "Black Forest Ham",
+    "Grilled Rosemary Chicken Breast",
+    "Italian Sausage",
+    "Pepperoni",
+    "Smoked Salmon",
+    "Vegan Sausage",
+    "None",
   ],
   CHEESES: [
-    'Mozzarella Cheese',
-    'Mozzarella Cheese, Fontina Cheese, Parmesan, Gruyere Cheese',
-    'Vegan Mozzarella Cheese',
-    'No Cheese',
+    "Mozzarella Cheese",
+    "Mozzarella Cheese, Fontina Cheese, Parmesan, Gruyere Cheese",
+    "Vegan Mozzarella Cheese",
+    "No Cheese",
   ],
   SAUCES: [
-    'BBQ Sauce',
-    'Bechamel Sauce',
-    'Buffalo Sauce',
-    'Dill & Shallot Cream Cheese',
-    'Pesto Sauce',
-    'Smoked Tomato Sauce',
-    'Spicy Marinara Sauce',
-    'No Sauce',
+    "BBQ Sauce",
+    "Bechamel Sauce",
+    "Buffalo Sauce",
+    "Dill & Shallot Cream Cheese",
+    "Pesto Sauce",
+    "Smoked Tomato Sauce",
+    "Spicy Marinara Sauce",
+    "No Sauce",
   ],
   ADD_ONS: [
-    'Basil',
-    'Mixed Peppers',
-    'Mushroom',
-    'Pineapple',
-    'Ranch Dressing',
-    'Red Onion',
-    'Sliced Black Olives',
-    'Sliced Jalapeño',
-    'Tomato',
+    "Basil",
+    "Mixed Peppers",
+    "Mushroom",
+    "Pineapple",
+    "Ranch Dressing",
+    "Red Onion",
+    "Sliced Black Olives",
+    "Sliced Jalapeño",
+    "Tomato",
   ],
-}
+};
 
 const PizzaReviewRequirements = {
   cheeses: [1, 1],
@@ -102,118 +103,151 @@ export default function PizzaCheckboxesGroup() {
   function checkExists(type, target) {
     return state[type].includes(target);
   }
+  const post = () => {
+    // if (!errors)
+    const errCopy = { ...error };
+
+    const hasNonEmptyStrings = Object.values(errCopy).filter(
+      (x) => x.length > 0
+    ).length > 0;
+
+    if(hasNonEmptyStrings)
+      console.log("errors, will not stringify")
+    else
+      {
+        console.log("no errors")
+        const copy = { ... state}
+        const reviewDataStr = JSON.stringify(copy);
+        console.log(reviewDataStr);
+      }
+  };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose One</FormLabel>
-        <FormGroup>
-          {PIZZAS.CHEESES.map((cheeses, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("cheeses", cheeses)}
-                    onChange={(event) => handleChange(event, "cheeses")}
-                    name={cheeses}
-                  />
-                }
-                label={cheeses}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["cheeses"]}</FormHelperText>
-      </FormControl>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose One</FormLabel>
-        <FormGroup>
-          {PIZZAS.TOPPINGS.map((toppings, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("toppings", toppings)}
-                    onChange={(event) => handleChange(event, "toppings")}
-                    name={toppings}
-                  />
-                }
-                label={toppings}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["toppings"]}</FormHelperText>
-      </FormControl>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose Up To Three</FormLabel>
-        <FormGroup>
-          {PIZZAS.ADD_ONS.map((add_ons, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("add_ons", add_ons)}
-                    onChange={(event) => handleChange(event, "add_ons")}
-                    name={add_ons}
-                  />
-                }
-                label={add_ons}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["add_ons"]}</FormHelperText>
-      </FormControl>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose One</FormLabel>
-        <FormGroup>
-          {PIZZAS.SAUCES.map((sauces, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("sauces",  sauces)}
-                    onChange={(event) => handleChange(event, "sauces")}
-                    name={ sauces }
-                  />
-                }
-                label={ sauces }
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["sauces"]}</FormHelperText>
-      </FormControl>
-    </Box>
+    <>
+      <Box sx={{ display: "flex" }}>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose One</FormLabel>
+          <FormGroup>
+            {PIZZAS.CHEESES.map((cheeses, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("cheeses", cheeses)}
+                      onChange={(event) => handleChange(event, "cheeses")}
+                      name={cheeses}
+                    />
+                  }
+                  label={cheeses}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["cheeses"]}</FormHelperText>
+        </FormControl>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose One</FormLabel>
+          <FormGroup>
+            {PIZZAS.TOPPINGS.map((toppings, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("toppings", toppings)}
+                      onChange={(event) => handleChange(event, "toppings")}
+                      name={toppings}
+                    />
+                  }
+                  label={toppings}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["toppings"]}</FormHelperText>
+        </FormControl>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose Up To Three</FormLabel>
+          <FormGroup>
+            {PIZZAS.ADD_ONS.map((add_ons, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("add_ons", add_ons)}
+                      onChange={(event) => handleChange(event, "add_ons")}
+                      name={add_ons}
+                    />
+                  }
+                  label={add_ons}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["add_ons"]}</FormHelperText>
+        </FormControl>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose One</FormLabel>
+          <FormGroup>
+            {PIZZAS.SAUCES.map((sauces, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("sauces", sauces)}
+                      onChange={(event) => handleChange(event, "sauces")}
+                      name={sauces}
+                    />
+                  }
+                  label={sauces}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["sauces"]}</FormHelperText>
+        </FormControl>
+      </Box>
+      <Box>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            paddingRight: "10px",
+            paddingBottom: "16px",
+          }}
+        >
+          <Button size="small" color="primary" onClick={post}>
+            Post
+          </Button>
+        </div>
+      </Box>
+    </>
   );
 }

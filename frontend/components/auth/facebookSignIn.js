@@ -1,44 +1,14 @@
-import { Button, Typography, Box, Link } from '@material-ui/core'
-import Image from 'next/image'
+import React from 'react'
+import SignInButton from './signInButton'
 
-import { getAuth, signInWithPopup, FacebookAuthProvider} from 'firebase/auth'
+import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
+import { useRouter } from 'next/router'
 
-const facebookStyles = {
-  facebookContainer: {
-    backgroundColor: '#1877F2',
-    color: '#FFF',
-    textTransform: 'none',
-  },
-}
+export default function FacebookSignIn({ isSignIn, style = {} }) {
+  const router = useRouter()
 
-const signInButtonStyle = {
-  width: 240,
-  // height: 60,
-}
-
-export default function FacebookLogin({ isSignUp = false }) {
-  return (
-    <Box style={signInButtonStyle}>
-      <Button
-        style={facebookStyles.facebookContainer}
-        onClick={() => _loginWithFacebook()}
-      >
-        {/*  */}
-        <Image
-          src="/facebook-white.png"
-          alt="Facebook logo"
-          width="32"
-          height="32"
-        />
-
-        {/* Facebook image */}
-        <Typography style={{ paddingLeft: 8 }}
-        
-        >Sign {isSignUp ? 'up' : 'in'} with Facebook</Typography>
-      </Button>
-    </Box>
-  )
+  return <SignInButton type="facebook" onClick={_loginWithFacebook} isSignIn={isSignIn} style={style} />
 }
 
 const auth = getAuth(Firebase)
@@ -51,11 +21,12 @@ async function _loginWithFacebook() {
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = FacebookAuthProvider.credentialFromResult(result)
       if (credential == null) return /* Throw some error */
-      
+
       const token = credential.accessToken
       const user = result.user
 
-      console.log(user)
+      // Redirect to main page
+      router.push('/')
     })
     .catch(error => {
       // Handle Errors here.

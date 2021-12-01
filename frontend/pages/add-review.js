@@ -37,7 +37,7 @@ import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
 
 export default function AddReview() {
   const [value, setValue] = useState(2);
-  const [reviewText, setReviewText] = useState("Controlled");
+  const [reviewText, setReviewText] = useState("");
 
   const handleChange = (event) => {
     setReviewText(event.target.reviewText);
@@ -54,6 +54,8 @@ export default function AddReview() {
     else return "Joe Bruin";
   };
 
+
+
   const [SandOrPizza, setSandOrPizza] = useState("sandwich");
 
   const handleChangeSandOrPizza = (event, newSelectionSandOrPizza) => {
@@ -65,7 +67,7 @@ export default function AddReview() {
   return (
     <>
       <NavigationBar />
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
         <Card style={{ width: "75%" }}>
           <CardHeader
             avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
@@ -142,18 +144,7 @@ export default function AddReview() {
             </div>
             {/* <PizzaCheckboxesGroup></PizzaCheckboxesGroup> */}
           </CardContent>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingRight: "10px",
-              paddingBottom: "16px",
-            }}
-          >
-            <Button size="small" color="primary">
-              Post
-            </Button>
-          </div>
+          
         </Card>
       </div>
     </>
