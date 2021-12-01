@@ -9,9 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
-import {
-  Button,
-} from "@mui/material";
+import { Button } from "@mui/material";
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -92,7 +90,10 @@ export default function SandwichCheckboxesGroup() {
     }
 
     // Otherwise push it to the object
-    else copy[type].push(event.target.name);
+    else {
+      copy[type].push(event.target.name);
+      copy[type] = copy[type].sort();
+    }
 
     // Check if the length is between min and max
     const [min, max] = ReviewRequirements[type];
@@ -104,6 +105,7 @@ export default function SandwichCheckboxesGroup() {
     else if (len > max) errCopy[type] = `You can pick up to ${max} ${type}.`;
     else errCopy[type] = ``;
 
+    console.log(copy);
     setState(copy);
     setError(errCopy);
     // console.log(copy)
@@ -115,153 +117,164 @@ export default function SandwichCheckboxesGroup() {
 
   const post = () => {
     // if (!errors)
-    JSON.stringify();
+    const errCopy = { ...error };
 
-  }
+    const hasNonEmptyStrings = Object.values(errCopy).filter(
+      (x) => x.length > 0
+    ).length > 0;
+
+    if(hasNonEmptyStrings)
+      console.log("errors, will not stringify")
+    else
+      {
+        console.log("no errors")
+        const copy = { ... state}
+        const reviewDataStr = JSON.stringify(copy);
+        console.log(reviewDataStr);
+      }
+  };
 
   return (
     <>
-    <Box sx={{ display: "flex" }}>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose One</FormLabel>
-        <FormGroup>
-          {Foods.BREADS.map((bread, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("breads", bread)}
-                    onChange={(event) => handleChange(event, "breads")}
-                    name={bread}
-                  />
-                }
-                label={bread}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["breads"]}</FormHelperText>
-      </FormControl>
+      <Box sx={{ display: "flex" }}>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose One</FormLabel>
+          <FormGroup>
+            {Foods.BREADS.map((bread, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("breads", bread)}
+                      onChange={(event) => handleChange(event, "breads")}
+                      name={bread}
+                    />
+                  }
+                  label={bread}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["breads"]}</FormHelperText>
+        </FormControl>
 
-
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose Up To One</FormLabel>
-        <FormGroup>
-          {Foods.CHEESES.map((cheeses, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("cheeses", cheeses)}
-                    onChange={(event) => handleChange(event, "cheeses")}
-                    name={cheeses}
-                  />
-                }
-                label={cheeses}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["cheeses"]}</FormHelperText>
-      </FormControl>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose Up to Two</FormLabel>
-        <FormGroup>
-          {Foods.TOPPINGS.map((toppings, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("toppings", toppings)}
-                    onChange={(event) => handleChange(event, "toppings")}
-                    name={toppings}
-                  />
-                }
-                label={toppings}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["toppings"]}</FormHelperText>
-      </FormControl>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose Up To Three</FormLabel>
-        <FormGroup>
-          {Foods.ADD_ONS.map((add_ons, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("add_ons", add_ons)}
-                    onChange={(event) => handleChange(event, "add_ons")}
-                    name={add_ons}
-                  />
-                }
-                label={add_ons}
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["add_ons"]}</FormHelperText>
-      </FormControl>
-      <FormControl
-        required
-        error={error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Choose Up To Two</FormLabel>
-        <FormGroup>
-          {Foods.SPREADS.map((spreads, index) => {
-            return (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={checkExists("spreads",  spreads)}
-                    onChange={(event) => handleChange(event, "spreads")}
-                    name={ spreads }
-                  />
-                }
-                label={ spreads }
-              />
-            );
-          })}
-        </FormGroup>
-        <FormHelperText>{error["spreads"]}</FormHelperText>
-      </FormControl>
-
-    </Box>
-    <Box>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose Up To One</FormLabel>
+          <FormGroup>
+            {Foods.CHEESES.map((cheeses, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("cheeses", cheeses)}
+                      onChange={(event) => handleChange(event, "cheeses")}
+                      name={cheeses}
+                    />
+                  }
+                  label={cheeses}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["cheeses"]}</FormHelperText>
+        </FormControl>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose Up to Two</FormLabel>
+          <FormGroup>
+            {Foods.TOPPINGS.map((toppings, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("toppings", toppings)}
+                      onChange={(event) => handleChange(event, "toppings")}
+                      name={toppings}
+                    />
+                  }
+                  label={toppings}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["toppings"]}</FormHelperText>
+        </FormControl>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose Up To Three</FormLabel>
+          <FormGroup>
+            {Foods.ADD_ONS.map((add_ons, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("add_ons", add_ons)}
+                      onChange={(event) => handleChange(event, "add_ons")}
+                      name={add_ons}
+                    />
+                  }
+                  label={add_ons}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["add_ons"]}</FormHelperText>
+        </FormControl>
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Choose Up To Two</FormLabel>
+          <FormGroup>
+            {Foods.SPREADS.map((spreads, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={checkExists("spreads", spreads)}
+                      onChange={(event) => handleChange(event, "spreads")}
+                      name={spreads}
+                    />
+                  }
+                  label={spreads}
+                />
+              );
+            })}
+          </FormGroup>
+          <FormHelperText>{error["spreads"]}</FormHelperText>
+        </FormControl>
+      </Box>
+      <Box>
         <div
           style={{
             display: "flex",
@@ -270,12 +283,11 @@ export default function SandwichCheckboxesGroup() {
             paddingBottom: "16px",
           }}
         >
-          <Button size="small" color="primary" onClick="{post}">
+          <Button size="small" color="primary" onClick={post}>
             Post
           </Button>
         </div>
-
-        </Box>
+      </Box>
     </>
   );
 }

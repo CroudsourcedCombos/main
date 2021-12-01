@@ -1,29 +1,58 @@
-import React from 'react'
-import SignInButton from './signInButton'
+import GoogleButton from "react-google-button";
+import {Button, Typography, Box} from "@material-ui/core";
+import Image from "next/image";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import Firebase from '../../config/firebase'
+import Firebase from "../../config/firebase";
+import {getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
+import {client} from "../../apolo-client";
+import {gql} from "@apollo/client";
 
-import { useRouter } from 'next/router'
+const auth = getAuth(Firebase);
+const provider = new GoogleAuthProvider();
 
-export default function GoogleSignIn({ isSignIn, style={} }) {
-  const router = useRouter()
-  
+const googleStyles = {
+  googleContainer: {
+    backgroundColor: "#FFF",
+    color: "black",
+    textTransform: "none",
+    border: "1px solid gray",
+    width: 240,
+  },
+};
+
+const signInButtonStyle = {
+  width: 220,
+  // height: 60,
+};
+
+export default function GoogleLogin({isSignUp = false}) {
   return (
-    <SignInButton
-      type="google"
-      onClick={() => _loginWithGoogle(router)}
-      isSignIn={isSignIn}
-      style={style}
-    />
-  )
+    <Box style={signInButtonStyle}>
+      <Button
+        style={googleStyles.googleContainer}
+        onClick={() => _loginWithGoogle()}
+      >
+        {/*  */}
+        <Image
+          src="/google-logo.png"
+          alt="Google logo"
+          width="32"
+          height="32"
+        />
+
+        {/* Google image */}
+        <Typography style={{paddingLeft: 8}}>
+          Sign {isSignUp ? "up" : "in"} with Google
+        </Typography>
+      </Button>
+    </Box>
+  );
+
+  // return <GoogleButton style={{ width: 240 }} onClick={() => _loginWithGoogle()} />
 }
 
-const auth = getAuth(Firebase)
-const provider = new GoogleAuthProvider()
-
 // Log into google with pop up
-async function _loginWithGoogle(router) {
+async function _loginWithGoogle() {
   signInWithPopup(auth, provider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -36,11 +65,6 @@ async function _loginWithGoogle(router) {
 
     const token = credential.accessToken;
     const user = result.user;
-    
-    // Redirect to main page
-    router.push('/')
-
-    /*
     client.mutate({
       mutation: gql`
           mutation CreateUser($name: String!, $email: String!, $firebaseId: String!) {
@@ -69,9 +93,8 @@ async function _loginWithGoogle(router) {
         firebaseId: result.user.uid
       }
     }).then((resp) => {
-      // console.log(resp)
+      console.log(resp)
     }).catch((e) => console.error(e));
-    */
   })
   .catch((error) => {
     // Handle Errors here.

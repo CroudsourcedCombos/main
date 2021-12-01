@@ -103,6 +103,24 @@ export default function PizzaCheckboxesGroup() {
   function checkExists(type, target) {
     return state[type].includes(target);
   }
+  const post = () => {
+    // if (!errors)
+    const errCopy = { ...error };
+
+    const hasNonEmptyStrings = Object.values(errCopy).filter(
+      (x) => x.length > 0
+    ).length > 0;
+
+    if(hasNonEmptyStrings)
+      console.log("errors, will not stringify")
+    else
+      {
+        console.log("no errors")
+        const copy = { ... state}
+        const reviewDataStr = JSON.stringify(copy);
+        console.log(reviewDataStr);
+      }
+  };
 
   return (
     <>
@@ -225,7 +243,7 @@ export default function PizzaCheckboxesGroup() {
             paddingBottom: "16px",
           }}
         >
-          <Button size="small" color="primary" onClick="{post}">
+          <Button size="small" color="primary" onClick={post}>
             Post
           </Button>
         </div>
