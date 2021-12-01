@@ -13,12 +13,19 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 // import {NavLink} from "react-router-dom";
 // import {Link} from "react-router-dom";
-import Link from "@material-ui/core";
+import Link from "@material-ui/core/Link";
 import { useAuth } from "../context/AuthenticatedUserContext";
 
 const pages = ["Add Review", "Soda", "Menu", "Sign In/Up"];
 const pageRoutes = ["add-review", "sodadex", "menu", "sign-in"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+const styles = {
+  navbarLink: {
+    color: 'white',
+    textDecorationColor: 'white'
+  }
+}
 
 const NavigationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -38,8 +45,6 @@ const NavigationBar = () => {
     else return "/static/images/avatar/2.jpg";
   };
 
-  console.log(user);
-
   const getUsername = () => {
     if (user) return user.displayName;
     else return "Joe Bruin";
@@ -53,16 +58,18 @@ const NavigationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            Crowdsourced Combos
+            <Link style={styles.navbarLink} href="/">
+              Crowdsourced Combos
+            </Link>
           </Typography>
 
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
             LOGO
           </Typography>
@@ -70,20 +77,21 @@ const NavigationBar = () => {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "right",
+              display: { xs: 'none', md: 'flex' },
+              justifyContent: 'right',
             }}
           >
             {pages.map((page, index) => (
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, color: 'white', display: 'block' }}
                 // component={Link}
                 // to="/sign-in"
                 key={page}
-                href={pageRoutes[index]}
               >
-                {page}
+                <Link style={styles.navbarLink} href={pageRoutes[index]}>
+                  {page}
+                </Link>
               </Button>
             ))}
           </Box>
@@ -98,24 +106,23 @@ const NavigationBar = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
               // onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} 
-                onClick={handleCloseNavMenu}>
+              {settings.map(setting => (
+                <MenuItem key={setting} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -124,6 +131,6 @@ const NavigationBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  )
 };
 export default NavigationBar;
