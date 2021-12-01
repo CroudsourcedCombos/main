@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import ResponsiveAppBar from "../components/navbar";
-import {Button} from "@mui/material";
-import {DataGrid} from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import {DataGrid} from "@mui/x-data-grid/";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -90,7 +90,7 @@ const renderAddReviewButton = ({
           rowCopy[id] = row;
           // Set the news state
           setRows(rowCopy);
-          console.log({row})
+          // console.log({row})
           createSodaReview({
             variables: {
               soda_id: row.id.toString(),
@@ -99,7 +99,7 @@ const renderAddReviewButton = ({
               comment: row.reviewText
             }
           })
-            .then((event) => console.log(event))
+            // .then((event) => console.log(event))
             .catch((e) => console.error(e))
         }}
       >
@@ -149,7 +149,7 @@ const renderReviewText = ({row, id}, rows, setRows) => {
       maxRows={3}
       disabled={!row.hasTried}
       onChange={(event) => {
-        console.log({target: event.target})
+        // console.log({target: event.target})
         // Update the row rating
         if (row.rating !== 0) {
           row.reviewText = event.target.value;
@@ -176,7 +176,6 @@ function generateRowsFromSodas(sodaData) {
     return row;
   });
 
-  console.log({sodaData})
   if (sodaData !== undefined)
     // Go through and update this based on the sodaData
     sodaData["reviews"].forEach((sodaDatum) => {
@@ -206,7 +205,7 @@ function SodaDexComponent({user}) {
   const [rows, setRows] = useState(generateRowsFromSodas);
 
 
-  const columns = [
+  let columns = [
     { field: "id", headerName: "ID", width: 100 },
     {
       field: "drink",
@@ -253,8 +252,8 @@ function SodaDexComponent({user}) {
     )
   }, [user.uid])
 
-  console.log(user)
-  let columns = []
+  // console.log(user)
+  // let columns = []
   if (user)
     columns = [
       {field: "id", headerName: "ID", width: 50},
