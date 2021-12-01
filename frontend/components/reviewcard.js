@@ -22,7 +22,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '70%',
+  width: '50%',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -55,14 +55,9 @@ const SampleModalReviews = [
 
 function ModalReviewCard({username, profilePic, stars, reviewText}) {
   return (<div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
-        <Card style={{ width: "75%" }}>
+        <Card sx = {{width : "80%"}}>
           <CardHeader
             avatar={<Avatar alt={username} src={profilePic} />}
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
             title={username}
             subheader="Posting publicly"
             paddingBottom="2px"
@@ -73,7 +68,6 @@ function ModalReviewCard({username, profilePic, stars, reviewText}) {
               <Rating
                 name="simple-controlled"
                 size="large"
-                // paddingTop="2px"
                 value={stars}
                 readOnly = "true"
               />
@@ -98,21 +92,24 @@ function ModalReview() {
   return (
     <div>
       <Button onClick={handleOpen}>All Reviews</Button>
+      <Container sx = {{display: "flex", alignItems: "center"}}>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx = {{width: "80%"}}
       >
-        <div>
+        <Container sx = {{maxHeight: '100%', overflow : "auto", }}>
         <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard>
-        {/* <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
-        <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard> */}
-        </div>
+        <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard>
+        <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
+        </Container>
       </Modal>
+      </Container>
     </div>
   );
 }
