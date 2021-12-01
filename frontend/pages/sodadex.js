@@ -205,6 +205,43 @@ function SodaDexComponent({user}) {
 
   const [rows, setRows] = useState(generateRowsFromSodas);
 
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 100 },
+    {
+      field: "drink",
+      headerName: "Soda Flavor",
+      width: 200,
+      editable: false,
+    },
+    {
+      field: "hasTriedDisp",
+      headerName: "Have you tried it?",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "rating",
+      headerName: "Your Rating",
+      width: 150,
+      renderCell: (params) => renderReviewStars(params, rows, setRows),
+      disableClickEventBubbling: true,
+    },
+    {
+      field: "review",
+      headerName: "Your comments",
+      width: 300,
+      renderCell: (params) => renderReviewText(params, rows, setRows),
+      disableClickEventBubbling: true,
+    },
+    {
+      field: "postButton",
+      headerName: "",
+      width: 100,
+      renderCell: (params) => renderAddReviewButton(params, rows, setRows),
+      disableClickEventBubbling: true,
+    },
+  ];
   useEffect(() => {
     client.query({
       variables: {
@@ -303,7 +340,9 @@ function SodaDexComponent({user}) {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
-                checkboxSelection
+                disablecheckboxSelection
+                disableColumnMenu
+                disableColumnFilter
                 selectionModel={getHasTriedIndices()}
                 hideFooterSelectedRowCount
                 onSelectionModelChange={(ids) => {
