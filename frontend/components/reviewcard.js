@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import { CardHeader } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -12,6 +13,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import Modal from '@mui/material/Modal';
+import IconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Rating from "@mui/material/Rating";
 
 const style = {
   position: 'absolute',
@@ -25,7 +29,68 @@ const style = {
   p: 4,
 };
 
-function ModalReviews() {
+const SampleModalReviews = [
+  {
+  username: "Joe Bruin",
+  profilePic: "/static/images/avatar/2.jpg",
+  stars: 5,
+  reviewText: "I thought this would be bad. I was right",
+},
+{
+  username: "Jo Brooin",
+  profilePic: "/static/images/avatar/2.jpg",
+  stars: 3,
+  reviewText: "This was good. Very good.",
+}, 
+{
+  username: "Go Brueyn",
+  profilePic: "/static/images/avatar/2.jpg",
+  stars: 1,
+  reviewText: "No",
+}, 
+]
+
+
+
+
+function ModalReviewCard({username, profilePic, stars, reviewText}) {
+  return (<div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>
+        <Card style={{ width: "75%" }}>
+          <CardHeader
+            avatar={<Avatar alt={username} src={profilePic} />}
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={username}
+            subheader="Posting publicly"
+            paddingBottom="2px"
+          />
+
+          <CardContent style={{ paddingTop: "0px" }}>
+            <div>
+              <Rating
+                name="simple-controlled"
+                size="large"
+                // paddingTop="2px"
+                value={stars}
+                readOnly = "true"
+              />
+            </div>
+            <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
+              {reviewText}
+            </div>
+          </CardContent>
+          
+        </Card>
+      </div>)
+}
+
+
+
+
+function ModalReview() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,18 +104,19 @@ function ModalReviews() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
+        <div>
+        <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
+        <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
+        <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard>
+        {/* <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
+        <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
+        <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard> */}
+        </div>
       </Modal>
     </div>
   );
 }
+
 
 
 
@@ -110,7 +176,7 @@ export default function ReviewCard({ score, category, ingredients }) {
         <Button onClick = {() => {setAddedToList(!AddedToList)}}>
           {AddedToList ? <PlaylistAddCheckIcon></PlaylistAddCheckIcon> : <PlaylistAddIcon></PlaylistAddIcon>}
         </Button>
-        <ModalReviews></ModalReviews>
+        <ModalReview></ModalReview>
       </Container>
       
     </Card>
