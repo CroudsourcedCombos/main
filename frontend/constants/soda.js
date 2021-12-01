@@ -2,7 +2,7 @@ export const SODAS = [
   {
     id: 0,
     drink: 'Coca-Cola',
-    hasTried: true,
+    hasTried: false,
   },
   {
     id: 1,
