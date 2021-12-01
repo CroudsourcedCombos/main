@@ -1,14 +1,20 @@
 // import * as React from "react";
 import NavigationBar from "../components/navbar";
-import {CircularProgress, Container} from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  ToggleButton,
+  ToggleButtonGroup
+} from "@mui/material";
 import SodaReviewCard from "../components/reviewCards/sodaReviewCard.js";
 import {gql, useQuery} from "@apollo/client";
 import FoodReviewCard from "../components/reviewCards/otherReviewCard";
 import Typography from "@material-ui/core/Typography";
+import {useState} from "react";
 
 
 const GET_REVIEWS = gql`
-    query GetAllData($current_food_type: FoodCategory!) {
+    query GetAllData($current_food_type: FoodCategory) {
         topSoda: topFoods(where: {food: {is: {type: {equals: soda}}}}) {
             id
             name
@@ -24,7 +30,22 @@ const GET_REVIEWS = gql`
                 text
             }
         }
-        topOther: topFoods(where: {food: {is: {type: {equals: $current_food_type}}}}) {
+        topOther: topFoods(where: {
+            food: {
+                is: {
+                    type: {
+                        equals: $current_food_type
+                    }
+                    AND: {
+                        type: {
+                            not: {
+                                equals: soda
+                            }
+                        }
+                    }
+                }
+            }
+        }) {
             id
             name
             type
@@ -43,18 +64,36 @@ const GET_REVIEWS = gql`
 `
 
 export default function Index() {
-  const {loading, error, data} = useQuery(GET_REVIEWS, {
+  const [foodTypeFilter, setFoodTypeFilter] = useState("all_types");
+  const {loading, data} = useQuery(GET_REVIEWS, {
     variables: {
-      current_food_type: "sandwich"
+      current_food_type: foodTypeFilter === "all_types" ? undefined : foodTypeFilter
     },
-    fetchPolicy: "cache-and-network",
-    pollInterval: 5
+    fetchPolicy: "cache-first",
+    pollInterval: 500
   });
+
+  const handleChangeFoodTypeFilter = (event, newFoodTypeFilter) => {
+    if (newFoodTypeFilter !== null)
+      setFoodTypeFilter(newFoodTypeFilter);
+  };
 
   if (loading)
     return (
       <>
         <NavigationBar/>
+        <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+          <ToggleButtonGroup
+            // color="primary"
+            value={foodTypeFilter}
+            exclusive
+            onChange={handleChangeFoodTypeFilter}
+          >
+            <ToggleButton value="sandwich">Sandwich</ToggleButton>
+            <ToggleButton value="pizza">Pizza</ToggleButton>
+            <ToggleButton value="all_types">All Types</ToggleButton>
+          </ToggleButtonGroup>
+        </div>
         <Container
           maxWidth="xl"
           sx={{display: "flex", justifyContent: "center", alignItems: "center"}}
@@ -66,6 +105,18 @@ export default function Index() {
   return (
     <>
       <NavigationBar/>
+      <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+        <ToggleButtonGroup
+          // color="primary"
+          value={foodTypeFilter}
+          exclusive
+          onChange={handleChangeFoodTypeFilter}
+        >
+          <ToggleButton value="sandwich">Sandwich</ToggleButton>
+          <ToggleButton value="pizza">Pizza</ToggleButton>
+          <ToggleButton value="all_types">All Types</ToggleButton>
+        </ToggleButtonGroup>
+      </div>
       <Container
         maxWidth="xl"
         sx={{display: "flex", justifyContent: "space-between"}}
@@ -81,7 +132,7 @@ export default function Index() {
                                        score={datum["overall_rating"]}
                                        name={datum["name"]}/>
               }) :
-              <Typography>No Data for Sandwiches yet!</Typography>
+              <Typography>No reviews for {foodTypeFilter} yet! Why don&apos;t you leave one?</Typography>
           }
         </Container>
         <Container sx={{width: "40%", margin: "10px"}}>

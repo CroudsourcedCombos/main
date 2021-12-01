@@ -203,7 +203,7 @@ type Query {
     profiles(cursor: ProfileWhereUniqueInput, distinct: [ProfileScalarFieldEnum!], orderBy: [ProfileOrderByWithRelationInput!], skip: Int, take: Int, where: ProfileWhereInput): [Profile!]!
     review(where: ReviewWhereUniqueInput!): Review
     reviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
-    searchReviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], search: String!, skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
+    searchReviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], search: String, skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
     topFoods(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Food!]!
     user(where: UserWhereUniqueInput!): User
     users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!

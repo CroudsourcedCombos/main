@@ -11,8 +11,7 @@ import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import Modal from "@mui/material/Modal";
 import ModalReviewCard from "../modal/ModalReviewCard";
 import TextField from "@mui/material/TextField";
-import {gql, useLazyQuery, useMutation, useQuery} from "@apollo/client";
-import {cache, client} from "../../apolo-client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 
 
 const style = {
@@ -26,27 +25,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
-const SampleModalReviews = [
-  {
-    username: "Joe Bruin",
-    profilePic: "/static/images/avatar/2.jpg",
-    stars: 5,
-    reviewText: "I thought this would be bad. I was right",
-  },
-  {
-    username: "Jo Brooin",
-    profilePic: "/static/images/avatar/2.jpg",
-    stars: 3,
-    reviewText: "This was good. Very good.",
-  },
-  {
-    username: "Go Brueyn",
-    profilePic: "/static/images/avatar/2.jpg",
-    stars: 1,
-    reviewText: "No",
-  },
-];
 
 const GET_USER_LISTS_FOR_FOOD = gql`
     query GetUserLists($firebase_id: String!, $food_id: String!) {
@@ -100,27 +78,11 @@ const TOGGLE_FAV = gql`
 `
 
 const GET_REVIEWS = gql`
-    query GetReviews($food_name: String!) {
-        reviews(
+    query GetReviews($food_name: String!, $search_term: String) {
+        reviews: searchReviews(
             where: {food: {is: {name: {equals: $food_name}}}}
             orderBy: [{creationDate: asc}]
-        ) {
-            id
-            author {
-                id
-                name
-            }
-            rating
-            text
-        }
-    }
-`
-
-const SEARCH_REVIEWS = gql`
-    query GetReviews($food_name: String!, $search_term: String!) {
-        searchReviews(
             search: $search_term
-            where: {food: {is: {name: {equals: $food_name}}}}
         ) {
             id
             author {
@@ -136,37 +98,21 @@ const SEARCH_REVIEWS = gql`
 function ModalReviews({foodId}) {
   const [open, setOpen] = React.useState(false);
   const [search_value, set_search_value] = React.useState("");
-  const {data, loading, refetch} = useQuery(GET_REVIEWS, {
+  const {data, loading, refetch, variables} = useQuery(GET_REVIEWS, {
     variables: {
       food_name: foodId
     },
-    fetchPolicy: "cache-only"
+    fetchPolicy: "cache-first"
   })
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const handleSearch = async (event) => {
     if (event.code === "Enter") {
-      if (search_value !== "") {
-        const resp = await client.query({
-          variables: {
-            search_term: search_value,
-            food_name: foodId
-          },
-          query: SEARCH_REVIEWS,
-          fetchPolicy: "network-only"
-        })
-        console.log({resp})
-        resp.data.searchReviews.forEach(elem => console.log({elem}))
-        // cache.modify({
-        //   id: cache.identify()
-        // })
-      }
-      else {
-        await refetch()
-      }
-
+      await refetch({
+        food_name: foodId,
+        search_term: search_value !== "" ? search_value : undefined
+      })
     }
   }
   if (loading)
@@ -251,7 +197,7 @@ export default function ReviewCard({
       firebase_id: user.uid,
       food_name: uniqueId.toString()
     },
-    refetchQueries: [GET_USER_LISTS_FOR_FOOD]
+    refetchQueries: [GET_USER_LISTS_FOR_FOOD],
   })
   if (loading)
     return <div/>
