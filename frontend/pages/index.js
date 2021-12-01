@@ -4,6 +4,7 @@ import {CircularProgress, Container} from "@mui/material";
 import SodaReviewCard from "../components/reviewCards/sodaReviewCard.js";
 import {gql, useQuery} from "@apollo/client";
 import FoodReviewCard from "../components/reviewCards/otherReviewCard";
+import Typography from "@material-ui/core/Typography";
 
 
 const GET_REVIEWS = gql`
@@ -13,12 +14,30 @@ const GET_REVIEWS = gql`
             name
             type
             overall_rating
+            reviews {
+                id
+                author {
+                    id
+                    name
+                }
+                rating
+                text
+            }
         }
         topOther: topFoods(where: {food: {is: {type: {equals: $current_food_type}}}}) {
             id
             name
             type
             overall_rating
+            reviews {
+                id
+                author {
+                    id
+                    name
+                }
+                rating
+                text
+            }
         }
     }
 `
@@ -28,7 +47,8 @@ export default function Index() {
     variables: {
       current_food_type: "sandwich"
     },
-    fetchPolicy: "cache-and-network"
+    fetchPolicy: "cache-and-network",
+    pollInterval: 5
   });
 
   if (loading)
@@ -43,7 +63,6 @@ export default function Index() {
         </Container>
       </>
     )
-
   return (
     <>
       <NavigationBar/>
@@ -52,20 +71,33 @@ export default function Index() {
         sx={{display: "flex", justifyContent: "space-between"}}
       >
         <Container sx={{width: "60%", margin: "10px"}}>
-
-          {/* data["topOther"].map((datum) => {
-            return <FoodReviewCard key={datum["id"]} category={datum["type"]}
-                                   score={datum["overall_rating"]} name={datum["name"]}/>
-          })} */}
-
+          {
+            data !== undefined &&
+            data["topOther"] !== undefined &&
+            data["topOther"].length !== 0 ?
+              data["topOther"].map((datum) => {
+                return <FoodReviewCard key={datum["id"]}
+                                       category={datum["type"]}
+                                       score={datum["overall_rating"]}
+                                       name={datum["name"]}/>
+              }) :
+              <Typography>No Data for Sandwiches yet!</Typography>
+          }
         </Container>
         <Container sx={{width: "40%", margin: "10px"}}>
-          {/* {data["topSoda"].map((datum) => {
-            return <SodaReviewCard key={datum["id"]} category={datum["type"]}
-                                   score={datum["overall_rating"]}
-                                   id={datum["name"]}/>
-          })}         */}
-          </Container>
+          {
+            data !== undefined &&
+            data["topSoda"] !== undefined &&
+            data["topSoda"].length !== 0 ?
+              data["topSoda"].map((datum) => {
+                return <SodaReviewCard key={datum["id"]}
+                                       category={datum["type"]}
+                                       score={datum["overall_rating"]}
+                                       id={datum["name"]}/>
+              }) :
+              <Typography>No Data for Sodas yet!</Typography>
+          }
+        </Container>
       </Container>
     </>
   );

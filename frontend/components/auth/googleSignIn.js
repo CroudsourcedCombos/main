@@ -5,10 +5,12 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import Firebase from '../../config/firebase'
 
 import { useRouter } from 'next/router'
+import {client} from "../../apolo-client";
+import {gql} from "@apollo/client";
 
 export default function GoogleSignIn({ isSignIn, style={} }) {
   const router = useRouter()
-  
+
   return (
     <SignInButton
       type="google"
@@ -36,11 +38,10 @@ async function _loginWithGoogle(router) {
 
     const token = credential.accessToken;
     const user = result.user;
-    
+
     // Redirect to main page
     router.push('/')
 
-    /*
     client.mutate({
       mutation: gql`
           mutation CreateUser($name: String!, $email: String!, $firebaseId: String!) {
@@ -71,7 +72,6 @@ async function _loginWithGoogle(router) {
     }).then((resp) => {
       // console.log(resp)
     }).catch((e) => console.error(e));
-    */
   })
   .catch((error) => {
     // Handle Errors here.

@@ -1,14 +1,17 @@
 import { Typography, Box, Link, Button } from "@material-ui/core";
 import Firebase from "../../config/firebase";
 
-import { signOut, getAuth } from "@firebase/auth";
-const auth = getAuth(Firebase);
+import { signOut, getAuth } from '@firebase/auth'
+import {useRouter} from "next/router";
+const auth = getAuth(Firebase)
 
 export async function SignOut() {
+  const router = useRouter()
   return (
     <Button
       onClick={() => {
-        _signOut();
+        _signOut()
+        router.push("/")
       }}
     >
       Sign Out
