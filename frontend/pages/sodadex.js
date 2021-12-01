@@ -37,6 +37,10 @@ const renderAddReviewButton = ({ row, id }, rows, setRows) => {
         onClick={() => {
           // Update the row update status
           row.ifUpdated = true;
+          const rowCopy = [...rows];
+          rowCopy[id] = row;
+          // Set the news state
+          setRows(rowCopy);
         }}
       >
         {row.ifUpdated ? "Saved" : "Update"}
@@ -45,8 +49,6 @@ const renderAddReviewButton = ({ row, id }, rows, setRows) => {
   );
 };
 const renderReviewStars = ({ row, id }, rows, setRows) => {
-  // console.log('params :>> ', params);
-  // const { row, id } = params
   return (
     <Rating
       name="simple-controlled"
