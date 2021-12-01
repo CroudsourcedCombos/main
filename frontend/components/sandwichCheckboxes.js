@@ -12,6 +12,8 @@ import { StarRateRounded } from "@material-ui/icons";
 import { Button } from "@mui/material";
 import {gql, useMutation} from "@apollo/client";
 
+import { useAuth } from "../context/AuthenticatedUserContext";
+
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
   CHEESES: [
@@ -60,12 +62,13 @@ const CREATE_SANDWICH_REVIEW = gql`
     mutation CreateSandwichReview(
         $name: String!,
         $rating: Int!,
-        $text: String!
+        $text: String!,
+        $id: String!
     ) {
         createReview(data: {
             author: {
                 connect: {
-                    firebaseId: "rjn3we2tWMPNmtYDaNDTDwFRCPU2"
+                    firebaseId: $id
                 }
             }
             food: {
@@ -113,6 +116,7 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
   });
 
   const [addSandwich] = useMutation(CREATE_SANDWICH_REVIEW);
+  const { user } = useAuth()
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
@@ -165,7 +169,8 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
           variables: {
             name: reviewDataStr,
             rating: rating,
-            text: reviewText
+            text: reviewText,
+            id: user.uid,
           }
         }).then(/* Success */).catch(reason => console.error(reason))
       }

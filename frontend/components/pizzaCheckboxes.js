@@ -10,8 +10,10 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
 import { Button } from "@mui/material";
-import {gql} from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 // import PIZZAS from "../constants/pizza"
+
+import { useAuth } from "../context/AuthenticatedUserContext";
 
 const PIZZAS = {
   TOPPINGS: [
@@ -57,12 +59,13 @@ const CREATE_PIZZA_REVIEW = gql`
     mutation CreateSandwichReview(
         $name: String!,
         $rating: Int!,
-        $text: String!
+        $text: String!,
+        $id: String!
     ) {
         createReview(data: {
             author: {
                 connect: {
-                    firebaseId: "rjn3we2tWMPNmtYDaNDTDwFRCPU2"
+                    firebaseId: $id
                 }
             }
             food: {
@@ -72,7 +75,7 @@ const CREATE_PIZZA_REVIEW = gql`
                     }
                     create: {
                         name: $name
-                        type: sandwich
+                        type: pizza
                     }
                 }
             }
@@ -91,7 +94,7 @@ const PizzaReviewRequirements = {
   sauces: [1, 1],
 };
 
-export default function PizzaCheckboxesGroup() {
+export default function PizzaCheckboxesGroup({ rating, reviewText }) {
   const [state, setState] = useState({
     cheeses: [],
     toppings: [],
@@ -104,6 +107,9 @@ export default function PizzaCheckboxesGroup() {
     add_ons: "",
     sauces: "You must pick at least 1 spread option.",
   });
+
+  const [addPizzas] = useMutation(CREATE_PIZZA_REVIEW)
+  const { user } = useAuth()
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
@@ -151,6 +157,17 @@ export default function PizzaCheckboxesGroup() {
         console.log("no errors")
         const copy = { ... state}
         const reviewDataStr = JSON.stringify(copy);
+        addPizzas({
+          variables: {
+            name: reviewDataStr,
+            rating: rating,
+            text: reviewText,
+            id: user.uid,
+          },
+        })
+          .then(/* Success */)
+          .catch(reason => console.error(reason))
+
         console.log(reviewDataStr);
       }
   };
