@@ -2,7 +2,7 @@ export const SODAS = [
   {
     id: 0,
     drink: 'Coca-Cola',
-    hasTried: true,
+    hasTried: false,
   },
   {
     id: 1,
@@ -1146,7 +1146,7 @@ export const SODAS = [
   },
   {
     id: 229,
-    drink: 'Barq’s Peach Crème  Soda',
+    drink: 'Barq’s Peach Crème  Soda',
     hasTried: false,
   },
   {
