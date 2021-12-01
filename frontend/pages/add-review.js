@@ -54,10 +54,7 @@ export default function AddReview() {
     else return "Joe Bruin";
   };
 
-  // post = () => {
-  //   if (!errors)
 
-  // }
 
   const [SandOrPizza, setSandOrPizza] = useState("sandwich");
 
@@ -147,18 +144,7 @@ export default function AddReview() {
             </div>
             {/* <PizzaCheckboxesGroup></PizzaCheckboxesGroup> */}
           </CardContent>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingRight: "10px",
-              paddingBottom: "16px",
-            }}
-          >
-            <Button size="small" color="primary" onClick="{post}">
-              Post
-            </Button>
-          </div>
+          
         </Card>
       </div>
     </>

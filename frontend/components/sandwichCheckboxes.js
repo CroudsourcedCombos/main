@@ -9,6 +9,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
+import {
+  Button,
+} from "@mui/material";
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -70,6 +73,7 @@ export default function SandwichCheckboxesGroup() {
     add_ons: [],
     spreads: [],
   });
+
   const [error, setError] = useState({
     breads: "You must pick at least 1 bread.",
     cheeses: "",
@@ -109,7 +113,14 @@ export default function SandwichCheckboxesGroup() {
     return state[type].includes(target);
   }
 
+  const post = () => {
+    // if (!errors)
+    JSON.stringify();
+
+  }
+
   return (
+    <>
     <Box sx={{ display: "flex" }}>
       <FormControl
         required
@@ -248,6 +259,23 @@ export default function SandwichCheckboxesGroup() {
         </FormGroup>
         <FormHelperText>{error["spreads"]}</FormHelperText>
       </FormControl>
+
     </Box>
+    <Box>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            paddingRight: "10px",
+            paddingBottom: "16px",
+          }}
+        >
+          <Button size="small" color="primary" onClick="{post}">
+            Post
+          </Button>
+        </div>
+
+        </Box>
+    </>
   );
 }
