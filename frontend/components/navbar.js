@@ -16,9 +16,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "@material-ui/core";
 import { useAuth } from "../context/AuthenticatedUserContext";
 
+import { _signOut } from "./auth/signOut";
+
 const pages = ["Add Review", "Soda", "Menu", "Sign In/Up"];
 const pageRoutes = ["add-review", "sodadex", "menu", "sign-in"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"]; // "Profile", "Account", "Dashboard", 
 
 const NavigationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -32,13 +34,20 @@ const NavigationBar = () => {
     setAnchorElNav(null);
   };
 
+  const handleOpenUserMenu = event => {
+    setAnchorElUser(event.currentTarget)
+  }
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
+
   const { user, setUser } = useAuth();
+  console.log(user)
   const getProfilePicture = () => {
     if (user) return user.photoURL;
     else return "/static/images/avatar/2.jpg";
   };
-
-  console.log(user);
 
   const getUsername = () => {
     if (user) return user.displayName;
@@ -91,7 +100,7 @@ const NavigationBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton
-                // onClick={handleOpenUserMenu}
+                onClick={handleOpenUserMenu}
                 sx={{ p: 0 }}
               >
                 <Avatar alt={getUsername()} src={getProfilePicture()} />
@@ -111,11 +120,14 @@ const NavigationBar = () => {
                 horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
-              // onClose={handleCloseUserMenu}
+              onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} 
-                onClick={handleCloseNavMenu}>
+                onClick={() => {
+                  handleCloseNavMenu()
+                  _signOut()
+                }}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
