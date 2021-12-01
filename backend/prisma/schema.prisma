@@ -30,6 +30,8 @@ model Review {
   author       User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   foodId       Int
   food         Food     @relation(fields: [foodId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([foodId, userId], name: "Review_User_Food_Unique_Constraint")
 }
 
 enum Location {

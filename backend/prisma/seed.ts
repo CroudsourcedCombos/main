@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
@@ -6,7 +7,7 @@ async function main() {
     data: {
       location: "UCLA",
       type: "sandwich",
-      name: "sand+WVPRRENNP",
+      name: '{"breads":["Country Loaf"],"cheeses":["Cheddar Cheese"],"toppings":["Egg Salad","Grilled Rosemary Chicken Breast"],"add_ons":["Red Onion"],"spreads":["Olive Oil","Pesto Sauce"]}',
     },
   })
 
@@ -22,9 +23,9 @@ async function main() {
     where: { email: "alice@prisma.io" },
     update: {},
     create: {
-      firebaseId: "aaaaaa",
-      email: "alice@prisma.io",
-      name: "Alice",
+      firebaseId: "rjn3we2tWMPNmtYDaNDTDwFRCPU2",
+      email: "royalcows9@gmail.com",
+      name: "Julie",
       profile: {
         create: {
           bio: "Alice's Bio",
@@ -32,11 +33,11 @@ async function main() {
       },
       reviews: {
         create: {
-          rating: 0,
+          rating: 2,
           food: {
             connect: {
-              id: sandwich_1.id
-            }
+              id: sandwich_1.id,
+            },
           },
           text: "ReviewText",
         },
@@ -44,11 +45,11 @@ async function main() {
       toTryList: {
         connect: [
           {
-            id: soda_1.id
+            id: soda_1.id,
           },
           {
-            id: sandwich_1.id
-          }
+            id: sandwich_1.id,
+          },
         ],
       },
     },
@@ -71,8 +72,8 @@ async function main() {
           rating: 1,
           food: {
             connect: {
-              id: sandwich_1.id
-            }
+              id: sandwich_1.id,
+            },
           },
           text: "ReviewText",
         },
@@ -81,7 +82,7 @@ async function main() {
         connect: [
           {
             id: sandwich_1.id,
-          }
+          },
         ],
       },
       toTryList: {
@@ -93,7 +94,7 @@ async function main() {
             location: "UCLA",
             type: "soda",
             name: "2",
-          }
+          },
         },
       },
     },

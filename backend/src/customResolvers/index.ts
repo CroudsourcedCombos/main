@@ -4,12 +4,26 @@ import {
   Ctx,
   Field,
   FieldResolver,
+  Mutation,
   Query,
   Resolver,
   Root,
 } from "type-graphql"
-import { FindManyReviewArgs, Food, Review } from "../generatedGraphql"
+import {
+  FindManyReviewArgs,
+  Food,
+  Review,
+  UserWhereUniqueInput,
+} from "../generatedGraphql"
 import { Context } from "../types"
+
+@ArgsType()
+class ToggleTryOrFavArgs {
+  @Field()
+  where: UserWhereUniqueInput
+  @Field()
+  food_name: string
+}
 
 @Resolver((of) => Food)
 class CustomFoodResolver {
@@ -66,6 +80,110 @@ class CustomFoodResolver {
       },
     })
   }
+
+  @Mutation((returns) => Food)
+  async toggleTry(
+    @Args() args: ToggleTryOrFavArgs,
+    @Ctx() { prisma }: Context
+  ) {
+    const current_user = await prisma.user.findFirst({
+      where: args.where,
+      select: {
+        toTryList: true,
+        id: true,
+      },
+    })
+    if (current_user === null) {
+      console.error("Failed to get user for toggleTry")
+      return undefined
+    }
+    let toTry = false
+    let toTryElement: Food
+    for (toTryElement of current_user["toTryList"]) {
+      if (toTryElement.name === args.food_name) {
+        toTry = true
+        break
+      }
+    }
+    // If toTry is true, then disconnect. If toTry is false, then connect.
+    if (toTry)
+      return await prisma.food.update({
+        where: {
+          name: args.food_name,
+        },
+        data: {
+          usersWantTry: {
+            disconnect: {
+              id: current_user.id,
+            },
+          },
+        },
+      })
+    return await prisma.food.update({
+      where: {
+        name: args.food_name,
+      },
+      data: {
+        usersWantTry: {
+          connect: {
+            id: current_user.id,
+          },
+        },
+      },
+    })
+  }
+
+  @Mutation((returns) => Food)
+  async toggleLiked(
+    @Args() args: ToggleTryOrFavArgs,
+    @Ctx() { prisma }: Context
+  ) {
+    const current_user = await prisma.user.findFirst({
+      where: args.where,
+      select: {
+        favoritesList: true,
+        id: true,
+      },
+    })
+    if (current_user === null) {
+      console.error("Failed to get user for toggleTry")
+      return undefined
+    }
+    let fav = false
+    let favElement: Food
+    for (favElement of current_user["favoritesList"]) {
+      if (favElement.name === args.food_name) {
+        fav = true
+        break
+      }
+    }
+    // If toTry is true, then disconnect. If toTry is false, then connect.
+    if (fav)
+      return await prisma.food.update({
+        where: {
+          name: args.food_name,
+        },
+        data: {
+          usersWithFavs: {
+            disconnect: {
+              id: current_user.id,
+            },
+          },
+        },
+      })
+    return await prisma.food.update({
+      where: {
+        name: args.food_name,
+      },
+      data: {
+        usersWithFavs: {
+          connect: {
+            id: current_user.id,
+          },
+        },
+      },
+    })
+  }
 }
 
 @ArgsType()
@@ -85,7 +203,7 @@ class CustomReviewResolver {
       where: {
         ...args.where,
         text: {
-          search: args.search,
+          search: args.search.replace(/\W/g, ""),
         },
       },
       orderBy: args.orderBy,
