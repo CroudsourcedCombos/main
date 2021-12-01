@@ -19,33 +19,33 @@ import { useRouter } from "next/router";
 
 import { _signOut } from "./auth/signOut";
 
-
-// const settings = ["Logout"]; // "Profile", "Account", "Dashboard", 
-const PAGES = ['Add Review', 'Soda', 'Menu', 'Sign In/Up']
-const PAGE_ROUTES = ['add-review', 'sodadex', 'menu', 'sign-in']
+// const settings = ["Logout"]; // "Profile", "Account", "Dashboard",
+const PAGES = ["Add Review", "Soda", "Menu", "Sign In/Up"];
+const PAGE_ROUTES = ["add-review", "sodadex", "menu", "sign-in"];
 
 const styles = {
   navbarLink: {
-    color: 'white',
-    textDecorationColor: 'white'
-  }
-}
-
+    color: "white",
+    textDecorationColor: "white",
+  },
+};
 
 const NavigationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { user, setUser } = useAuth()
-  const router = useRouter()
+  const { user, setUser } = useAuth();
+  const router = useRouter();
 
   // We want settings to dynamically update if signed in or not
 
-  const settings = [user ? 'Sign Out' : 'Sign In']
+  const settings = [user ? "Sign Out" : "Sign In"];
 
   // If the user is signed in, then no sign in/up option
   // TO-DO: Refactor this with useRef?
-  const pages = user ? PAGES.slice(0, PAGES.length - 1) : PAGES
-  const pageRoutes = user ? PAGE_ROUTES.slice(0, PAGE_ROUTES.length - 1) : PAGE_ROUTES 
+  const pages = user ? PAGES.slice(0, PAGES.length - 1) : PAGES;
+  const pageRoutes = user
+    ? PAGE_ROUTES.slice(0, PAGE_ROUTES.length - 1)
+    : PAGE_ROUTES;
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,13 +55,13 @@ const NavigationBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleOpenUserMenu = event => {
-    setAnchorElUser(event.currentTarget)
-  }
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
-  }
+    setAnchorElUser(null);
+  };
 
   const getProfilePicture = () => {
     if (user) return user.photoURL;
@@ -92,7 +92,7 @@ const NavigationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
             LOGO
           </Typography>
@@ -100,14 +100,14 @@ const NavigationBar = () => {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: 'none', md: 'flex' },
-              justifyContent: 'right',
+              display: { xs: "none", md: "flex" },
+              justifyContent: "right",
             }}
           >
             {pages.map((page, index) => (
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: "white", display: "block" }}
                 // component={Link}
                 // to="/sign-in"
                 key={page}
@@ -121,38 +121,37 @@ const NavigationBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0 }}
-              >
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt={getUsername()} src={getProfilePicture()} />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} 
-                onClick={() => {
-                  handleCloseNavMenu()
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    handleCloseNavMenu();
 
-                  // Choose the appropriate action based on if signing in or out
-                  if (setting === 'Sign Out') _signOut()
-                  else router.push('/sign-in')
-                }}>
+                    // Choose the appropriate action based on if signing in or out
+                    if (setting === "Sign Out") _signOut();
+                    else router.push("/sign-in");
+                  }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
