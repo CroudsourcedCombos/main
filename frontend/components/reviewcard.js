@@ -14,7 +14,8 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import Modal from "@mui/material/Modal";
 import ModalReviewCard from "./modal/ModalReviewCard";
-import FreeSolo from "./FreeSolo";
+import TextField from "@mui/material/TextField";
+
 
 const style = {
   position: "absolute",
@@ -65,7 +66,23 @@ function ModalReviews() {
         aria-describedby="modal-modal-description"
       >
         <Container sx={{ maxHeight: "100%", overflow: "auto", width: "70%" }}>
-          <FreeSolo />
+          <Container
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              backgroundColor: "white",
+              width: "80%",
+              marginTop: "10px"
+            }}
+          >
+            <TextField
+              id="standard-basic"
+              label="Search Reviews"
+              variant="standard"
+            />
+          </Container>
+
           <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
           <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
           <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard>
