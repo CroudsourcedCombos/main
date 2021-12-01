@@ -23,6 +23,9 @@ export async function bootstrap() {
       schema,
       plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
       context: (): Context => ({ prisma }),
+      cors: {
+        origin: ["http://localhost:3000", /.*localhost.*/, /.*/],
+      },
     })
 
     // Start the server
