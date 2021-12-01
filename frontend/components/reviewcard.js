@@ -13,9 +13,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import Modal from '@mui/material/Modal';
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Rating from "@mui/material/Rating";
+import ModalReviewCard from './modal/ModalReviewCard';
+import FreeSolo from './FreeSolo';
 
 const style = {
   position: 'absolute',
@@ -51,40 +50,7 @@ const SampleModalReviews = [
 ]
 
 
-
-
-function ModalReviewCard({username, profilePic, stars, reviewText}) {
-  return (<div style={{ display: "flex", justifyContent: "center", padding: '8px' }}>
-        <Card sx = {{width : "100%"}}>
-          <CardHeader
-            avatar={<Avatar alt={username} src={profilePic} />}
-            title={username}
-            subheader="Posting publicly"
-            paddingBottom="2px"
-          />
-
-          <CardContent style={{ paddingTop: "0px" }}>
-            <div>
-              <Rating
-                name="simple-controlled"
-                size="large"
-                value={stars}
-                readOnly = "true"
-              />
-            </div>
-            <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
-              {reviewText}
-            </div>
-          </CardContent>
-          
-        </Card>
-      </div>)
-}
-
-
-
-
-function ModalReview() {
+function ModalReviews() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -100,6 +66,7 @@ function ModalReview() {
         aria-describedby="modal-modal-description"
       >
         <Container sx = {{maxHeight: '100%', overflow : "auto", width: "70%"}}>
+        <FreeSolo/>
         <ModalReviewCard {...SampleModalReviews[0]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[1]}></ModalReviewCard>
         <ModalReviewCard {...SampleModalReviews[2]}></ModalReviewCard>
@@ -172,7 +139,7 @@ export default function ReviewCard({ score, category, ingredients }) {
         <Button onClick = {() => {setAddedToList(!AddedToList)}}>
           {AddedToList ? <PlaylistAddCheckIcon></PlaylistAddCheckIcon> : <PlaylistAddIcon></PlaylistAddIcon>}
         </Button>
-        <ModalReview></ModalReview>
+        <ModalReviews></ModalReviews>
       </Container>
       
     </Card>
