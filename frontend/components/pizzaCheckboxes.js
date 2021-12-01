@@ -10,6 +10,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
 import { Button } from "@mui/material";
+import {gql} from "@apollo/client";
 // import PIZZAS from "../constants/pizza"
 
 const PIZZAS = {
@@ -51,6 +52,37 @@ const PIZZAS = {
     "Tomato",
   ],
 };
+
+const CREATE_PIZZA_REVIEW = gql`
+    mutation CreateSandwichReview(
+        $name: String!,
+        $rating: Int!,
+        $text: String!
+    ) {
+        createReview(data: {
+            author: {
+                connect: {
+                    firebaseId: "rjn3we2tWMPNmtYDaNDTDwFRCPU2"
+                }
+            }
+            food: {
+                connectOrCreate: {
+                    where: {
+                        name: $name
+                    }
+                    create: {
+                        name: $name
+                        type: sandwich
+                    }
+                }
+            }
+            rating: $rating
+            text: $text
+        }) {
+            rating
+        }
+    }
+`
 
 const PizzaReviewRequirements = {
   cheeses: [1, 1],
