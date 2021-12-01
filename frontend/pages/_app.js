@@ -1,12 +1,15 @@
 import '../styles/globals.css'
 
-import { AuthenticatedUserProvider } from '../context/AuthenticatedUserContext'
-import { useEffect } from 'react'
+import {AuthenticatedUserProvider} from '../context/AuthenticatedUserContext'
+import {ApolloProvider} from "@apollo/client";
+import {client} from "../apolo-client";
 
 // Give app access to the authenticated user
-function Application({ Component, pageProps }) {
+function Application({Component, pageProps}) {
   return <AuthenticatedUserProvider>
-    <Component {...pageProps} />
+    <ApolloProvider client={client}>
+      <Component {...pageProps} />
+    </ApolloProvider>
   </AuthenticatedUserProvider>
 }
 
