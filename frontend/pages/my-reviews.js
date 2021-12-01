@@ -71,12 +71,25 @@ const foods = [
 
 const drinks = [
   {
-    score: 10,
+    score: 2,
     category: "Freestyle Drinks",
     id: 1,
     comment: "cant beat original",
   },
+  {
+    score: 3.5,
+    category: "Freestyle Drinks",
+    id: 2,
+    comment: "coolio",
+  },
+  {
+    score: 4,
+    category: "Freestyle Drinks",
+    id: 3,
+    comment: "hype",
+  },
 ];
+
 export default function myReviews({ user }) {
   const [value, setValue] = useState(2);
   const [reviewText, setreviewText] = useState("Controlled");
@@ -114,6 +127,10 @@ export default function myReviews({ user }) {
           <ReviewCard {...foods[2]} />
         </Container>
         <Container sx={{ width: "50%", margin: "10px" }}>
+          <SodaReviewCard {...drinks[0]} />
+          <SodaReviewCard {...drinks[1]} />
+          <SodaReviewCard {...drinks[0]} />
+          <SodaReviewCard {...drinks[1]} />
           <SodaReviewCard {...drinks[0]} />
         </Container>
       </Container>

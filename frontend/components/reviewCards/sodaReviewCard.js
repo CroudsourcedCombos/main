@@ -4,42 +4,39 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { SODAS } from "../../constants/soda";
-
-export default function SodaReviewCard({ score, category, id }) {
-  console.log(id);
+import Rating from "@mui/material/Rating";
+export default function SodaReviewCard({ score, category, id, comment }) {
   const data = SODAS[id];
 
   return (
     <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex" }}>
-      <Container sx={{ width: "20%" }}>
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Rated
-          </Typography>
-          <Typography variant="h2" component="div">
-            {score}
-          </Typography>
-        </CardContent>
-      </Container>
-      <Container sx={{ width: "60%" }}>
+      <Container sx={{ width: "40%" }}>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {category}
           </Typography>
-          <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
+          <Typography variant="h5" color="text.primary" gutterBottom>
             {data["drink"]}
           </Typography>
         </CardContent>
       </Container>
-      <Container
-        sx={{
-          width: "20%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        Image?
+      <Container sx={{ width: "20%", justifyContent: "center" }}>
+        <CardContent>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            Rating
+          </Typography>
+          <Rating value={score} readOnly size="small" />
+        </CardContent>
+      </Container>
+      <Container sx={{ width: "40%" }}>
+        <CardContent>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            Comments
+          </Typography>
+          <Typography variant="h7" color="text.primary" gutterBottom>
+            {comment}
+          </Typography>
+        </CardContent>
       </Container>
     </Card>
   );
