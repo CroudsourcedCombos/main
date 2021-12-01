@@ -1,7 +1,7 @@
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
+const {PHASE_DEVELOPMENT_SERVER} = require('next/constants')
 
 /**
- * @type {import('next').NextConfig}
+ * @return {import('next').NextConfig}
  */
 module.exports = (phase) => {
   return {

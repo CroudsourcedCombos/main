@@ -284,7 +284,7 @@ function SodaDexComponent({user}) {
           />
 
           <CardContent style={{paddingTop: "0px"}}>
-            <div></div>
+            <div/>
             <div
               style={{
                 paddingTop: "8px",
@@ -326,7 +326,7 @@ function SodaDexComponent({user}) {
               paddingRight: "10px",
               paddingBottom: "16px",
             }}
-          ></div>
+          />
         </Card>
       </div>
     </>
@@ -338,5 +338,5 @@ export default function Sodadex() {
   const {user, setUser} = useAuth();
   if (user)
     return <SodaDexComponent user={user}/>
-  return <div>a</div>
+  return <div/>
 }
