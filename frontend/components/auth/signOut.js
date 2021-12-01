@@ -1,5 +1,4 @@
-import Button from '@material-ui/core/Button'
-
+import { Typography, Box, Link, Button } from '@material-ui/core'
 import Firebase from '../../config/firebase'
 
 import { signOut, getAuth } from '@firebase/auth'
