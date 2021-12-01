@@ -96,7 +96,7 @@ function ModalReviews() {
   );
 }
 
-export default function ReviewCard({ score, category, ingredients }) {
+export default function ReviewCard({ score, category, ingredients}) {
   const [IsLiked, setIsLiked] = React.useState(false);
   const [AddedToList, setAddedToList] = React.useState(false);
 
