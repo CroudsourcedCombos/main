@@ -140,7 +140,7 @@ export default function Sodadex() {
   const [rows, setRows] = useState(generateRowsFromSodas);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 50 },
+    { field: "id", headerName: "ID", width: 100 },
     {
       field: "drink",
       headerName: "Soda Flavor",
@@ -223,7 +223,9 @@ export default function Sodadex() {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
-                checkboxSelection
+                disablecheckboxSelection
+                disableColumnMenu
+                disableColumnFilter
                 selectionModel={getHasTriedIndices()}
                 hideFooterSelectedRowCount
                 onSelectionModelChange={(ids) => {
