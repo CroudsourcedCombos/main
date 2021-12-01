@@ -10,6 +10,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
 import { Button } from "@mui/material";
+import {gql} from "@apollo/client";
 // import PIZZAS from "../constants/pizza"
 
 const PIZZAS = {
@@ -51,6 +52,37 @@ const PIZZAS = {
     "Tomato",
   ],
 };
+
+const CREATE_PIZZA_REVIEW = gql`
+    mutation CreateSandwichReview(
+        $name: String!,
+        $rating: Int!,
+        $text: String!
+    ) {
+        createReview(data: {
+            author: {
+                connect: {
+                    firebaseId: "rjn3we2tWMPNmtYDaNDTDwFRCPU2"
+                }
+            }
+            food: {
+                connectOrCreate: {
+                    where: {
+                        name: $name
+                    }
+                    create: {
+                        name: $name
+                        type: sandwich
+                    }
+                }
+            }
+            rating: $rating
+            text: $text
+        }) {
+            rating
+        }
+    }
+`
 
 const PizzaReviewRequirements = {
   cheeses: [1, 1],
@@ -103,6 +135,26 @@ export default function PizzaCheckboxesGroup() {
   function checkExists(type, target) {
     return state[type].includes(target);
   }
+
+  const post = () => {
+    // if (!errors)
+    const errCopy = { ...error };
+
+    const hasNonEmptyStrings = Object.values(errCopy).filter(
+      (x) => x.length > 0
+    ).length > 0;
+
+    if(hasNonEmptyStrings)
+      console.log("errors, will not stringify")
+    else
+      {
+        console.log("no errors")
+        const copy = { ... state}
+        const reviewDataStr = JSON.stringify(copy);
+        console.log(reviewDataStr);
+      }
+  };
+
 
   return (
     <>
@@ -226,6 +278,7 @@ export default function PizzaCheckboxesGroup() {
           }}
         >
           <Button size="small" color="primary" onClick="{post}">
+          <Button size="small" color="primary" onClick={post}>
             Post
           </Button>
         </div>

@@ -18,7 +18,7 @@ export default function SignIn() {
   // If the user is signed in, send them to main page
   useEffect(() => {
     if (user) router.push('/')
-  }, [user])
+  }, [router, user])
 
   return (
     <div className="login">
@@ -64,7 +64,7 @@ export default function SignIn() {
           />
           <Grid>
             <Typography variant="body1" color="textSecondary" component="p">
-              Don't have an account? <Link href="/sign-up">Sign up</Link>!
+              Don%apos;t have an account? <Link href="/sign-up">Sign up</Link>!
             </Typography>
           </Grid>
           <Typography

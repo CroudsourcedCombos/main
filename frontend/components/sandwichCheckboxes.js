@@ -10,6 +10,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import { StarRateRounded } from "@material-ui/icons";
 import { Button } from "@mui/material";
+import {gql, useMutation} from "@apollo/client";
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -55,6 +56,37 @@ const Foods = {
   ],
 };
 
+const CREATE_SANDWICH_REVIEW = gql`
+    mutation CreateSandwichReview(
+        $name: String!,
+        $rating: Int!,
+        $text: String!
+    ) {
+        createReview(data: {
+            author: {
+                connect: {
+                    firebaseId: "rjn3we2tWMPNmtYDaNDTDwFRCPU2"
+                }
+            }
+            food: {
+                connectOrCreate: {
+                    where: {
+                        name: $name
+                    }
+                    create: {
+                        name: $name
+                        type: sandwich
+                    }
+                }
+            }
+            rating: $rating
+            text: $text
+        }) {
+            rating
+        }
+    }
+`
+
 const ReviewRequirements = {
   breads: [1, 1],
   cheeses: [0, 1],
@@ -63,7 +95,7 @@ const ReviewRequirements = {
   spreads: [0, 2],
 };
 
-export default function SandwichCheckboxesGroup() {
+export default function SandwichCheckboxesGroup({rating, reviewText}) {
   const [state, setState] = useState({
     breads: [],
     cheeses: [],
@@ -79,6 +111,8 @@ export default function SandwichCheckboxesGroup() {
     add_ons: "",
     spreads: "",
   });
+
+  const [addSandwich] = useMutation(CREATE_SANDWICH_REVIEW);
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
@@ -105,10 +139,8 @@ export default function SandwichCheckboxesGroup() {
     else if (len > max) errCopy[type] = `You can pick up to ${max} ${type}.`;
     else errCopy[type] = ``;
 
-    console.log(copy);
     setState(copy);
     setError(errCopy);
-    // console.log(copy)
   };
 
   function checkExists(type, target) {
@@ -119,18 +151,23 @@ export default function SandwichCheckboxesGroup() {
     // if (!errors)
     const errCopy = { ...error };
 
-    const hasNonEmptyStrings = Object.values(errCopy).filter(
-      (x) => x.length > 0
-    ).length > 0;
+    const hasNonEmptyStrings =
+      Object.values(errCopy).filter((x) => x.length > 0).length > 0;
 
     if(hasNonEmptyStrings)
       console.log("errors, will not stringify")
     else
       {
-        console.log("no errors")
         const copy = { ... state}
         const reviewDataStr = JSON.stringify(copy);
-        console.log(reviewDataStr);
+        console.log({reviewText});
+        addSandwich({
+          variables: {
+            name: reviewDataStr,
+            rating: rating,
+            text: reviewText
+          }
+        }).then(/* Success */).catch(reason => console.error(reason))
       }
   };
 

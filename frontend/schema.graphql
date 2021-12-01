@@ -121,6 +121,8 @@ type Mutation {
     deleteProfile(where: ProfileWhereUniqueInput!): Profile
     deleteReview(where: ReviewWhereUniqueInput!): Review
     deleteUser(where: UserWhereUniqueInput!): User
+    toggleLiked(food_name: String!, where: UserWhereUniqueInput!): Food!
+    toggleTry(food_name: String!, where: UserWhereUniqueInput!): Food!
     updateFood(data: FoodUpdateInput!, where: FoodWhereUniqueInput!): Food
     updateManyFood(data: FoodUpdateManyMutationInput!, where: FoodWhereInput): AffectedRowsOutput!
     updateManyProfile(data: ProfileUpdateManyMutationInput!, where: ProfileWhereInput): AffectedRowsOutput!
@@ -201,6 +203,7 @@ type Query {
     profiles(cursor: ProfileWhereUniqueInput, distinct: [ProfileScalarFieldEnum!], orderBy: [ProfileOrderByWithRelationInput!], skip: Int, take: Int, where: ProfileWhereInput): [Profile!]!
     review(where: ReviewWhereUniqueInput!): Review
     reviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
+    searchReviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], search: String, skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
     topFoods(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Food!]!
     user(where: UserWhereUniqueInput!): User
     users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
@@ -208,8 +211,8 @@ type Query {
 
 type Review {
     author: User!
-    creationDate: DateTime!
-    editDate: DateTime!
+    creationDate: Timestamp!
+    editDate: Timestamp!
     food: Food!
     foodId: Int!
     id: Int!
@@ -242,8 +245,8 @@ type ReviewGroupBy {
     _max: ReviewMaxAggregate
     _min: ReviewMinAggregate
     _sum: ReviewSumAggregate
-    creationDate: DateTime!
-    editDate: DateTime!
+    creationDate: Timestamp!
+    editDate: Timestamp!
     foodId: Int!
     id: Int!
     rating: Int!
@@ -252,8 +255,8 @@ type ReviewGroupBy {
 }
 
 type ReviewMaxAggregate {
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     foodId: Int
     id: Int
     rating: Int
@@ -262,8 +265,8 @@ type ReviewMaxAggregate {
 }
 
 type ReviewMinAggregate {
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     foodId: Int
     id: Int
     rating: Int
@@ -391,32 +394,32 @@ enum UserScalarFieldEnum {
 }
 
 input DateTimeFieldUpdateOperationsInput {
-    set: DateTime
+    set: Timestamp
 }
 
 input DateTimeFilter {
-    equals: DateTime
-    gt: DateTime
-    gte: DateTime
-    in: [DateTime!]
-    lt: DateTime
-    lte: DateTime
+    equals: Timestamp
+    gt: Timestamp
+    gte: Timestamp
+    in: [Timestamp!]
+    lt: Timestamp
+    lte: Timestamp
     not: NestedDateTimeFilter
-    notIn: [DateTime!]
+    notIn: [Timestamp!]
 }
 
 input DateTimeWithAggregatesFilter {
     _count: NestedIntFilter
     _max: NestedDateTimeFilter
     _min: NestedDateTimeFilter
-    equals: DateTime
-    gt: DateTime
-    gte: DateTime
-    in: [DateTime!]
-    lt: DateTime
-    lte: DateTime
+    equals: Timestamp
+    gt: Timestamp
+    gte: Timestamp
+    in: [Timestamp!]
+    lt: Timestamp
+    lte: Timestamp
     not: NestedDateTimeWithAggregatesFilter
-    notIn: [DateTime!]
+    notIn: [Timestamp!]
 }
 
 input EnumFoodCategoryFieldUpdateOperationsInput {
@@ -813,28 +816,28 @@ input IntWithAggregatesFilter {
 }
 
 input NestedDateTimeFilter {
-    equals: DateTime
-    gt: DateTime
-    gte: DateTime
-    in: [DateTime!]
-    lt: DateTime
-    lte: DateTime
+    equals: Timestamp
+    gt: Timestamp
+    gte: Timestamp
+    in: [Timestamp!]
+    lt: Timestamp
+    lte: Timestamp
     not: NestedDateTimeFilter
-    notIn: [DateTime!]
+    notIn: [Timestamp!]
 }
 
 input NestedDateTimeWithAggregatesFilter {
     _count: NestedIntFilter
     _max: NestedDateTimeFilter
     _min: NestedDateTimeFilter
-    equals: DateTime
-    gt: DateTime
-    gte: DateTime
-    in: [DateTime!]
-    lt: DateTime
-    lte: DateTime
+    equals: Timestamp
+    gt: Timestamp
+    gte: Timestamp
+    in: [Timestamp!]
+    lt: Timestamp
+    lte: Timestamp
     not: NestedDateTimeWithAggregatesFilter
-    notIn: [DateTime!]
+    notIn: [Timestamp!]
 }
 
 input NestedEnumFoodCategoryFilter {
@@ -1138,16 +1141,16 @@ input ReviewCountOrderByAggregateInput {
 
 input ReviewCreateInput {
     author: UserCreateNestedOneWithoutReviewsInput!
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     food: FoodCreateNestedOneWithoutReviewsInput!
     rating: Int!
     text: String
 }
 
 input ReviewCreateManyAuthorInput {
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     foodId: Int!
     id: Int
     rating: Int!
@@ -1160,8 +1163,8 @@ input ReviewCreateManyAuthorInputEnvelope {
 }
 
 input ReviewCreateManyFoodInput {
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     id: Int
     rating: Int!
     text: String
@@ -1174,8 +1177,8 @@ input ReviewCreateManyFoodInputEnvelope {
 }
 
 input ReviewCreateManyInput {
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     foodId: Int!
     id: Int
     rating: Int!
@@ -1208,8 +1211,8 @@ input ReviewCreateOrConnectWithoutFoodInput {
 }
 
 input ReviewCreateWithoutAuthorInput {
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     food: FoodCreateNestedOneWithoutReviewsInput!
     rating: Int!
     text: String
@@ -1217,8 +1220,8 @@ input ReviewCreateWithoutAuthorInput {
 
 input ReviewCreateWithoutFoodInput {
     author: UserCreateNestedOneWithoutReviewsInput!
-    creationDate: DateTime
-    editDate: DateTime
+    creationDate: Timestamp
+    editDate: Timestamp
     rating: Int!
     text: String
 }
@@ -1278,6 +1281,11 @@ input ReviewOrderByWithRelationInput {
     rating: SortOrder
     text: SortOrder
     userId: SortOrder
+}
+
+input ReviewReview_User_Food_Unique_ConstraintCompoundUniqueInput {
+    foodId: Int!
+    userId: Int!
 }
 
 input ReviewScalarWhereInput {
@@ -1421,6 +1429,7 @@ input ReviewWhereInput {
 }
 
 input ReviewWhereUniqueInput {
+    Review_User_Food_Unique_Constraint: ReviewReview_User_Food_Unique_ConstraintCompoundUniqueInput
     id: Int
 }
 
@@ -1847,5 +1856,5 @@ input UserWhereUniqueInput {
 }
 
 
-"The javascript `Date` as string. Type represents date and time as the ISO Date string."
-scalar DateTime
+"The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch."
+scalar Timestamp
