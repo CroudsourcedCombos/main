@@ -75,6 +75,8 @@ const renderAddReviewButton = (
         size="small"
         style={{ marginLeft: 16 }}
         onClick={() => {
+          if (row.rating === "0")
+            return
           // Update the row update status
           row.ifUpdated = true;
           row.server = true;

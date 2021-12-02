@@ -12,10 +12,25 @@ import FoodReviewCard from "../components/reviewCards/otherReviewCard";
 import Typography from "@material-ui/core/Typography";
 import {useState} from "react";
 
+function getLastDay() {
+  const today = new Date();
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, today.getHours());
+}
 
 const GET_REVIEWS = gql`
-    query GetAllData($current_food_type: FoodCategory) {
-        topSoda: topFoods(where: {food: {is: {type: {equals: soda}}}}) {
+    query GetAllData($current_food_type: FoodCategory, $creation_date: DateTime) {
+        topSoda: topFoods(where: {
+            food: {
+                is: {
+                    type: {
+                        equals: soda
+                    }
+                }
+            }
+            creationDate: {
+                gt: $creation_date
+            }
+        }) {
             id
             name
             type
@@ -28,6 +43,7 @@ const GET_REVIEWS = gql`
                 }
                 rating
                 text
+                creationDate
             }
         }
         topOther: topFoods(where: {
@@ -44,6 +60,9 @@ const GET_REVIEWS = gql`
                         }
                     }
                 }
+            }
+            creationDate: {
+                gt: $creation_date
             }
         }) {
             id
@@ -66,14 +85,16 @@ const GET_REVIEWS = gql`
 export default function Index() {
   const [foodTypeFilter, setFoodTypeFilter] = useState("all_types");
   const [timeFilter, setTimeFilter] = useState("all_time");
-
   const {loading, data} = useQuery(GET_REVIEWS, {
     variables: {
-      current_food_type: foodTypeFilter === "all_types" ? undefined : foodTypeFilter
+      current_food_type: foodTypeFilter === "all_types" ? undefined : foodTypeFilter,
+      creation_date: timeFilter === "all_time" ? undefined : getLastDay()
     },
     fetchPolicy: "cache-first",
     pollInterval: 500
   });
+
+  console.log(data)
 
   const handleChangeFoodTypeFilter = (event, newFoodTypeFilter) => {
     if (newFoodTypeFilter !== null)
@@ -91,7 +112,11 @@ export default function Index() {
     return (
       <>
         <NavigationBar/>
-        <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+        <div style={{
+          display: "flex",
+          justifyContent: 'center',
+          paddingTop: '16px'
+        }}>
           <ToggleButtonGroup
             // color="primary"
             value={foodTypeFilter}
@@ -114,7 +139,8 @@ export default function Index() {
   return (
     <>
       <NavigationBar/>
-      <div style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
+      <div
+        style={{display: "flex", justifyContent: 'center', paddingTop: '16px'}}>
         <ToggleButtonGroup
           // color="primary"
           value={foodTypeFilter}
@@ -126,7 +152,7 @@ export default function Index() {
           <ToggleButton value="pizza">Pizza</ToggleButton>
           <ToggleButton value="all_types">All Types</ToggleButton>
         </ToggleButtonGroup>
-        
+
         <ToggleButtonGroup
           // color="primary"
           value={timeFilter}
@@ -134,7 +160,7 @@ export default function Index() {
           onChange={handleChangeTimeFilter}
           style={{paddingLeft: "8px"}}
         >
-          <ToggleButton value="past_week">Past Week</ToggleButton>
+          <ToggleButton value="past_day">Past Day</ToggleButton>
           <ToggleButton value="all_time">All Time</ToggleButton>
         </ToggleButtonGroup>
       </div>
@@ -153,7 +179,8 @@ export default function Index() {
                                        score={datum["overall_rating"]}
                                        name={datum["name"]}/>
               }) :
-              <Typography>No reviews for {foodTypeFilter} yet! Why don&apos;t you leave one?</Typography>
+              <Typography>No reviews for {foodTypeFilter} yet! Why don&apos;t
+                you leave one?</Typography>
           }
         </Container>
         <Container sx={{width: "40%", margin: "10px"}}>
