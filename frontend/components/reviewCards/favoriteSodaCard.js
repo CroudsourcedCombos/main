@@ -6,8 +6,8 @@ import { Container } from "@mui/material";
 import { SODAS } from "../../constants/soda";
 import Rating from "@mui/material/Rating";
 
-export default function FavoriteSodaCard({ score, category, id, comment }) {
-  const data = SODAS[id];
+export default function FavoriteSodaCard({ score, category, name, comment }) {
+  const data = SODAS[name];
 
   return (
     <Card

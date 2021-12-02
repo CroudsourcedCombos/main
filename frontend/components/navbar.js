@@ -12,13 +12,15 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@mui/material/Link";
 
-import { useAuth } from "../context/AuthenticatedUserContext";
-import { useRouter } from "next/router";
-import { _signOut } from "./auth/signOut";
+import {useAuth} from "../context/AuthenticatedUserContext";
+import {useRouter} from "next/router";
+import {_signOut} from "./auth/signOut";
 
 // const settings = ["Logout"]; // "Profile", "Account", "Dashboard",
-const PAGES = ["Add Review", "Soda", "My Reviews", "Menu", "Sign In/Up"];
-const PAGE_ROUTES = ["add-review", "sodadex", "my-reviews", "menu", "sign-in"];
+const PAGES = ["Add Review", "Soda", "To Try", "My Favorites", "Menu",
+  "Sign In/Up"];
+const PAGE_ROUTES = ["add-review", "sodadex", "my-list", "my-favorites", "menu",
+  "sign-in"];
 
 const styles = {
   navbarLink: {
@@ -30,7 +32,7 @@ const styles = {
 const NavigationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { user, setUser } = useAuth();
+  const {user, setUser} = useAuth();
   const router = useRouter();
 
   // We want settings to dynamically update if signed in or not
@@ -78,7 +80,7 @@ const NavigationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            sx={{mr: 2, display: {xs: "none", md: "flex"}}}
           >
             <Link style={styles.navbarLink} href="/">
               Crowdsourced Combos
@@ -89,7 +91,7 @@ const NavigationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            sx={{flexGrow: 1, display: {xs: "flex", md: "none"}}}
           >
             LOGO
           </Typography>
@@ -97,14 +99,14 @@ const NavigationBar = () => {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
+              display: {xs: "none", md: "flex"},
               justifyContent: "right",
             }}
           >
             {pages.map((page, index) => (
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{my: 2, color: "white", display: "block"}}
                 // component={Link}
                 // to="/sign-in"
                 key={page}
@@ -116,14 +118,14 @@ const NavigationBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0, paddingLeft: 4 }}>
+          <Box sx={{flexGrow: 0, paddingLeft: 4}}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={getUsername()} src={getProfilePicture()} />
+              <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                <Avatar alt={getUsername()} src={getProfilePicture()}/>
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{mt: "45px"}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{

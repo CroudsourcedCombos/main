@@ -5,8 +5,8 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { SODAS } from "../../constants/soda";
 
-export default function SavedSodaCard({ score, category, id, comment }) {
-  const data = SODAS[id];
+export default function SavedSodaCard({category, name }) {
+  const data = SODAS[name];
 
   return (
     <Card

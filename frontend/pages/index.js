@@ -94,7 +94,7 @@ export default function Index() {
     pollInterval: 500
   });
 
-  console.log(data)
+
 
   const handleChangeFoodTypeFilter = (event, newFoodTypeFilter) => {
     if (newFoodTypeFilter !== null)
@@ -173,7 +173,7 @@ export default function Index() {
             data !== undefined &&
             data["topOther"] !== undefined &&
             data["topOther"].length !== 0 ?
-              data["topOther"].map((datum) => {
+              [...data["topOther"]].sort((a, b) => (a.overall_rating < b.overall_rating) ? 1 : -1).map((datum) => {
                 return <FoodReviewCard key={datum["id"]}
                                        category={datum["type"]}
                                        score={datum["overall_rating"]}

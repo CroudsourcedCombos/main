@@ -1,11 +1,14 @@
 import ResponsiveAppBar from "../components/navbar";
-import { useState } from "react";
 // import * as React from "react";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
-import { Container } from "@mui/material";
+import {CircularProgress, Container} from "@mui/material";
 import FavoriteFoodCard from "../components/reviewCards/favoriteFoodCard";
+import {useAuth} from "../context/AuthenticatedUserContext";
+import {gql, useQuery} from "@apollo/client";
+import Typography from "@material-ui/core/Typography";
 import FavoriteSodaCard from "../components/reviewCards/favoriteSodaCard";
+
 const foods = [
   {
     score: 10,
@@ -69,12 +72,54 @@ const drinks = [
   },
 ];
 
-export default function myReviews({ user }) {
-  const [value, setValue] = useState(2);
-  const [reviewText, setreviewText] = useState("Controlled");
-  const handleChange = (event) => {
-    setreviewText(event.target.reviewText);
-  };
+const MY_FAVORITES = gql`
+    query GetMyReviews($firebase_id: String!) {
+        foodReviews: foods(where: {
+            usersWithFavs: {some: {firebaseId: {equals: $firebase_id}}}
+            type: {not: {equals: soda}}
+        }) {
+            id
+            name
+            type
+            reviews {
+                id
+                rating
+                text
+                author {
+                    firebaseId
+                }
+            }
+        }
+        sodaReviews: foods(where: {
+            usersWithFavs: {some: {firebaseId: {equals: $firebase_id}}}
+            type: {equals: soda}
+        }) {
+            id
+            name
+            type
+            reviews {
+                id
+                rating
+                text
+                author {
+                    firebaseId
+                }
+            }
+        }
+    }
+`
+
+function MyFavorites({user}) {
+  const {data, loading} = useQuery(MY_FAVORITES, {
+    variables: {
+      firebase_id: user.uid
+    },
+    pollInterval: 500
+  })
+
+  if (loading)
+    return <div/>
+
   const getProfilePicture = () => {
     if (user) return user.photoURL;
     else return "/static/images/avatar/2.jpg";
@@ -87,9 +132,9 @@ export default function myReviews({ user }) {
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar/>
       <CardHeader
-        avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
+        avatar={<Avatar alt={getUsername()} src={getProfilePicture()}/>}
         display="flex"
         justifyContent="center"
         title="My Favorites:"
@@ -97,21 +142,67 @@ export default function myReviews({ user }) {
       />
       <Container
         maxWidth="xl"
-        sx={{ display: "flex", justifyContent: "space-between" }}
+        sx={{display: "flex", justifyContent: "space-between"}}
       >
-        <Container sx={{ width: "50%", margin: "10px" }}>
-          <FavoriteFoodCard {...foods[0]} />
-          <FavoriteFoodCard {...foods[1]} />
-          <FavoriteFoodCard {...foods[2]} />
+        <Container sx={{width: "50%", margin: "10px"}}>
+          {
+            data !== undefined &&
+            data["foodReviews"] !== undefined &&
+            data["foodReviews"].length !== 0 ?
+              data["foodReviews"].map((datum) => {
+                let rating = 0
+                datum["reviews"].forEach(thing => {
+                  if (thing["author"]["firebaseId"] === user.uid) {
+                    rating = thing["rating"]
+                  }
+                })
+                return <FavoriteFoodCard key={datum["id"]}
+                                         category={datum["type"]}
+                                         score={rating}
+                                         name={datum["name"]}/>
+              }) :
+              <Typography>No reviews for foods yet! Why don&apos;t
+                you leave one?</Typography>
+          }
         </Container>
-        <Container sx={{ width: "50%", margin: "10px" }}>
-          <FavoriteSodaCard {...drinks[0]} />
-          <FavoriteSodaCard {...drinks[1]} />
-          <FavoriteSodaCard {...drinks[0]} />
-          <FavoriteSodaCard {...drinks[1]} />
-          <FavoriteSodaCard {...drinks[0]} />
+        <Container sx={{width: "50%", margin: "10px"}}>
+          {
+            data !== undefined &&
+            data["sodaReviews"] !== undefined &&
+            data["sodaReviews"].length !== 0 ?
+              data["sodaReviews"].map((datum) => {
+                let rating = 0
+                datum["reviews"].forEach(thing => {
+                  if (thing["author"]["firebaseId"] === user.uid) {
+                    rating = thing["rating"]
+                  }
+                })
+                return <FavoriteSodaCard key={datum["id"]}
+                                         category={datum["type"]}
+                                         score={rating}
+                                         name={parseInt(datum["name"])}/>
+              }) :
+              <Typography>No reviews for foods yet! Why don&apos;t
+                you leave one?</Typography>
+          }
         </Container>
       </Container>
     </>
   );
+
+}
+
+export default function MyFavoritesWrapper() {
+  const {user} = useAuth();
+  if (user)
+    return <MyFavorites user={user}/>
+  return <>
+    <ResponsiveAppBar/>
+    <Container
+      maxWidth="xl"
+      sx={{display: "flex", justifyContent: "center", alignItems: "center"}}
+    >
+      <CircularProgress/>
+    </Container>
+  </>
 }

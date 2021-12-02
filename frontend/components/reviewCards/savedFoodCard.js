@@ -5,7 +5,9 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
-export default function SavedFoodCard({  category, ingredients }) {
+export default function SavedFoodCard({  category, name}) {
+  const ingredients = JSON.parse(name)
+
   // Format ingredients to be all strings
   function formatIngredient(ingredients) {
     // If it's an array, format it
@@ -15,6 +17,7 @@ export default function SavedFoodCard({  category, ingredients }) {
   }
 
   function titleCase(str) {
+    if (str === "") return "";
     const words = str.split(/\s+/);
     const titleCaseArr = words.map(
       (substr) => substr[0].toUpperCase() + substr.slice(1)

@@ -3,9 +3,13 @@ import { useState } from "react";
 // import * as React from "react";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
-import { Container } from "@mui/material";
+import {CircularProgress, Container} from "@mui/material";
 import SavedFoodCard from "../components/reviewCards/savedFoodCard";
 import SavedSodaCard from "../components/reviewCards/savedSodaCard";
+import {gql, useQuery} from "@apollo/client";
+import {useAuth} from "../context/AuthenticatedUserContext";
+import FavoriteFoodCard from "../components/reviewCards/favoriteFoodCard";
+import Typography from "@material-ui/core/Typography";
 const foods = [
   {
     score: 10,
@@ -69,12 +73,36 @@ const drinks = [
   },
 ];
 
-export default function myReviews({ user }) {
-  const [value, setValue] = useState(2);
-  const [reviewText, setreviewText] = useState("Controlled");
-  const handleChange = (event) => {
-    setreviewText(event.target.reviewText);
-  };
+const MY_LIST = gql`
+    query GetWantTry($firebase_id: String!) {
+        foodReviews: foods(where: {
+            usersWantTry: {some: {firebaseId: {equals: $firebase_id}}}
+            type: {not: {equals: soda}}
+        }) {
+            id
+            name
+            type
+        }
+        sodaReviews: foods(where: {
+            usersWantTry: {some: {firebaseId: {equals: $firebase_id}}}
+            type: {equals: soda}
+        }) {
+            id
+            name
+            type
+        }
+    }
+`
+
+
+function MyList({ user }) {
+  const {data, loading} = useQuery(MY_LIST, {
+    variables: {
+      firebase_id: user.uid
+    },
+    pollInterval: 500
+  })
+
   const getProfilePicture = () => {
     if (user) return user.photoURL;
     else return "/static/images/avatar/2.jpg";
@@ -87,7 +115,7 @@ export default function myReviews({ user }) {
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar/>
       <CardHeader
         avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
         display="flex"
@@ -100,18 +128,49 @@ export default function myReviews({ user }) {
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
         <Container sx={{ width: "50%", margin: "10px" }}>
-          <SavedFoodCard {...foods[0]} />
-          <SavedFoodCard {...foods[1]} />
-          <SavedFoodCard {...foods[2]} />
+          {
+            data !== undefined &&
+            data["foodReviews"] !== undefined &&
+            data["foodReviews"].length !== 0 ?
+              data["foodReviews"].map((datum) => {
+                return <SavedFoodCard key={datum["id"]}
+                                         category={datum["type"]}
+                                         name={datum["name"]}/>
+              }) :
+              <Typography>No reviews for foods yet! Why don&apos;t
+                you leave one?</Typography>
+          }
         </Container>
         <Container sx={{ width: "50%", margin: "10px" }}>
-          <SavedSodaCard {...drinks[0]} />
-          <SavedSodaCard {...drinks[1]} />
-          <SavedSodaCard {...drinks[0]} />
-          <SavedSodaCard {...drinks[1]} />
-          <SavedSodaCard {...drinks[0]} />
+          {
+            data !== undefined &&
+            data["sodaReviews"] !== undefined &&
+            data["sodaReviews"].length !== 0 ?
+              data["sodaReviews"].map((datum) => {
+                return <SavedSodaCard key={datum["id"]}
+                                      category={datum["type"]}
+                                      name={parseInt(datum["name"])}/>
+              }) :
+              <Typography>No reviews for foods yet! Why don&apos;t
+                you leave one?</Typography>
+          }
         </Container>
       </Container>
     </>
   );
+}
+
+export default function MyListWrapper() {
+  const {user} = useAuth();
+  if (user)
+    return <MyList user={user}/>
+  return <>
+    <ResponsiveAppBar/>
+    <Container
+      maxWidth="xl"
+      sx={{display: "flex", justifyContent: "center", alignItems: "center"}}
+    >
+      <CircularProgress/>
+    </Container>
+  </>
 }

@@ -2,10 +2,12 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
+import {Container} from "@mui/material";
 import Rating from "@mui/material/Rating";
-import Button from "@mui/material/Button";
-export default function FavoriteFoodCard({ score, category, ingredients }) {
+
+export default function FavoriteFoodCard({score, category, name}) {
+  const ingredients = JSON.parse(name)
+
   // Format ingredients to be all strings
   function formatIngredient(ingredients) {
     // If it's an array, format it
@@ -15,12 +17,14 @@ export default function FavoriteFoodCard({ score, category, ingredients }) {
   }
 
   function titleCase(str) {
+    if (str === "") return "";
     const words = str.split(/\s+/);
     const titleCaseArr = words.map(
       (substr) => substr[0].toUpperCase() + substr.slice(1)
     );
     return titleCaseArr.join(" ");
   }
+
   return (
     <Card
       sx={{
@@ -31,7 +35,7 @@ export default function FavoriteFoodCard({ score, category, ingredients }) {
         flexDirection: "column",
       }}
     >
-      <Container sx={{ width: "100%", paddingTop: "20px" }}>
+      <Container sx={{width: "100%", paddingTop: "20px"}}>
         <CardContent
           sx={{
             display: "flex",
@@ -41,7 +45,7 @@ export default function FavoriteFoodCard({ score, category, ingredients }) {
             },
           }}
         >
-          <Typography sx={{ fontSize: 15 }} color="primary">
+          <Typography sx={{fontSize: 15}} color="primary">
             {category}
           </Typography>
           <CardContent
@@ -54,12 +58,12 @@ export default function FavoriteFoodCard({ score, category, ingredients }) {
             }}
           >
             <Typography
-              sx={{ fontSize: 15, paddingRight: "15px" }}
+              sx={{fontSize: 15, paddingRight: "15px"}}
               color="text.secondary"
             >
               {"Rating: "}
             </Typography>
-            <Rating value={score} readOnly size="medium" />
+            <Rating value={score} readOnly size="medium"/>
           </CardContent>
         </CardContent>
         <CardContent
@@ -73,7 +77,8 @@ export default function FavoriteFoodCard({ score, category, ingredients }) {
           }}
         >
           {Object.keys(ingredients).map((key) => (
-            <Typography sx={{ fontSize: 12 }} color="text.primary" gutterBottom>
+            <Typography key={key} sx={{fontSize: 12}} color="text.primary"
+                        gutterBottom>
               {titleCase(key)}:{" "}
               <strong>{formatIngredient(ingredients[key])}</strong>
             </Typography>
