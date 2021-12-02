@@ -15,6 +15,8 @@ This requires running the database, which takes a decent bit of manual configura
 
 For an interactive API playground, go to http://localhost:4000
 
+Note: Make sure there are no other instances of this backend running on the same machine, as duplicates will have issues running due to using the same host.
+
 ### Frontend
 Now we can start up the frontend! Open a new terminal and do the following:
 1. `cd frontend` to navigate to the frontend folder
