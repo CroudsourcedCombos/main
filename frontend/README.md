@@ -1,6 +1,6 @@
 # About
 
-CrowdSourced Combos is a web app designed for UCLA students to share reviews o their favorite sandwich and drink combinations from The Study!
+CrowdSourced Combos is a web app designed for UCLA students to share reviews for their favorite sandwich, pizza, and drinks from The Study! There are many different combinations of ingredients that can be picked for the sandwiches and pizzas, and this web app shows crowdsourced ratings for the different combinations of ingredients.
 
 The frontend uses Material UI components with Next.js. 
 
@@ -28,6 +28,14 @@ Add a new file `.env.local` and add required environment variables (see `.env.ex
 To run the development server: `npm run dev`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Reviews can be seen in the http://localhost:3000/ page. Reviews for pizza and sandwiches can be added by clicking on the ADD REVIEW button on the navigation bar on the top of the screen. 
+Then, click on the number of stars for the review, and then write text explaining the review and the opinion on the food. Then, click the toggle with possible values SANDWICH and PIZZA and select the food type that is being reviewed.
+Lastly, check the boxes corresponding to the ingredients in the food and then click post to send the review data to the server.
+
+Reviews for soda can be added by clicking on the SODA button on the navigation bar on the top of the screen. In the row corresponding to the soda flavor that is to be reviewed, click on the number of stars for the review, and then write text explaining the review and the opinion on the soda. Finally, press the SAVED button for that row to send the soda review data to the server 
+
+## Changing the code
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
