@@ -8,11 +8,10 @@ This requires running the database, which takes a decent bit of manual configura
 (this isn't in a shell script because some of these can be a bit tempermental and require manual troubleshooting or configuration choices)
 1. `cd backend` to get into the right folder for all these commands
 2. `npm i` to get everything you need installed and generate important prisma information you will need to build. Wait for this to continue.
-3. `mv .env.example .env` and modify the file to change the password or username. Make sure to reflect these changes in `docker-compose.yml`. The defaults will be fine for local testing.
-4. `docker compose up` to start up the database. Wait for this to finish before continuing.
-5. `npm run reset-seed` to 1) nuke the database to a clean slate (not important here but useful in other cases) 2) update the database to reflect the status of the schema 3) load seed data into the database
-6. `npm run build` to build the typescript files to js to be ran with node
-7. `npm run start` to start the server and you're good to go!
+3. `docker compose up` to start up the database. Wait for this to finish before continuing.
+4. `npm run reset-seed` to 1) nuke the database to a clean slate (not important here but useful in other cases) 2) update the database to reflect the status of the schema 3) load seed data into the database
+5. `npm run build` to build the typescript files to js to be ran with node
+6. `npm run start` to start the server and you're good to go!
 
 For an interactive API playground, go to http://localhost:4000
 
@@ -21,7 +20,7 @@ Now we can start up the frontend! Open a new terminal and do the following:
 1. `cd frontend` to navigate to the frontend folder
 2. `npm i` to install everything. This one takes a bit! NextJS is pretty thicc
 3. `npm run build` to create an optimized production build of the nextjs app. This can also take a minute or two as well.
-4. `npm run serve` to serve the compiled app. You're good to go!
+4. `npm run start` to start the compiled app. You're good to go!
 
 ## How to use
 Reviews can be seen in the http://localhost:3000/ page. Reviews for pizza and sandwiches can be added by clicking on the ADD REVIEW button on the navigation bar on the top of the screen. 
