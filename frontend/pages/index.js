@@ -65,6 +65,8 @@ const GET_REVIEWS = gql`
 
 export default function Index() {
   const [foodTypeFilter, setFoodTypeFilter] = useState("all_types");
+  const [timeFilter, setTimeFilter] = useState("all_time");
+
   const {loading, data} = useQuery(GET_REVIEWS, {
     variables: {
       current_food_type: foodTypeFilter === "all_types" ? undefined : foodTypeFilter
@@ -76,6 +78,13 @@ export default function Index() {
   const handleChangeFoodTypeFilter = (event, newFoodTypeFilter) => {
     if (newFoodTypeFilter !== null)
       setFoodTypeFilter(newFoodTypeFilter);
+    // console.log(foodTypeFilter)
+  };
+
+  const handleChangeTimeFilter = (event, newTimeFilter) => {
+    if (newTimeFilter !== null)
+      setTimeFilter(newTimeFilter);
+    // console.log(timeFilter)
   };
 
   if (loading)
@@ -111,10 +120,22 @@ export default function Index() {
           value={foodTypeFilter}
           exclusive
           onChange={handleChangeFoodTypeFilter}
+          style={{paddingRight: "8px"}}
         >
           <ToggleButton value="sandwich">Sandwich</ToggleButton>
           <ToggleButton value="pizza">Pizza</ToggleButton>
           <ToggleButton value="all_types">All Types</ToggleButton>
+        </ToggleButtonGroup>
+        
+        <ToggleButtonGroup
+          // color="primary"
+          value={timeFilter}
+          exclusive
+          onChange={handleChangeTimeFilter}
+          style={{paddingLeft: "8px"}}
+        >
+          <ToggleButton value="past_week">Past Week</ToggleButton>
+          <ToggleButton value="all_time">All Time</ToggleButton>
         </ToggleButtonGroup>
       </div>
       <Container
