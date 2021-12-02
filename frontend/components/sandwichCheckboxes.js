@@ -1,18 +1,17 @@
 // import * as React from "react";
 import { useState } from "react";
 
-import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormHelperText from "@mui/material/FormHelperText";
-import Checkbox from "@mui/material/Checkbox";
-import { StarRateRounded } from "@material-ui/icons";
-import { Button } from "@mui/material";
 import {gql, useMutation} from "@apollo/client";
-
 import { useAuth } from "../context/AuthenticatedUserContext";
+
+import Box from '@mui/material/Box'
+import FormLabel from '@mui/material/FormLabel'
+import FormControl from '@mui/material/FormControl'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormHelperText from '@mui/material/FormHelperText'
+import Checkbox from '@mui/material/Checkbox'
+import Button from '@mui/material/Button'
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
