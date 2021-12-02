@@ -5,7 +5,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
 import { Container } from "@mui/material";
 import MyFoodReviewCard from "../components/reviewCards/myFoodReviewCard";
-import SodaReviewCard from "../components/reviewCards/sodaReviewCard";
+import MySodaReviewCard from "../components/reviewCards/mySodaReviewCard";
 
 const foods = [
   {
@@ -106,11 +106,11 @@ export default function myReviews({ user }) {
           <MyFoodReviewCard {...foods[2]} />
         </Container>
         <Container sx={{ width: "50%", margin: "10px" }}>
-          <SodaReviewCard {...drinks[0]} />
-          <SodaReviewCard {...drinks[1]} />
-          <SodaReviewCard {...drinks[0]} />
-          <SodaReviewCard {...drinks[1]} />
-          <SodaReviewCard {...drinks[0]} />
+          <MySodaReviewCard {...drinks[0]} />
+          <MySodaReviewCard {...drinks[1]} />
+          <MySodaReviewCard {...drinks[0]} />
+          <MySodaReviewCard {...drinks[1]} />
+          <MySodaReviewCard {...drinks[0]} />
         </Container>
       </Container>
     </>
