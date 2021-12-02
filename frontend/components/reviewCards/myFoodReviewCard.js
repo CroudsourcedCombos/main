@@ -2,10 +2,12 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
+import {Container} from "@mui/material";
 import Rating from "@mui/material/Rating";
 
-export default function MyFoodReviewCard({ score, category, ingredients }) {
+export default function MyFoodReviewCard({score, category, name, text}) {
+  const ingredients = JSON.parse(name)
+
   // Format ingredients to be all strings
   function formatIngredient(ingredients) {
     // If it's an array, format it
@@ -17,12 +19,14 @@ export default function MyFoodReviewCard({ score, category, ingredients }) {
   // Title case any strings
   // TO-DO: Move this to be shared across multiple components
   function titleCase(str) {
+    if (str === "") return "";
     const words = str.split(/\s+/);
     const titleCaseArr = words.map(
       (substr) => substr[0].toUpperCase() + substr.slice(1)
     );
     return titleCaseArr.join(" ");
   }
+
   return (
     <Card
       sx={{
@@ -33,7 +37,7 @@ export default function MyFoodReviewCard({ score, category, ingredients }) {
         flexDirection: "column",
       }}
     >
-      <Container sx={{ width: "100%", paddingTop: "20px" }}>
+      <Container sx={{width: "100%", paddingTop: "20px"}}>
         <CardContent
           sx={{
             display: "flex",
@@ -43,7 +47,7 @@ export default function MyFoodReviewCard({ score, category, ingredients }) {
             },
           }}
         >
-          <Typography sx={{ fontSize: 11 }} color="text.secondary">
+          <Typography sx={{fontSize: 11}} color="text.secondary">
             {category}
           </Typography>
           <CardContent
@@ -56,12 +60,12 @@ export default function MyFoodReviewCard({ score, category, ingredients }) {
             }}
           >
             <Typography
-              sx={{ fontSize: 11, paddingRight: "15px" }}
+              sx={{fontSize: 11, paddingRight: "15px"}}
               color="text.secondary"
             >
               {"Rating: "}
             </Typography>
-            <Rating value={score} readOnly size="medium" />
+            <Rating value={score} readOnly size="medium"/>
           </CardContent>
         </CardContent>
         <CardContent
@@ -76,32 +80,34 @@ export default function MyFoodReviewCard({ score, category, ingredients }) {
           }}
         >
           {Object.keys(ingredients).map((key) => (
-            <Typography sx={{ fontSize: 12 }} color="text.primary" gutterBottom>
+            <Typography sx={{fontSize: 12}} color="text.primary" gutterBottom>
               {titleCase(key)}:{" "}
               <strong>{formatIngredient(ingredients[key])}</strong>
             </Typography>
           ))}
         </CardContent>
       </Container>
-      <Container sx={{ width: "100%" }}>
-        <CardContent>
-          <Typography
-            sx={{
-              fontSize: 14,
-              "&:last-child": {
-                paddingBottom: 0,
-              },
-            }}
-            color="text.secondary"
-            gutterBottom
-          >
-            Comments
-          </Typography>
-          <Typography variant="h7" color="text.primary" gutterBottom>
-            "Text goes here djfahkjsdhfas sdfhjkasdfhasdjfhcs"
-          </Typography>
-        </CardContent>
-      </Container>
+      {
+        text !== "" ? <Container sx={{width: "100%"}}>
+          <CardContent>
+            <Typography
+              sx={{
+                fontSize: 14,
+                "&:last-child": {
+                  paddingBottom: 0,
+                },
+              }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Comments
+            </Typography>
+            <Typography variant="h7" color="text.primary" gutterBottom>
+              {text}
+            </Typography>
+          </CardContent>
+        </Container> : <></>
+      }
     </Card>
   );
 }

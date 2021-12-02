@@ -1,11 +1,13 @@
 import ResponsiveAppBar from "../components/navbar";
-import { useState } from "react";
 // import * as React from "react";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
-import { Container } from "@mui/material";
+import {CircularProgress, Container} from "@mui/material";
 import MyFoodReviewCard from "../components/reviewCards/myFoodReviewCard";
 import MySodaReviewCard from "../components/reviewCards/mySodaReviewCard";
+import {gql, useQuery} from "@apollo/client";
+import {useAuth} from "../context/AuthenticatedUserContext";
+import Typography from "@material-ui/core/Typography";
 
 const foods = [
   {
@@ -70,12 +72,45 @@ const drinks = [
   },
 ];
 
-export default function myReviews({ user }) {
-  const [value, setValue] = useState(2);
-  const [reviewText, setreviewText] = useState("Controlled");
-  const handleChange = (event) => {
-    setreviewText(event.target.reviewText);
-  };
+const GET_MY_REVIEWS = gql`query Get_Reviews($firebase_id: String!) {
+    sodaReviews: reviews(where: {food: {is: {type: {equals: soda}}}
+        author: {is: {firebaseId: {equals: $firebase_id}}}}) {
+        id
+        food {
+            name
+            type
+            id
+        }
+        rating
+        text
+    }
+    foodReviews: reviews(where: {food: {is: {type: {not: {equals: soda}}}}
+        author: {is: {firebaseId: {equals: $firebase_id}}}}) {
+        id
+        food {
+            name
+            type
+            id
+        }
+        rating
+        text
+    }
+}
+`
+
+function MyReviews({user}) {
+  const {data, loading} = useQuery(GET_MY_REVIEWS, {
+    variables: {
+      firebase_id: user.uid
+    }
+  })
+
+  if (loading) {
+    return <div/>
+  }
+
+  console.log({data})
+
   const getProfilePicture = () => {
     if (user) return user.photoURL;
     else return "/static/images/avatar/2.jpg";
@@ -88,9 +123,9 @@ export default function myReviews({ user }) {
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar/>
       <CardHeader
-        avatar={<Avatar alt={getUsername()} src={getProfilePicture()} />}
+        avatar={<Avatar alt={getUsername()} src={getProfilePicture()}/>}
         display="flex"
         justifyContent="center"
         title="My Reviews:"
@@ -98,14 +133,26 @@ export default function myReviews({ user }) {
       />
       <Container
         maxWidth="xl"
-        sx={{ display: "flex", justifyContent: "space-between" }}
+        sx={{display: "flex", justifyContent: "space-between"}}
       >
-        <Container sx={{ width: "50%", margin: "10px" }}>
-          <MyFoodReviewCard {...foods[0]} />
-          <MyFoodReviewCard {...foods[1]} />
-          <MyFoodReviewCard {...foods[2]} />
+        <Container sx={{width: "50%", margin: "10px"}}>
+          {
+            data !== undefined &&
+            data["foodReviews"] !== undefined &&
+            data["foodReviews"].length !== 0 ?
+              data["foodReviews"].map((datum) => {
+                console.log({datum})
+                return <MyFoodReviewCard key={datum["id"]}
+                                         category={datum["food"]["type"]}
+                                         score={datum["rating"]}
+                                         name={datum["food"]["name"]}
+                                         text={datum["text"]}/>
+              }) :
+              <Typography>No reviews for foods yet! Why don&apos;t
+                you leave one?</Typography>
+          }
         </Container>
-        <Container sx={{ width: "50%", margin: "10px" }}>
+        <Container sx={{width: "50%", margin: "10px"}}>
           <MySodaReviewCard {...drinks[0]} />
           <MySodaReviewCard {...drinks[1]} />
           <MySodaReviewCard {...drinks[0]} />
@@ -115,4 +162,20 @@ export default function myReviews({ user }) {
       </Container>
     </>
   );
+
+}
+
+export default function MyReviewsWrapper() {
+  const {user} = useAuth();
+  if (user)
+    return <MyReviews user={user}/>
+  return <>
+    <ResponsiveAppBar/>
+    <Container
+      maxWidth="xl"
+      sx={{display: "flex", justifyContent: "center", alignItems: "center"}}
+    >
+      <CircularProgress/>
+    </Container>
+  </>
 }
