@@ -6,8 +6,8 @@ import {Container} from "@mui/material";
 import {SODAS} from "../../constants/soda";
 import Rating from "@mui/material/Rating";
 
-export default function MySodaReviewCard({score, category, id, comment}) {
-  const data = SODAS[id];
+export default function MySodaReviewCard({score, category, name, text}) {
+  const data = SODAS[name];
 
   return (
     <Card
@@ -46,7 +46,7 @@ export default function MySodaReviewCard({score, category, id, comment}) {
             Comments
           </Typography>
           <Typography variant="h7" color="text.primary" gutterBottom>
-            {comment}
+            {text}
           </Typography>
         </CardContent>
       </Container>

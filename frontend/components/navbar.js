@@ -17,8 +17,8 @@ import { useRouter } from "next/router";
 import { _signOut } from "./auth/signOut";
 
 // const settings = ["Logout"]; // "Profile", "Account", "Dashboard",
-const PAGES = ["Add Review", "Soda", "Menu", "Sign In/Up"];
-const PAGE_ROUTES = ["add-review", "sodadex", "menu", "sign-in"];
+const PAGES = ["Add Review", "Soda", "My Reviews", "Menu", "Sign In/Up"];
+const PAGE_ROUTES = ["add-review", "sodadex", "my-reviews", "menu", "sign-in"];
 
 const styles = {
   navbarLink: {

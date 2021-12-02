@@ -141,7 +141,6 @@ function MyReviews({user}) {
             data["foodReviews"] !== undefined &&
             data["foodReviews"].length !== 0 ?
               data["foodReviews"].map((datum) => {
-                console.log({datum})
                 return <MyFoodReviewCard key={datum["id"]}
                                          category={datum["food"]["type"]}
                                          score={datum["rating"]}
@@ -153,11 +152,20 @@ function MyReviews({user}) {
           }
         </Container>
         <Container sx={{width: "50%", margin: "10px"}}>
-          <MySodaReviewCard {...drinks[0]} />
-          <MySodaReviewCard {...drinks[1]} />
-          <MySodaReviewCard {...drinks[0]} />
-          <MySodaReviewCard {...drinks[1]} />
-          <MySodaReviewCard {...drinks[0]} />
+          {
+            data !== undefined &&
+            data["sodaReviews"] !== undefined &&
+            data["sodaReviews"].length !== 0 ?
+              data["sodaReviews"].map((datum) => {
+                return <MySodaReviewCard key={datum["id"]}
+                                         category={datum["food"]["type"]}
+                                         score={datum["rating"]}
+                                         name={parseInt(datum["food"]["name"])}
+                                         text={datum["text"]}/>
+              }) :
+              <Typography>No reviews for sodas yet! Why don&apos;t
+                you leave one?</Typography>
+          }
         </Container>
       </Container>
     </>
