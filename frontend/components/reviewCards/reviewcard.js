@@ -1,6 +1,6 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import {Container} from "@mui/material";
+import { Container } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -11,8 +11,7 @@ import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import Modal from "@mui/material/Modal";
 import ModalReviewCard from "../modal/ModalReviewCard";
 import TextField from "@mui/material/TextField";
-import {gql, useMutation, useQuery} from "@apollo/client";
-
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 const style = {
   position: "absolute",
@@ -27,83 +26,87 @@ const style = {
 };
 
 const GET_USER_LISTS_FOR_FOOD = gql`
-    query GetUserLists($firebase_id: String!, $food_id: String!) {
-        fav_foods: foods(where: {usersWithFavs: {some: {firebaseId: {equals: $firebase_id}}} name: {equals: $food_id}}) {
-            name
-            usersWithFavs {
-                name
-            }
-            id
-        }
-        to_try_foods: foods(where: {usersWantTry: {some: {firebaseId: {equals: $firebase_id}}} name: {equals: $food_id}}) {
-            name
-            usersWantTry {
-                name
-            }
-            id
-        }
+  query GetUserLists($firebase_id: String!, $food_id: String!) {
+    fav_foods: foods(
+      where: {
+        usersWithFavs: { some: { firebaseId: { equals: $firebase_id } } }
+        name: { equals: $food_id }
+      }
+    ) {
+      name
+      usersWithFavs {
+        name
+      }
+      id
     }
-`
+    to_try_foods: foods(
+      where: {
+        usersWantTry: { some: { firebaseId: { equals: $firebase_id } } }
+        name: { equals: $food_id }
+      }
+    ) {
+      name
+      usersWantTry {
+        name
+      }
+      id
+    }
+  }
+`;
 
 const TOGGLE_TRY = gql`
-    mutation ToggleTry($firebase_id: String!, $food_name: String!) {
-        toggleTry(
-            food_name: $food_name
-            where: {firebaseId: $firebase_id}
-        ) {
-            usersWantTry {
-                firebaseId
-                id
-            }
-            __typename
-            id
-        }
+  mutation ToggleTry($firebase_id: String!, $food_name: String!) {
+    toggleTry(food_name: $food_name, where: { firebaseId: $firebase_id }) {
+      usersWantTry {
+        firebaseId
+        id
+      }
+      __typename
+      id
     }
-`
+  }
+`;
 
 const TOGGLE_FAV = gql`
-    mutation ToggleLiked($firebase_id: String!, $food_name: String!) {
-        toggleLiked(
-            food_name: $food_name
-            where: {firebaseId: $firebase_id}
-        ) {
-            usersWithFavs {
-                firebaseId
-                id
-            }
-            __typename
-            id
-        }
+  mutation ToggleLiked($firebase_id: String!, $food_name: String!) {
+    toggleLiked(food_name: $food_name, where: { firebaseId: $firebase_id }) {
+      usersWithFavs {
+        firebaseId
+        id
+      }
+      __typename
+      id
     }
-`
+  }
+`;
 
 const GET_REVIEWS = gql`
-    query GetReviews($food_name: String!, $search_term: String) {
-        reviews: searchReviews(
-            where: {food: {is: {name: {equals: $food_name}}}}
-            orderBy: [{creationDate: asc}]
-            search: $search_term
-        ) {
-            id
-            author {
-                id
-                name
-            }
-            rating
-            text
-        }
+  query GetReviews($food_name: String!, $search_term: String) {
+    reviews: searchReviews(
+      where: { food: { is: { name: { equals: $food_name } } } }
+      orderBy: [{ creationDate: asc }]
+      search: $search_term
+    ) {
+      id
+      author {
+        id
+        name
+      }
+      rating
+      text
     }
-`
+  }
+`;
 
-function ModalReviews({foodId}) {
+function ModalReviews({ foodId }) {
   const [open, setOpen] = React.useState(false);
   const [search_value, set_search_value] = React.useState("");
-  const {data, loading, refetch, variables} = useQuery(GET_REVIEWS, {
+  const { data, loading, refetch, variables } = useQuery(GET_REVIEWS, {
     variables: {
-      food_name: foodId
+      food_name: foodId,
     },
-    fetchPolicy: "cache-first"
-  })
+    fetchPolicy: "cache-first",
+  });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -111,15 +114,13 @@ function ModalReviews({foodId}) {
     if (event.code === "Enter") {
       await refetch({
         food_name: foodId,
-        search_term: search_value !== "" ? search_value : undefined
-      })
+        search_term: search_value !== "" ? search_value : undefined,
+      });
     }
-  }
-  if (loading)
-    return <div/>
+  };
+  if (loading) return <div />;
 
-  if (!data)
-    return <Typography>No data to display</Typography>
+  if (!data) return <Typography>No data to display</Typography>;
 
   return (
     <div>
@@ -131,7 +132,7 @@ function ModalReviews({foodId}) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Container sx={{maxHeight: "100%", overflow: "auto", width: "70%"}}>
+          <Container sx={{ maxHeight: "100%", overflow: "auto", width: "70%" }}>
             <Container
               sx={{
                 display: "flex",
@@ -139,7 +140,7 @@ function ModalReviews({foodId}) {
                 justifyContent: "center",
                 backgroundColor: "white",
                 width: "80%",
-                marginTop: "10px"
+                marginTop: "10px",
               }}
             >
               <TextField
@@ -147,23 +148,26 @@ function ModalReviews({foodId}) {
                 label="Search Reviews"
                 variant="standard"
                 value={search_value}
-                onChange={
-                  (event) =>
-                    set_search_value(event.target.value)
-                }
+                onChange={(event) => set_search_value(event.target.value)}
                 onKeyDown={handleSearch}
               />
             </Container>
 
-            {data["reviews"].length > 0 ?
-              data["reviews"].map(datum => {
-                return <ModalReviewCard key={datum["id"]}
-                                        reviewText={datum["text"]}
-                                        profilePic={"/static/images/avatar/2.jpg"}
-                                        stars={datum["rating"]}
-                                        username={datum["author"]["name"]}/>
-              }) : <div>No reviews!</div>
-            }
+            {data["reviews"].length > 0 ? (
+              data["reviews"].map((datum) => {
+                return (
+                  <ModalReviewCard
+                    key={datum["id"]}
+                    reviewText={datum["text"]}
+                    profilePic={"/static/images/avatar/2.jpg"}
+                    stars={datum["rating"]}
+                    username={datum["author"]["name"]}
+                  />
+                );
+              })
+            ) : (
+              <div>No reviews!</div>
+            )}
           </Container>
         </Modal>
       </Container>
@@ -172,38 +176,39 @@ function ModalReviews({foodId}) {
 }
 
 export default function ReviewCard({
-                                     score,
-                                     category,
-                                     ingredients,
-                                     user,
-                                     uniqueId
-                                   }) {
-  const {loading, data} = useQuery(GET_USER_LISTS_FOR_FOOD, {
+  score,
+  category,
+  ingredients,
+  user,
+  uniqueId,
+}) {
+  const { loading, data } = useQuery(GET_USER_LISTS_FOR_FOOD, {
     variables: {
       firebase_id: user.uid,
-      food_id: uniqueId.toString()
+      food_id: uniqueId.toString(),
     },
-    fetchPolicy: "cache-first"
-  })
+    fetchPolicy: "cache-first",
+  });
   const [toggleTry] = useMutation(TOGGLE_TRY, {
     variables: {
       firebase_id: user.uid,
-      food_name: uniqueId.toString()
+      food_name: uniqueId.toString(),
     },
-    refetchQueries: [GET_USER_LISTS_FOR_FOOD]
-  })
+    refetchQueries: [GET_USER_LISTS_FOR_FOOD],
+  });
   const [toggleFav] = useMutation(TOGGLE_FAV, {
     variables: {
       firebase_id: user.uid,
-      food_name: uniqueId.toString()
+      food_name: uniqueId.toString(),
     },
     refetchQueries: [GET_USER_LISTS_FOR_FOOD],
-  })
-  if (loading)
-    return <div/>
+  });
+  if (loading) return <div />;
   if (!data)
     return (
-      <Card sx={{width: "100%", border: "1", margin: "10px", display: "flex"}}>
+      <Card
+        sx={{ width: "100%", border: "1", margin: "10px", display: "flex" }}
+      >
         <Container
           sx={{
             width: "20%",
@@ -215,11 +220,11 @@ export default function ReviewCard({
           <Typography>No Data Found!</Typography>
         </Container>
       </Card>
-    )
+    );
 
   // TODO: Check the backend for these
-  const IsLiked = data["fav_foods"].length > 0
-  const AddedToList = data["to_try_foods"].length > 0
+  const IsLiked = data["fav_foods"].length > 0;
+  const AddedToList = data["to_try_foods"].length > 0;
 
   // Format ingredients to be all strings
   function formatIngredient(ingredients) {
@@ -232,8 +237,7 @@ export default function ReviewCard({
   // Title case any strings
   // TO-DO: Move this to be shared across multiple components
   function titleCase(str) {
-    if (str === "")
-      return ""
+    if (str === "") return "";
     const words = str.split(/\s+/);
     const titleCaseArr = words.map(
       (substr) => substr[0].toUpperCase() + substr.slice(1)
@@ -242,7 +246,7 @@ export default function ReviewCard({
   }
 
   return (
-    <Card sx={{width: "100%", border: "1", margin: "10px", display: "flex"}}>
+    <Card sx={{ width: "100%", border: "1", margin: "10px", display: "flex" }}>
       <Container
         sx={{
           width: "20%",
@@ -253,7 +257,7 @@ export default function ReviewCard({
       >
         <CardContent>
           <Typography
-            sx={{fontSize: 14, display: "flex", justifyContent: "center"}}
+            sx={{ fontSize: 14, display: "flex", justifyContent: "center" }}
             color="text.secondary"
             gutterBottom
           >
@@ -265,15 +269,19 @@ export default function ReviewCard({
         </CardContent>
       </Container>
 
-      <Container sx={{width: "60%"}}>
+      <Container sx={{ width: "60%" }}>
         <CardContent>
-          <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-            {category}
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            {titleCase(category)}
           </Typography>
 
           {Object.keys(ingredients).map((key) => (
-            <Typography key={key} sx={{fontSize: 15}} color="text.primary"
-                        gutterBottom>
+            <Typography
+              key={key}
+              sx={{ fontSize: 15 }}
+              color="text.primary"
+              gutterBottom
+            >
               {titleCase(key)}:{" "}
               <strong>{formatIngredient(ingredients[key])}</strong>
             </Typography>
@@ -305,13 +313,9 @@ export default function ReviewCard({
             toggleTry();
           }}
         >
-          {AddedToList ? (
-            <PlaylistAddCheckIcon/>
-          ) : (
-            <PlaylistAddIcon/>
-          )}
+          {AddedToList ? <PlaylistAddCheckIcon /> : <PlaylistAddIcon />}
         </Button>
-        <ModalReviews foodId={uniqueId}/>
+        <ModalReviews foodId={uniqueId} />
       </Container>
     </Card>
   );

@@ -294,7 +294,6 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
             paddingBottom: "16px",
           }}
         >
-          <Button size="small" color="primary" onClick="{post}">
           <Button size="small" color="primary" onClick={post}>
             Post
           </Button>

@@ -64,7 +64,7 @@ export default function SignIn() {
           />
           <Grid>
             <Typography variant="body1" color="textSecondary" component="p">
-              Don%apos;t have an account? <Link href="/sign-up">Sign up</Link>!
+              Don{"'"}t have an account? <Link href="/sign-up">Sign up</Link>!
             </Typography>
           </Grid>
           <Typography
