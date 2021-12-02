@@ -59,7 +59,7 @@ export default function SavedFoodCard({  category, name}) {
           }}
         >
           {Object.keys(ingredients).map((key) => (
-            <Typography sx={{ fontSize: 12 }} color="text.primary" gutterBottom>
+            <Typography key={key} sx={{ fontSize: 12 }} color="text.primary" gutterBottom>
               {titleCase(key)}:{" "}
               <strong>{formatIngredient(ingredients[key])}</strong>
             </Typography>

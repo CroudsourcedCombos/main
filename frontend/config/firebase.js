@@ -5,13 +5,13 @@ import { initializeApp } from 'firebase/app'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
-messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+  apiKey: "AIzaSyAv2Kn2apOCA3A8o4Bv8mF2QFol5FzUCWs",
+  authDomain: "crowdsourcedcombos.firebaseapp.com",
+  projectId: "crowdsourcedcombos",
+  storageBucket: "crowdsourcedcombos.appspot.com",
+  appId: "1:990214478016:web:daf58957d77a25f45a7525",
+  messagingSenderId: "990214478016",
+  measurementId: "G-B8EN0BFSN0",
 }
 
 // Initialize Firebase

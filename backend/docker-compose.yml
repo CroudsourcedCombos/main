@@ -1,23 +1,6 @@
 version: "3.9"
 services:
-  backend:
-    build: .
-    restart: always
-    ports:
-      - "4000:4000"
-    env_file:
-      - .env
-    environment:
-      DATABASE_URL: "postgresql://postgres:secret@database:5432/cc"
-    links:
-      - "db:database"
-    depends_on:
-      - db
-    command: ["./wait-for-it.sh", "db:5432", "--", "npm", "run", "start"]
   db:
-    # Keep the ports exposed for development and local testing, as well as for
-    # if we ever need to connect directly with another prisma instance for
-    # migrations and such
     ports:
       - "5432:5432"
     restart: always
