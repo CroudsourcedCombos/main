@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import ResponsiveAppBar from "../components/navbar";
-import { Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import { DataGrid } from "@mui/x-data-grid/";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
