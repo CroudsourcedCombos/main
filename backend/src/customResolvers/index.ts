@@ -70,7 +70,6 @@ class CustomFoodResolver {
         },
       },
     })
-
     const foodIds = reviews.map((review) => review.foodId)
     return await prisma.food.findMany({
       where: {

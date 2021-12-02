@@ -16,7 +16,6 @@ export async function bootstrap() {
     const schema = await buildSchema({
       resolvers: [...resolvers, ...customResolvers],
       validate: false,
-      dateScalarMode: "timestamp",
     })
 
     const server = new ApolloServer({
