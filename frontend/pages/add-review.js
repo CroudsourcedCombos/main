@@ -1,5 +1,5 @@
 // import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import Card from "@mui/material/Card";
@@ -12,11 +12,13 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
 
 import { useAuth } from "../context/AuthenticatedUserContext";
+import { useRouter } from 'next/router'
 import NavigationBar from "../components/navbar";
 import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
 import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
 
 export default function AddReview() {
+  const router = useRouter()
   const [value, setValue] = useState(2);
   const [reviewText, setReviewText] = useState("");
 
@@ -43,6 +45,10 @@ export default function AddReview() {
     console.log(newSelectionSandOrPizza);
   };
 
+  useEffect(() => {
+    // Force unauthorized user to sign in
+    if (!user) router.push('/sign-in')
+  }, [user])
 
   return (
     <>
