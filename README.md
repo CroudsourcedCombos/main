@@ -38,3 +38,10 @@ There is another toggle in the center top of the page with options PAST WEEK and
 
 ## Side Notes
 An early figma design is in design_plan.pdf. There were major changes since then but it was foundational in our application's final design.
+
+## Group Member Names:
+Raj Piskala
+Siddhant Gupta
+Julie Cover
+Sidharth Reddy Patllollu
+Raj Kumar
