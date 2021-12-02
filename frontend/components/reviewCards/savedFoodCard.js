@@ -2,10 +2,10 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
+import { Container } from "@mui/material";
 import Rating from "@mui/material/Rating";
-
-export default function MyFoodReviewCard({score, category, name, text}) {
+import Button from "@mui/material/Button";
+export default function SavedFoodCard({  category, name}) {
   const ingredients = JSON.parse(name)
 
   // Format ingredients to be all strings
@@ -16,8 +16,6 @@ export default function MyFoodReviewCard({score, category, name, text}) {
     else return titleCase(ingredients);
   }
 
-  // Title case any strings
-  // TO-DO: Move this to be shared across multiple components
   function titleCase(str) {
     if (str === "") return "";
     const words = str.split(/\s+/);
@@ -26,7 +24,6 @@ export default function MyFoodReviewCard({score, category, name, text}) {
     );
     return titleCaseArr.join(" ");
   }
-
   return (
     <Card
       sx={{
@@ -37,7 +34,7 @@ export default function MyFoodReviewCard({score, category, name, text}) {
         flexDirection: "column",
       }}
     >
-      <Container sx={{width: "100%", paddingTop: "20px"}}>
+      <Container sx={{ width: "100%", paddingTop: "20px" }}>
         <CardContent
           sx={{
             display: "flex",
@@ -50,23 +47,6 @@ export default function MyFoodReviewCard({score, category, name, text}) {
           <Typography sx={{ fontSize: 15 }} color="primary">
             {category}
           </Typography>
-          <CardContent
-            sx={{
-              padding: "0",
-              display: "flex",
-              "&:last-child": {
-                paddingBottom: 0,
-              },
-            }}
-          >
-            <Typography
-              sx={{fontSize: 11, paddingRight: "15px"}}
-              color="text.secondary"
-            >
-              {"Rating: "}
-            </Typography>
-            <Rating value={score} readOnly size="medium"/>
-          </CardContent>
         </CardContent>
         <CardContent
           sx={{
@@ -74,40 +54,18 @@ export default function MyFoodReviewCard({score, category, name, text}) {
             justifyContent: "space-between",
             flexFlow: "row wrap",
             "&:last-child": {
-              paddingBottom: 0,
               paddingTop: 0,
             },
           }}
         >
           {Object.keys(ingredients).map((key) => (
-            <Typography sx={{fontSize: 12}} color="text.primary" gutterBottom>
+            <Typography sx={{ fontSize: 12 }} color="text.primary" gutterBottom>
               {titleCase(key)}:{" "}
               <strong>{formatIngredient(ingredients[key])}</strong>
             </Typography>
           ))}
         </CardContent>
       </Container>
-      {
-        text !== "" ? <Container sx={{width: "100%"}}>
-          <CardContent>
-            <Typography
-              sx={{
-                fontSize: 14,
-                "&:last-child": {
-                  paddingBottom: 0,
-                },
-              }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Comments
-            </Typography>
-            <Typography variant="h7" color="text.primary" gutterBottom>
-              {text}
-            </Typography>
-          </CardContent>
-        </Container> : <></>
-      }
     </Card>
   );
 }

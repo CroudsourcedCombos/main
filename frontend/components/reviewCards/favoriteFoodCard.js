@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import {Container} from "@mui/material";
 import Rating from "@mui/material/Rating";
 
-export default function MyFoodReviewCard({score, category, name, text}) {
+export default function FavoriteFoodCard({score, category, name}) {
   const ingredients = JSON.parse(name)
 
   // Format ingredients to be all strings
@@ -16,8 +16,6 @@ export default function MyFoodReviewCard({score, category, name, text}) {
     else return titleCase(ingredients);
   }
 
-  // Title case any strings
-  // TO-DO: Move this to be shared across multiple components
   function titleCase(str) {
     if (str === "") return "";
     const words = str.split(/\s+/);
@@ -47,7 +45,7 @@ export default function MyFoodReviewCard({score, category, name, text}) {
             },
           }}
         >
-          <Typography sx={{ fontSize: 15 }} color="primary">
+          <Typography sx={{fontSize: 15}} color="primary">
             {category}
           </Typography>
           <CardContent
@@ -60,7 +58,7 @@ export default function MyFoodReviewCard({score, category, name, text}) {
             }}
           >
             <Typography
-              sx={{fontSize: 11, paddingRight: "15px"}}
+              sx={{fontSize: 15, paddingRight: "15px"}}
               color="text.secondary"
             >
               {"Rating: "}
@@ -74,40 +72,19 @@ export default function MyFoodReviewCard({score, category, name, text}) {
             justifyContent: "space-between",
             flexFlow: "row wrap",
             "&:last-child": {
-              paddingBottom: 0,
               paddingTop: 0,
             },
           }}
         >
           {Object.keys(ingredients).map((key) => (
-            <Typography sx={{fontSize: 12}} color="text.primary" gutterBottom>
+            <Typography key={key} sx={{fontSize: 12}} color="text.primary"
+                        gutterBottom>
               {titleCase(key)}:{" "}
               <strong>{formatIngredient(ingredients[key])}</strong>
             </Typography>
           ))}
         </CardContent>
       </Container>
-      {
-        text !== "" ? <Container sx={{width: "100%"}}>
-          <CardContent>
-            <Typography
-              sx={{
-                fontSize: 14,
-                "&:last-child": {
-                  paddingBottom: 0,
-                },
-              }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Comments
-            </Typography>
-            <Typography variant="h7" color="text.primary" gutterBottom>
-              {text}
-            </Typography>
-          </CardContent>
-        </Container> : <></>
-      }
     </Card>
   );
 }
