@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
-export default function FavoriteFoodCard({ score, category, ingredients }) {
+export default function SavedFoodCard({  category, ingredients }) {
   // Format ingredients to be all strings
   function formatIngredient(ingredients) {
     // If it's an array, format it
@@ -44,23 +44,6 @@ export default function FavoriteFoodCard({ score, category, ingredients }) {
           <Typography sx={{ fontSize: 15 }} color="primary">
             {category}
           </Typography>
-          <CardContent
-            sx={{
-              padding: "0",
-              display: "flex",
-              "&:last-child": {
-                paddingBottom: 0,
-              },
-            }}
-          >
-            <Typography
-              sx={{ fontSize: 15, paddingRight: "15px" }}
-              color="text.secondary"
-            >
-              {"Rating: "}
-            </Typography>
-            <Rating value={score} readOnly size="medium" />
-          </CardContent>
         </CardContent>
         <CardContent
           sx={{
