@@ -11,6 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 import {Button} from "@mui/material";
 import {gql, useMutation} from "@apollo/client";
 import { useRouter } from 'next/router'
+import Typography from "@mui/material/Typography";
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -113,7 +114,7 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
     spreads: "",
   });
 
-  const [set, sentSent] = useState(false)
+  const [sent, setSent] = useState(false)
   const [addSandwich, {called, reset}] = useMutation(CREATE_SANDWICH_REVIEW);
   const router = useRouter()
 

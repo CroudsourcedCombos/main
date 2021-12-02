@@ -18,7 +18,6 @@ import SandwichCheckboxesGroup from "../components/sandwichCheckboxes";
 import PizzaCheckboxesGroup from "../components/pizzaCheckboxes";
 
 export default function AddReview() {
-  const router = useRouter()
   const [value, setValue] = useState(2);
   const [reviewText, setReviewText] = useState("");
 
@@ -44,11 +43,6 @@ export default function AddReview() {
       setSandOrPizza(newSelectionSandOrPizza);
     console.log(newSelectionSandOrPizza);
   };
-
-  useEffect(() => {
-    // Force unauthorized user to sign in
-    if (!user) router.push('/sign-in')
-  }, [user])
 
   return (
     <>

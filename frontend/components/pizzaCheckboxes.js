@@ -14,6 +14,7 @@ import {Button} from "@mui/material";
 
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from 'next/router'
+import Typography from "@mui/material/Typography";
 
 const PIZZAS = {
   TOPPINGS: [

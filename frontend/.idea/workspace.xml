@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf6c2f18-22bd-47d3-915e-2182fed11828" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/components/reviewCards/favoriteFoodCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/reviewCards/favoriteFoodCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/reviewCards/favoriteSodaCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/reviewCards/favoriteSodaCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/my-favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/my-favorites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/pizzaCheckboxes.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/pizzaCheckboxes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/sandwichCheckboxes.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/sandwichCheckboxes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/add-review.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/add-review.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +39,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="Siddhant/myfavorites" />
-                    <option name="lastUsedInstant" value="1638411358" />
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1638415079" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1638405636" />
+                    <option name="branchName" value="Siddhant/myfavorites" />
+                    <option name="lastUsedInstant" value="1638415039" />
                   </RecentBranch>
                 </list>
               </option>
