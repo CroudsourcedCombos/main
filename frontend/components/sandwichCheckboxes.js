@@ -1,17 +1,15 @@
 // import * as React from "react";
-import { useState } from "react";
+import {useState} from "react";
 
+import Box from "@mui/material/Box";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import Checkbox from "@mui/material/Checkbox";
+import {Button} from "@mui/material";
 import {gql, useMutation} from "@apollo/client";
-import { useAuth } from "../context/AuthenticatedUserContext";
-
-import Box from '@mui/material/Box'
-import FormLabel from '@mui/material/FormLabel'
-import FormControl from '@mui/material/FormControl'
-import FormGroup from '@mui/material/FormGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormHelperText from '@mui/material/FormHelperText'
-import Checkbox from '@mui/material/Checkbox'
-import Button from '@mui/material/Button'
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -62,12 +60,12 @@ const CREATE_SANDWICH_REVIEW = gql`
         $name: String!,
         $rating: Int!,
         $text: String!,
-        $id: String!
+        $firebase_id: String!
     ) {
         createReview(data: {
             author: {
                 connect: {
-                    firebaseId: $id
+                    firebaseId: $firebase_id
                 }
             }
             food: {
@@ -77,7 +75,7 @@ const CREATE_SANDWICH_REVIEW = gql`
                     }
                     create: {
                         name: $name
-                        type: sandwich
+                        type: pizza
                     }
                 }
             }
@@ -97,7 +95,7 @@ const ReviewRequirements = {
   spreads: [0, 2],
 };
 
-export default function SandwichCheckboxesGroup({rating, reviewText}) {
+export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
   const [state, setState] = useState({
     breads: [],
     cheeses: [],
@@ -114,12 +112,11 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
     spreads: "",
   });
 
-  const [addSandwich] = useMutation(CREATE_SANDWICH_REVIEW);
-  const { user } = useAuth()
+  const [addSandwich, {called, reset}] = useMutation(CREATE_SANDWICH_REVIEW);
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
-    const copy = { ...state };
+    const copy = {...state};
     if (copy[type].includes(event.target.name)) {
       copy[type] = copy[type].filter(
         (ingredient) => ingredient !== event.target.name
@@ -137,7 +134,7 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
     const len = copy[type].length;
 
     // Set the error based on if it's lower than min or higher than max
-    const errCopy = { ...error };
+    const errCopy = {...error};
     if (len < min) errCopy[type] = `You must pick at least ${min} ${type}.`;
     else if (len > max) errCopy[type] = `You can pick up to ${max} ${type}.`;
     else errCopy[type] = ``;
@@ -152,37 +149,35 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
 
   const post = () => {
     // if (!errors)
-    const errCopy = { ...error };
+    const errCopy = {...error};
 
     const hasNonEmptyStrings =
       Object.values(errCopy).filter((x) => x.length > 0).length > 0;
 
-    if(hasNonEmptyStrings)
+    if (hasNonEmptyStrings)
       console.log("errors, will not stringify")
-    else
-      {
-        const copy = { ... state}
-        const reviewDataStr = JSON.stringify(copy);
-        console.log({reviewText});
-        addSandwich({
-          variables: {
-            name: reviewDataStr,
-            rating: rating,
-            text: reviewText,
-            id: user.uid,
-          }
-        }).then(/* Success */).catch(reason => console.error(reason))
-      }
+    else {
+      const copy = {...state}
+      const reviewDataStr = JSON.stringify(copy);
+      addSandwich({
+        variables: {
+          name: reviewDataStr,
+          rating: rating,
+          text: reviewtext,
+          firebase_id: user.uid
+        }
+      }).then(/* Success */).catch(reason => console.error(reason))
+    }
   };
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{display: "flex"}}>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -210,7 +205,7 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To One</FormLabel>
@@ -237,7 +232,7 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up to Two</FormLabel>
@@ -264,7 +259,7 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To Three</FormLabel>
@@ -291,7 +286,7 @@ export default function SandwichCheckboxesGroup({rating, reviewText}) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To Two</FormLabel>

@@ -1,5 +1,5 @@
 // import * as React from "react";
-import { useState } from "react";
+import {useState} from "react";
 
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
@@ -8,7 +8,8 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
+import {Button} from "@mui/material";
+// import PIZZAS from "../constants/pizza"
 
 
 import { gql, useMutation } from "@apollo/client";
@@ -59,12 +60,12 @@ const CREATE_PIZZA_REVIEW = gql`
         $name: String!,
         $rating: Int!,
         $text: String!,
-        $id: String!
+        $firebase_id: String!
     ) {
         createReview(data: {
             author: {
                 connect: {
-                    firebaseId: $id
+                    firebaseId: $firebase_id
                 }
             }
             food: {
@@ -93,7 +94,7 @@ const PizzaReviewRequirements = {
   sauces: [1, 1],
 };
 
-export default function PizzaCheckboxesGroup({ rating, reviewText }) {
+export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
   const [state, setState] = useState({
     cheeses: [],
     toppings: [],
@@ -107,12 +108,12 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
     sauces: "You must pick at least 1 spread option.",
   });
 
-  const [addPizzas] = useMutation(CREATE_PIZZA_REVIEW)
-  const { user } = useAuth()
+  const [addPizza, {called, reset}] = useMutation(CREATE_PIZZA_REVIEW);
+
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
-    const copy = { ...state };
+    const copy = {...state};
     if (copy[type].includes(event.target.name)) {
       copy[type] = copy[type].filter(
         (ingredient) => ingredient !== event.target.name
@@ -127,7 +128,7 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
     const len = copy[type].length;
 
     // Set the error based on if it's lower than min or higher than max
-    const errCopy = { ...error };
+    const errCopy = {...error};
     if (len < min) errCopy[type] = `You must pick at least ${min} ${type}.`;
     else if (len > max) errCopy[type] = `You can pick up to ${max} ${type}.`;
     else errCopy[type] = ``;
@@ -143,43 +144,38 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
 
   const post = () => {
     // if (!errors)
-    const errCopy = { ...error };
+    const errCopy = {...error};
 
     const hasNonEmptyStrings = Object.values(errCopy).filter(
       (x) => x.length > 0
     ).length > 0;
 
-    if(hasNonEmptyStrings)
+    if (hasNonEmptyStrings)
       console.log("errors, will not stringify")
-    else
-      {
-        console.log("no errors")
-        const copy = { ... state}
-        const reviewDataStr = JSON.stringify(copy);
-        addPizzas({
-          variables: {
-            name: reviewDataStr,
-            rating: rating,
-            text: reviewText,
-            id: user.uid,
-          },
-        })
-          .then(/* Success */)
-          .catch(reason => console.error(reason))
-
-        console.log(reviewDataStr);
-      }
+    else {
+      console.log("no errors")
+      const copy = {...state}
+      const reviewDataStr = JSON.stringify(copy);
+      addPizza({
+        variables: {
+          name: reviewDataStr,
+          rating: rating,
+          text: reviewtext,
+          firebase_id: user.uid
+        }
+      }).then(/* Success */).catch(reason => console.error(reason))
+    }
   };
 
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{display: "flex"}}>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -206,7 +202,7 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -233,7 +229,7 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To Three</FormLabel>
@@ -260,7 +256,7 @@ export default function PizzaCheckboxesGroup({ rating, reviewText }) {
           required
           error={error}
           component="fieldset"
-          sx={{ m: 3 }}
+          sx={{m: 3}}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>

@@ -6,7 +6,7 @@ import {
   ToggleButton,
   ToggleButtonGroup
 } from "@mui/material";
-import SodaReviewCard from "../components/reviewCards/sodaReviewCard.js";
+import SodaReviewCard from "../components/reviewCards/sodaReviewCard";
 import {gql, useQuery} from "@apollo/client";
 import FoodReviewCard from "../components/reviewCards/otherReviewCard";
 import Typography from "@material-ui/core/Typography";

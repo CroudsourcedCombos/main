@@ -43,7 +43,6 @@ export default function AddReview() {
     console.log(newSelectionSandOrPizza);
   };
 
-  
 
   return (
     <>
@@ -108,10 +107,12 @@ export default function AddReview() {
             </div>
             <div>
               {SandOrPizza === "sandwich" ? (
-                <SandwichCheckboxesGroup reviewText={reviewText} rating={value}/>
+                <SandwichCheckboxesGroup reviewtext={reviewText} rating={value}
+                                         user={user}/>
               ) : null}
               {SandOrPizza === "pizza" ? (
-                <PizzaCheckboxesGroup reviewText={reviewText} rating={value}/>
+                <PizzaCheckboxesGroup reviewtext={reviewText} rating={value}
+                                      user={user}/>
               ) : null}
             </div>
           </CardContent>
