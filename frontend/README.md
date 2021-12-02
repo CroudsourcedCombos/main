@@ -33,7 +33,12 @@ Reviews can be seen in the http://localhost:3000/ page. Reviews for pizza and sa
 Then, click on the number of stars for the review, and then write text explaining the review and the opinion on the food. Then, click the toggle with possible values SANDWICH and PIZZA and select the food type that is being reviewed.
 Lastly, check the boxes corresponding to the ingredients in the food and then click post to send the review data to the server.
 
-Reviews for soda can be added by clicking on the SODA button on the navigation bar on the top of the screen. In the row corresponding to the soda flavor that is to be reviewed, click on the number of stars for the review, and then write text explaining the review and the opinion on the soda. Finally, press the SAVED button for that row to send the soda review data to the server 
+Reviews for soda can be added by clicking on the SODA button on the navigation bar on the top of the screen. In the row corresponding to the soda flavor that is to be reviewed, click on the number of stars for the review, and then write text explaining the review and the opinion on the soda. Finally, press the SAVED button for that row to send the soda review data to the server.
+
+On the homepage, which can be accessed by clicking on the Crowdsourced Combos button on the navigation bar on the top left of the screen, the reviews can be seen and filtered.
+By default, the left column shows reviews for pizzas and sandwiches and the right column shows soda reviews. 
+The toggle in the center top of the page which has the three options SANDWICH, PIZZA, ALL TYPES allows filtering of the left column to just show sandwich reviews, pizza reviews, or a combination of both for ALL TYPES which does not filter by food type. 
+There is another toggle in the center top of the page with options PAST WEEK and ALL TIME and this allows filtering of both columns based on the time of the review post. PAST WEEK limits only reviews to show up if it was posted in the last week while ALL TIME doesn't filter by time at all.
 
 ## Changing the code
 
