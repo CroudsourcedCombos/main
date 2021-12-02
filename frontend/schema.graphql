@@ -1,0 +1,1860 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type AffectedRowsOutput {
+    count: Int!
+}
+
+type AggregateFood {
+    _avg: FoodAvgAggregate
+    _count: FoodCountAggregate
+    _max: FoodMaxAggregate
+    _min: FoodMinAggregate
+    _sum: FoodSumAggregate
+}
+
+type AggregateProfile {
+    _avg: ProfileAvgAggregate
+    _count: ProfileCountAggregate
+    _max: ProfileMaxAggregate
+    _min: ProfileMinAggregate
+    _sum: ProfileSumAggregate
+}
+
+type AggregateReview {
+    _avg: ReviewAvgAggregate
+    _count: ReviewCountAggregate
+    _max: ReviewMaxAggregate
+    _min: ReviewMinAggregate
+    _sum: ReviewSumAggregate
+}
+
+type AggregateUser {
+    _avg: UserAvgAggregate
+    _count: UserCountAggregate
+    _max: UserMaxAggregate
+    _min: UserMinAggregate
+    _sum: UserSumAggregate
+}
+
+type Food {
+    _count: FoodCount
+    id: Int!
+    images: [String!]!
+    location: Location!
+    name: String!
+    overall_rating: Float!
+    reviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
+    type: FoodCategory!
+    usersWantTry(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+    usersWithFavs(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+}
+
+type FoodAvgAggregate {
+    id: Float
+}
+
+type FoodCount {
+    reviews: Int!
+    usersWantTry: Int!
+    usersWithFavs: Int!
+}
+
+type FoodCountAggregate {
+    _all: Int!
+    id: Int!
+    images: Int!
+    location: Int!
+    name: Int!
+    type: Int!
+}
+
+type FoodGroupBy {
+    _avg: FoodAvgAggregate
+    _count: FoodCountAggregate
+    _max: FoodMaxAggregate
+    _min: FoodMinAggregate
+    _sum: FoodSumAggregate
+    id: Int!
+    images: [String!]
+    location: Location!
+    name: String!
+    type: FoodCategory!
+}
+
+type FoodMaxAggregate {
+    id: Int
+    location: Location
+    name: String
+    type: FoodCategory
+}
+
+type FoodMinAggregate {
+    id: Int
+    location: Location
+    name: String
+    type: FoodCategory
+}
+
+type FoodSumAggregate {
+    id: Int
+}
+
+type Mutation {
+    createFood(data: FoodCreateInput!): Food!
+    createManyFood(data: [FoodCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+    createManyProfile(data: [ProfileCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+    createManyReview(data: [ReviewCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+    createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+    createProfile(data: ProfileCreateInput!): Profile!
+    createReview(data: ReviewCreateInput!): Review!
+    createUser(data: UserCreateInput!): User!
+    deleteFood(where: FoodWhereUniqueInput!): Food
+    deleteManyFood(where: FoodWhereInput): AffectedRowsOutput!
+    deleteManyProfile(where: ProfileWhereInput): AffectedRowsOutput!
+    deleteManyReview(where: ReviewWhereInput): AffectedRowsOutput!
+    deleteManyUser(where: UserWhereInput): AffectedRowsOutput!
+    deleteProfile(where: ProfileWhereUniqueInput!): Profile
+    deleteReview(where: ReviewWhereUniqueInput!): Review
+    deleteUser(where: UserWhereUniqueInput!): User
+    toggleLiked(food_name: String!, where: UserWhereUniqueInput!): Food!
+    toggleTry(food_name: String!, where: UserWhereUniqueInput!): Food!
+    updateFood(data: FoodUpdateInput!, where: FoodWhereUniqueInput!): Food
+    updateManyFood(data: FoodUpdateManyMutationInput!, where: FoodWhereInput): AffectedRowsOutput!
+    updateManyProfile(data: ProfileUpdateManyMutationInput!, where: ProfileWhereInput): AffectedRowsOutput!
+    updateManyReview(data: ReviewUpdateManyMutationInput!, where: ReviewWhereInput): AffectedRowsOutput!
+    updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): AffectedRowsOutput!
+    updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile
+    updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
+    updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+    upsertFood(create: FoodCreateInput!, update: FoodUpdateInput!, where: FoodWhereUniqueInput!): Food!
+    upsertProfile(create: ProfileCreateInput!, update: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile!
+    upsertReview(create: ReviewCreateInput!, update: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review!
+    upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type Profile {
+    bio: String
+    id: Int!
+    user: User!
+    userId: Int!
+}
+
+type ProfileAvgAggregate {
+    id: Float
+    userId: Float
+}
+
+type ProfileCountAggregate {
+    _all: Int!
+    bio: Int!
+    id: Int!
+    userId: Int!
+}
+
+type ProfileGroupBy {
+    _avg: ProfileAvgAggregate
+    _count: ProfileCountAggregate
+    _max: ProfileMaxAggregate
+    _min: ProfileMinAggregate
+    _sum: ProfileSumAggregate
+    bio: String
+    id: Int!
+    userId: Int!
+}
+
+type ProfileMaxAggregate {
+    bio: String
+    id: Int
+    userId: Int
+}
+
+type ProfileMinAggregate {
+    bio: String
+    id: Int
+    userId: Int
+}
+
+type ProfileSumAggregate {
+    id: Int
+    userId: Int
+}
+
+type Query {
+    aggregateFood(cursor: FoodWhereUniqueInput, orderBy: [FoodOrderByWithRelationInput!], skip: Int, take: Int, where: FoodWhereInput): AggregateFood!
+    aggregateProfile(cursor: ProfileWhereUniqueInput, orderBy: [ProfileOrderByWithRelationInput!], skip: Int, take: Int, where: ProfileWhereInput): AggregateProfile!
+    aggregateReview(cursor: ReviewWhereUniqueInput, orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): AggregateReview!
+    aggregateUser(cursor: UserWhereUniqueInput, orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): AggregateUser!
+    findFirstFood(cursor: FoodWhereUniqueInput, distinct: [FoodScalarFieldEnum!], orderBy: [FoodOrderByWithRelationInput!], skip: Int, take: Int, where: FoodWhereInput): Food
+    findFirstProfile(cursor: ProfileWhereUniqueInput, distinct: [ProfileScalarFieldEnum!], orderBy: [ProfileOrderByWithRelationInput!], skip: Int, take: Int, where: ProfileWhereInput): Profile
+    findFirstReview(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): Review
+    findFirstUser(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): User
+    food(where: FoodWhereUniqueInput!): Food
+    foods(cursor: FoodWhereUniqueInput, distinct: [FoodScalarFieldEnum!], orderBy: [FoodOrderByWithRelationInput!], skip: Int, take: Int, where: FoodWhereInput): [Food!]!
+    groupByFood(by: [FoodScalarFieldEnum!]!, having: FoodScalarWhereWithAggregatesInput, orderBy: [FoodOrderByWithAggregationInput!], skip: Int, take: Int, where: FoodWhereInput): [FoodGroupBy!]!
+    groupByProfile(by: [ProfileScalarFieldEnum!]!, having: ProfileScalarWhereWithAggregatesInput, orderBy: [ProfileOrderByWithAggregationInput!], skip: Int, take: Int, where: ProfileWhereInput): [ProfileGroupBy!]!
+    groupByReview(by: [ReviewScalarFieldEnum!]!, having: ReviewScalarWhereWithAggregatesInput, orderBy: [ReviewOrderByWithAggregationInput!], skip: Int, take: Int, where: ReviewWhereInput): [ReviewGroupBy!]!
+    groupByUser(by: [UserScalarFieldEnum!]!, having: UserScalarWhereWithAggregatesInput, orderBy: [UserOrderByWithAggregationInput!], skip: Int, take: Int, where: UserWhereInput): [UserGroupBy!]!
+    profile(where: ProfileWhereUniqueInput!): Profile
+    profiles(cursor: ProfileWhereUniqueInput, distinct: [ProfileScalarFieldEnum!], orderBy: [ProfileOrderByWithRelationInput!], skip: Int, take: Int, where: ProfileWhereInput): [Profile!]!
+    review(where: ReviewWhereUniqueInput!): Review
+    reviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
+    searchReviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], search: String, skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
+    topFoods(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Food!]!
+    user(where: UserWhereUniqueInput!): User
+    users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+}
+
+type Review {
+    author: User!
+    creationDate: DateTime!
+    editDate: DateTime!
+    food: Food!
+    foodId: Int!
+    id: Int!
+    rating: Int!
+    text: String
+    userId: Int!
+}
+
+type ReviewAvgAggregate {
+    foodId: Float
+    id: Float
+    rating: Float
+    userId: Float
+}
+
+type ReviewCountAggregate {
+    _all: Int!
+    creationDate: Int!
+    editDate: Int!
+    foodId: Int!
+    id: Int!
+    rating: Int!
+    text: Int!
+    userId: Int!
+}
+
+type ReviewGroupBy {
+    _avg: ReviewAvgAggregate
+    _count: ReviewCountAggregate
+    _max: ReviewMaxAggregate
+    _min: ReviewMinAggregate
+    _sum: ReviewSumAggregate
+    creationDate: DateTime!
+    editDate: DateTime!
+    foodId: Int!
+    id: Int!
+    rating: Int!
+    text: String
+    userId: Int!
+}
+
+type ReviewMaxAggregate {
+    creationDate: DateTime
+    editDate: DateTime
+    foodId: Int
+    id: Int
+    rating: Int
+    text: String
+    userId: Int
+}
+
+type ReviewMinAggregate {
+    creationDate: DateTime
+    editDate: DateTime
+    foodId: Int
+    id: Int
+    rating: Int
+    text: String
+    userId: Int
+}
+
+type ReviewSumAggregate {
+    foodId: Int
+    id: Int
+    rating: Int
+    userId: Int
+}
+
+type User {
+    _count: UserCount
+    email: String!
+    favoritesList(cursor: FoodWhereUniqueInput, distinct: [FoodScalarFieldEnum!], orderBy: [FoodOrderByWithRelationInput!], skip: Int, take: Int, where: FoodWhereInput): [Food!]!
+    firebaseId: String!
+    id: Int!
+    name: String
+    profile: Profile
+    reviews(cursor: ReviewWhereUniqueInput, distinct: [ReviewScalarFieldEnum!], orderBy: [ReviewOrderByWithRelationInput!], skip: Int, take: Int, where: ReviewWhereInput): [Review!]!
+    toTryList(cursor: FoodWhereUniqueInput, distinct: [FoodScalarFieldEnum!], orderBy: [FoodOrderByWithRelationInput!], skip: Int, take: Int, where: FoodWhereInput): [Food!]!
+}
+
+type UserAvgAggregate {
+    id: Float
+}
+
+type UserCount {
+    favoritesList: Int!
+    reviews: Int!
+    toTryList: Int!
+}
+
+type UserCountAggregate {
+    _all: Int!
+    email: Int!
+    firebaseId: Int!
+    id: Int!
+    name: Int!
+}
+
+type UserGroupBy {
+    _avg: UserAvgAggregate
+    _count: UserCountAggregate
+    _max: UserMaxAggregate
+    _min: UserMinAggregate
+    _sum: UserSumAggregate
+    email: String!
+    firebaseId: String!
+    id: Int!
+    name: String
+}
+
+type UserMaxAggregate {
+    email: String
+    firebaseId: String
+    id: Int
+    name: String
+}
+
+type UserMinAggregate {
+    email: String
+    firebaseId: String
+    id: Int
+    name: String
+}
+
+type UserSumAggregate {
+    id: Int
+}
+
+enum FoodCategory {
+    pizza
+    salad
+    sandwich
+    soda
+}
+
+enum FoodScalarFieldEnum {
+    id
+    images
+    location
+    name
+    type
+}
+
+enum Location {
+    UCLA
+}
+
+enum ProfileScalarFieldEnum {
+    bio
+    id
+    userId
+}
+
+enum QueryMode {
+    default
+    insensitive
+}
+
+enum ReviewScalarFieldEnum {
+    creationDate
+    editDate
+    foodId
+    id
+    rating
+    text
+    userId
+}
+
+enum SortOrder {
+    asc
+    desc
+}
+
+enum UserScalarFieldEnum {
+    email
+    firebaseId
+    id
+    name
+}
+
+input DateTimeFieldUpdateOperationsInput {
+    set: DateTime
+}
+
+input DateTimeFilter {
+    equals: DateTime
+    gt: DateTime
+    gte: DateTime
+    in: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    not: NestedDateTimeFilter
+    notIn: [DateTime!]
+}
+
+input DateTimeWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedDateTimeFilter
+    _min: NestedDateTimeFilter
+    equals: DateTime
+    gt: DateTime
+    gte: DateTime
+    in: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    not: NestedDateTimeWithAggregatesFilter
+    notIn: [DateTime!]
+}
+
+input EnumFoodCategoryFieldUpdateOperationsInput {
+    set: FoodCategory
+}
+
+input EnumFoodCategoryFilter {
+    equals: FoodCategory
+    in: [FoodCategory!]
+    not: NestedEnumFoodCategoryFilter
+    notIn: [FoodCategory!]
+}
+
+input EnumFoodCategoryWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedEnumFoodCategoryFilter
+    _min: NestedEnumFoodCategoryFilter
+    equals: FoodCategory
+    in: [FoodCategory!]
+    not: NestedEnumFoodCategoryWithAggregatesFilter
+    notIn: [FoodCategory!]
+}
+
+input EnumLocationFieldUpdateOperationsInput {
+    set: Location
+}
+
+input EnumLocationFilter {
+    equals: Location
+    in: [Location!]
+    not: NestedEnumLocationFilter
+    notIn: [Location!]
+}
+
+input EnumLocationWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedEnumLocationFilter
+    _min: NestedEnumLocationFilter
+    equals: Location
+    in: [Location!]
+    not: NestedEnumLocationWithAggregatesFilter
+    notIn: [Location!]
+}
+
+input FoodAvgOrderByAggregateInput {
+    id: SortOrder
+}
+
+input FoodCountOrderByAggregateInput {
+    id: SortOrder
+    images: SortOrder
+    location: SortOrder
+    name: SortOrder
+    type: SortOrder
+}
+
+input FoodCreateInput {
+    images: FoodCreateimagesInput
+    location: Location
+    name: String!
+    reviews: ReviewCreateNestedManyWithoutFoodInput
+    type: FoodCategory!
+    usersWantTry: UserCreateNestedManyWithoutToTryListInput
+    usersWithFavs: UserCreateNestedManyWithoutFavoritesListInput
+}
+
+input FoodCreateManyInput {
+    id: Int
+    images: FoodCreateManyimagesInput
+    location: Location
+    name: String!
+    type: FoodCategory!
+}
+
+input FoodCreateManyimagesInput {
+    set: [String!]!
+}
+
+input FoodCreateNestedManyWithoutUsersWantTryInput {
+    connect: [FoodWhereUniqueInput!]
+    connectOrCreate: [FoodCreateOrConnectWithoutUsersWantTryInput!]
+    create: [FoodCreateWithoutUsersWantTryInput!]
+}
+
+input FoodCreateNestedManyWithoutUsersWithFavsInput {
+    connect: [FoodWhereUniqueInput!]
+    connectOrCreate: [FoodCreateOrConnectWithoutUsersWithFavsInput!]
+    create: [FoodCreateWithoutUsersWithFavsInput!]
+}
+
+input FoodCreateNestedOneWithoutReviewsInput {
+    connect: FoodWhereUniqueInput
+    connectOrCreate: FoodCreateOrConnectWithoutReviewsInput
+    create: FoodCreateWithoutReviewsInput
+}
+
+input FoodCreateOrConnectWithoutReviewsInput {
+    create: FoodCreateWithoutReviewsInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodCreateOrConnectWithoutUsersWantTryInput {
+    create: FoodCreateWithoutUsersWantTryInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodCreateOrConnectWithoutUsersWithFavsInput {
+    create: FoodCreateWithoutUsersWithFavsInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodCreateWithoutReviewsInput {
+    images: FoodCreateimagesInput
+    location: Location
+    name: String!
+    type: FoodCategory!
+    usersWantTry: UserCreateNestedManyWithoutToTryListInput
+    usersWithFavs: UserCreateNestedManyWithoutFavoritesListInput
+}
+
+input FoodCreateWithoutUsersWantTryInput {
+    images: FoodCreateimagesInput
+    location: Location
+    name: String!
+    reviews: ReviewCreateNestedManyWithoutFoodInput
+    type: FoodCategory!
+    usersWithFavs: UserCreateNestedManyWithoutFavoritesListInput
+}
+
+input FoodCreateWithoutUsersWithFavsInput {
+    images: FoodCreateimagesInput
+    location: Location
+    name: String!
+    reviews: ReviewCreateNestedManyWithoutFoodInput
+    type: FoodCategory!
+    usersWantTry: UserCreateNestedManyWithoutToTryListInput
+}
+
+input FoodCreateimagesInput {
+    set: [String!]!
+}
+
+input FoodListRelationFilter {
+    every: FoodWhereInput
+    none: FoodWhereInput
+    some: FoodWhereInput
+}
+
+input FoodMaxOrderByAggregateInput {
+    id: SortOrder
+    location: SortOrder
+    name: SortOrder
+    type: SortOrder
+}
+
+input FoodMinOrderByAggregateInput {
+    id: SortOrder
+    location: SortOrder
+    name: SortOrder
+    type: SortOrder
+}
+
+input FoodOrderByRelationAggregateInput {
+    _count: SortOrder
+}
+
+input FoodOrderByWithAggregationInput {
+    _avg: FoodAvgOrderByAggregateInput
+    _count: FoodCountOrderByAggregateInput
+    _max: FoodMaxOrderByAggregateInput
+    _min: FoodMinOrderByAggregateInput
+    _sum: FoodSumOrderByAggregateInput
+    id: SortOrder
+    images: SortOrder
+    location: SortOrder
+    name: SortOrder
+    type: SortOrder
+}
+
+input FoodOrderByWithRelationInput {
+    id: SortOrder
+    images: SortOrder
+    location: SortOrder
+    name: SortOrder
+    reviews: ReviewOrderByRelationAggregateInput
+    type: SortOrder
+    usersWantTry: UserOrderByRelationAggregateInput
+    usersWithFavs: UserOrderByRelationAggregateInput
+}
+
+input FoodRelationFilter {
+    is: FoodWhereInput
+    isNot: FoodWhereInput
+}
+
+input FoodScalarWhereInput {
+    AND: [FoodScalarWhereInput!]
+    NOT: [FoodScalarWhereInput!]
+    OR: [FoodScalarWhereInput!]
+    id: IntFilter
+    images: StringNullableListFilter
+    location: EnumLocationFilter
+    name: StringFilter
+    type: EnumFoodCategoryFilter
+}
+
+input FoodScalarWhereWithAggregatesInput {
+    AND: [FoodScalarWhereWithAggregatesInput!]
+    NOT: [FoodScalarWhereWithAggregatesInput!]
+    OR: [FoodScalarWhereWithAggregatesInput!]
+    id: IntWithAggregatesFilter
+    images: StringNullableListFilter
+    location: EnumLocationWithAggregatesFilter
+    name: StringWithAggregatesFilter
+    type: EnumFoodCategoryWithAggregatesFilter
+}
+
+input FoodSumOrderByAggregateInput {
+    id: SortOrder
+}
+
+input FoodUpdateInput {
+    images: FoodUpdateimagesInput
+    location: EnumLocationFieldUpdateOperationsInput
+    name: StringFieldUpdateOperationsInput
+    reviews: ReviewUpdateManyWithoutFoodInput
+    type: EnumFoodCategoryFieldUpdateOperationsInput
+    usersWantTry: UserUpdateManyWithoutToTryListInput
+    usersWithFavs: UserUpdateManyWithoutFavoritesListInput
+}
+
+input FoodUpdateManyMutationInput {
+    images: FoodUpdateimagesInput
+    location: EnumLocationFieldUpdateOperationsInput
+    name: StringFieldUpdateOperationsInput
+    type: EnumFoodCategoryFieldUpdateOperationsInput
+}
+
+input FoodUpdateManyWithWhereWithoutUsersWantTryInput {
+    data: FoodUpdateManyMutationInput!
+    where: FoodScalarWhereInput!
+}
+
+input FoodUpdateManyWithWhereWithoutUsersWithFavsInput {
+    data: FoodUpdateManyMutationInput!
+    where: FoodScalarWhereInput!
+}
+
+input FoodUpdateManyWithoutUsersWantTryInput {
+    connect: [FoodWhereUniqueInput!]
+    connectOrCreate: [FoodCreateOrConnectWithoutUsersWantTryInput!]
+    create: [FoodCreateWithoutUsersWantTryInput!]
+    delete: [FoodWhereUniqueInput!]
+    deleteMany: [FoodScalarWhereInput!]
+    disconnect: [FoodWhereUniqueInput!]
+    set: [FoodWhereUniqueInput!]
+    update: [FoodUpdateWithWhereUniqueWithoutUsersWantTryInput!]
+    updateMany: [FoodUpdateManyWithWhereWithoutUsersWantTryInput!]
+    upsert: [FoodUpsertWithWhereUniqueWithoutUsersWantTryInput!]
+}
+
+input FoodUpdateManyWithoutUsersWithFavsInput {
+    connect: [FoodWhereUniqueInput!]
+    connectOrCreate: [FoodCreateOrConnectWithoutUsersWithFavsInput!]
+    create: [FoodCreateWithoutUsersWithFavsInput!]
+    delete: [FoodWhereUniqueInput!]
+    deleteMany: [FoodScalarWhereInput!]
+    disconnect: [FoodWhereUniqueInput!]
+    set: [FoodWhereUniqueInput!]
+    update: [FoodUpdateWithWhereUniqueWithoutUsersWithFavsInput!]
+    updateMany: [FoodUpdateManyWithWhereWithoutUsersWithFavsInput!]
+    upsert: [FoodUpsertWithWhereUniqueWithoutUsersWithFavsInput!]
+}
+
+input FoodUpdateOneRequiredWithoutReviewsInput {
+    connect: FoodWhereUniqueInput
+    connectOrCreate: FoodCreateOrConnectWithoutReviewsInput
+    create: FoodCreateWithoutReviewsInput
+    update: FoodUpdateWithoutReviewsInput
+    upsert: FoodUpsertWithoutReviewsInput
+}
+
+input FoodUpdateWithWhereUniqueWithoutUsersWantTryInput {
+    data: FoodUpdateWithoutUsersWantTryInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodUpdateWithWhereUniqueWithoutUsersWithFavsInput {
+    data: FoodUpdateWithoutUsersWithFavsInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodUpdateWithoutReviewsInput {
+    images: FoodUpdateimagesInput
+    location: EnumLocationFieldUpdateOperationsInput
+    name: StringFieldUpdateOperationsInput
+    type: EnumFoodCategoryFieldUpdateOperationsInput
+    usersWantTry: UserUpdateManyWithoutToTryListInput
+    usersWithFavs: UserUpdateManyWithoutFavoritesListInput
+}
+
+input FoodUpdateWithoutUsersWantTryInput {
+    images: FoodUpdateimagesInput
+    location: EnumLocationFieldUpdateOperationsInput
+    name: StringFieldUpdateOperationsInput
+    reviews: ReviewUpdateManyWithoutFoodInput
+    type: EnumFoodCategoryFieldUpdateOperationsInput
+    usersWithFavs: UserUpdateManyWithoutFavoritesListInput
+}
+
+input FoodUpdateWithoutUsersWithFavsInput {
+    images: FoodUpdateimagesInput
+    location: EnumLocationFieldUpdateOperationsInput
+    name: StringFieldUpdateOperationsInput
+    reviews: ReviewUpdateManyWithoutFoodInput
+    type: EnumFoodCategoryFieldUpdateOperationsInput
+    usersWantTry: UserUpdateManyWithoutToTryListInput
+}
+
+input FoodUpdateimagesInput {
+    push: [String!]
+    set: [String!]
+}
+
+input FoodUpsertWithWhereUniqueWithoutUsersWantTryInput {
+    create: FoodCreateWithoutUsersWantTryInput!
+    update: FoodUpdateWithoutUsersWantTryInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodUpsertWithWhereUniqueWithoutUsersWithFavsInput {
+    create: FoodCreateWithoutUsersWithFavsInput!
+    update: FoodUpdateWithoutUsersWithFavsInput!
+    where: FoodWhereUniqueInput!
+}
+
+input FoodUpsertWithoutReviewsInput {
+    create: FoodCreateWithoutReviewsInput!
+    update: FoodUpdateWithoutReviewsInput!
+}
+
+input FoodWhereInput {
+    AND: [FoodWhereInput!]
+    NOT: [FoodWhereInput!]
+    OR: [FoodWhereInput!]
+    id: IntFilter
+    images: StringNullableListFilter
+    location: EnumLocationFilter
+    name: StringFilter
+    reviews: ReviewListRelationFilter
+    type: EnumFoodCategoryFilter
+    usersWantTry: UserListRelationFilter
+    usersWithFavs: UserListRelationFilter
+}
+
+input FoodWhereUniqueInput {
+    id: Int
+    name: String
+}
+
+input IntFieldUpdateOperationsInput {
+    decrement: Int
+    divide: Int
+    increment: Int
+    multiply: Int
+    set: Int
+}
+
+input IntFilter {
+    equals: Int
+    gt: Int
+    gte: Int
+    in: [Int!]
+    lt: Int
+    lte: Int
+    not: NestedIntFilter
+    notIn: [Int!]
+}
+
+input IntWithAggregatesFilter {
+    _avg: NestedFloatFilter
+    _count: NestedIntFilter
+    _max: NestedIntFilter
+    _min: NestedIntFilter
+    _sum: NestedIntFilter
+    equals: Int
+    gt: Int
+    gte: Int
+    in: [Int!]
+    lt: Int
+    lte: Int
+    not: NestedIntWithAggregatesFilter
+    notIn: [Int!]
+}
+
+input NestedDateTimeFilter {
+    equals: DateTime
+    gt: DateTime
+    gte: DateTime
+    in: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    not: NestedDateTimeFilter
+    notIn: [DateTime!]
+}
+
+input NestedDateTimeWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedDateTimeFilter
+    _min: NestedDateTimeFilter
+    equals: DateTime
+    gt: DateTime
+    gte: DateTime
+    in: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    not: NestedDateTimeWithAggregatesFilter
+    notIn: [DateTime!]
+}
+
+input NestedEnumFoodCategoryFilter {
+    equals: FoodCategory
+    in: [FoodCategory!]
+    not: NestedEnumFoodCategoryFilter
+    notIn: [FoodCategory!]
+}
+
+input NestedEnumFoodCategoryWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedEnumFoodCategoryFilter
+    _min: NestedEnumFoodCategoryFilter
+    equals: FoodCategory
+    in: [FoodCategory!]
+    not: NestedEnumFoodCategoryWithAggregatesFilter
+    notIn: [FoodCategory!]
+}
+
+input NestedEnumLocationFilter {
+    equals: Location
+    in: [Location!]
+    not: NestedEnumLocationFilter
+    notIn: [Location!]
+}
+
+input NestedEnumLocationWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedEnumLocationFilter
+    _min: NestedEnumLocationFilter
+    equals: Location
+    in: [Location!]
+    not: NestedEnumLocationWithAggregatesFilter
+    notIn: [Location!]
+}
+
+input NestedFloatFilter {
+    equals: Float
+    gt: Float
+    gte: Float
+    in: [Float!]
+    lt: Float
+    lte: Float
+    not: NestedFloatFilter
+    notIn: [Float!]
+}
+
+input NestedIntFilter {
+    equals: Int
+    gt: Int
+    gte: Int
+    in: [Int!]
+    lt: Int
+    lte: Int
+    not: NestedIntFilter
+    notIn: [Int!]
+}
+
+input NestedIntNullableFilter {
+    equals: Int
+    gt: Int
+    gte: Int
+    in: [Int!]
+    lt: Int
+    lte: Int
+    not: NestedIntNullableFilter
+    notIn: [Int!]
+}
+
+input NestedIntWithAggregatesFilter {
+    _avg: NestedFloatFilter
+    _count: NestedIntFilter
+    _max: NestedIntFilter
+    _min: NestedIntFilter
+    _sum: NestedIntFilter
+    equals: Int
+    gt: Int
+    gte: Int
+    in: [Int!]
+    lt: Int
+    lte: Int
+    not: NestedIntWithAggregatesFilter
+    notIn: [Int!]
+}
+
+input NestedStringFilter {
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    not: NestedStringFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input NestedStringNullableFilter {
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    not: NestedStringNullableFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input NestedStringNullableWithAggregatesFilter {
+    _count: NestedIntNullableFilter
+    _max: NestedStringNullableFilter
+    _min: NestedStringNullableFilter
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    not: NestedStringNullableWithAggregatesFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input NestedStringWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedStringFilter
+    _min: NestedStringFilter
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    not: NestedStringWithAggregatesFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input NullableStringFieldUpdateOperationsInput {
+    set: String
+}
+
+input ProfileAvgOrderByAggregateInput {
+    id: SortOrder
+    userId: SortOrder
+}
+
+input ProfileCountOrderByAggregateInput {
+    bio: SortOrder
+    id: SortOrder
+    userId: SortOrder
+}
+
+input ProfileCreateInput {
+    bio: String
+    user: UserCreateNestedOneWithoutProfileInput!
+}
+
+input ProfileCreateManyInput {
+    bio: String
+    id: Int
+    userId: Int!
+}
+
+input ProfileCreateNestedOneWithoutUserInput {
+    connect: ProfileWhereUniqueInput
+    connectOrCreate: ProfileCreateOrConnectWithoutUserInput
+    create: ProfileCreateWithoutUserInput
+}
+
+input ProfileCreateOrConnectWithoutUserInput {
+    create: ProfileCreateWithoutUserInput!
+    where: ProfileWhereUniqueInput!
+}
+
+input ProfileCreateWithoutUserInput {
+    bio: String
+}
+
+input ProfileMaxOrderByAggregateInput {
+    bio: SortOrder
+    id: SortOrder
+    userId: SortOrder
+}
+
+input ProfileMinOrderByAggregateInput {
+    bio: SortOrder
+    id: SortOrder
+    userId: SortOrder
+}
+
+input ProfileOrderByWithAggregationInput {
+    _avg: ProfileAvgOrderByAggregateInput
+    _count: ProfileCountOrderByAggregateInput
+    _max: ProfileMaxOrderByAggregateInput
+    _min: ProfileMinOrderByAggregateInput
+    _sum: ProfileSumOrderByAggregateInput
+    bio: SortOrder
+    id: SortOrder
+    userId: SortOrder
+}
+
+input ProfileOrderByWithRelationInput {
+    bio: SortOrder
+    id: SortOrder
+    user: UserOrderByWithRelationInput
+    userId: SortOrder
+}
+
+input ProfileRelationFilter {
+    is: ProfileWhereInput
+    isNot: ProfileWhereInput
+}
+
+input ProfileScalarWhereWithAggregatesInput {
+    AND: [ProfileScalarWhereWithAggregatesInput!]
+    NOT: [ProfileScalarWhereWithAggregatesInput!]
+    OR: [ProfileScalarWhereWithAggregatesInput!]
+    bio: StringNullableWithAggregatesFilter
+    id: IntWithAggregatesFilter
+    userId: IntWithAggregatesFilter
+}
+
+input ProfileSumOrderByAggregateInput {
+    id: SortOrder
+    userId: SortOrder
+}
+
+input ProfileUpdateInput {
+    bio: NullableStringFieldUpdateOperationsInput
+    user: UserUpdateOneRequiredWithoutProfileInput
+}
+
+input ProfileUpdateManyMutationInput {
+    bio: NullableStringFieldUpdateOperationsInput
+}
+
+input ProfileUpdateOneWithoutUserInput {
+    connect: ProfileWhereUniqueInput
+    connectOrCreate: ProfileCreateOrConnectWithoutUserInput
+    create: ProfileCreateWithoutUserInput
+    delete: Boolean
+    disconnect: Boolean
+    update: ProfileUpdateWithoutUserInput
+    upsert: ProfileUpsertWithoutUserInput
+}
+
+input ProfileUpdateWithoutUserInput {
+    bio: NullableStringFieldUpdateOperationsInput
+}
+
+input ProfileUpsertWithoutUserInput {
+    create: ProfileCreateWithoutUserInput!
+    update: ProfileUpdateWithoutUserInput!
+}
+
+input ProfileWhereInput {
+    AND: [ProfileWhereInput!]
+    NOT: [ProfileWhereInput!]
+    OR: [ProfileWhereInput!]
+    bio: StringNullableFilter
+    id: IntFilter
+    user: UserRelationFilter
+    userId: IntFilter
+}
+
+input ProfileWhereUniqueInput {
+    id: Int
+    userId: Int
+}
+
+input ReviewAvgOrderByAggregateInput {
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    userId: SortOrder
+}
+
+input ReviewCountOrderByAggregateInput {
+    creationDate: SortOrder
+    editDate: SortOrder
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    text: SortOrder
+    userId: SortOrder
+}
+
+input ReviewCreateInput {
+    author: UserCreateNestedOneWithoutReviewsInput!
+    creationDate: DateTime
+    editDate: DateTime
+    food: FoodCreateNestedOneWithoutReviewsInput!
+    rating: Int!
+    text: String
+}
+
+input ReviewCreateManyAuthorInput {
+    creationDate: DateTime
+    editDate: DateTime
+    foodId: Int!
+    id: Int
+    rating: Int!
+    text: String
+}
+
+input ReviewCreateManyAuthorInputEnvelope {
+    data: [ReviewCreateManyAuthorInput!]!
+    skipDuplicates: Boolean
+}
+
+input ReviewCreateManyFoodInput {
+    creationDate: DateTime
+    editDate: DateTime
+    id: Int
+    rating: Int!
+    text: String
+    userId: Int!
+}
+
+input ReviewCreateManyFoodInputEnvelope {
+    data: [ReviewCreateManyFoodInput!]!
+    skipDuplicates: Boolean
+}
+
+input ReviewCreateManyInput {
+    creationDate: DateTime
+    editDate: DateTime
+    foodId: Int!
+    id: Int
+    rating: Int!
+    text: String
+    userId: Int!
+}
+
+input ReviewCreateNestedManyWithoutAuthorInput {
+    connect: [ReviewWhereUniqueInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutAuthorInput!]
+    create: [ReviewCreateWithoutAuthorInput!]
+    createMany: ReviewCreateManyAuthorInputEnvelope
+}
+
+input ReviewCreateNestedManyWithoutFoodInput {
+    connect: [ReviewWhereUniqueInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutFoodInput!]
+    create: [ReviewCreateWithoutFoodInput!]
+    createMany: ReviewCreateManyFoodInputEnvelope
+}
+
+input ReviewCreateOrConnectWithoutAuthorInput {
+    create: ReviewCreateWithoutAuthorInput!
+    where: ReviewWhereUniqueInput!
+}
+
+input ReviewCreateOrConnectWithoutFoodInput {
+    create: ReviewCreateWithoutFoodInput!
+    where: ReviewWhereUniqueInput!
+}
+
+input ReviewCreateWithoutAuthorInput {
+    creationDate: DateTime
+    editDate: DateTime
+    food: FoodCreateNestedOneWithoutReviewsInput!
+    rating: Int!
+    text: String
+}
+
+input ReviewCreateWithoutFoodInput {
+    author: UserCreateNestedOneWithoutReviewsInput!
+    creationDate: DateTime
+    editDate: DateTime
+    rating: Int!
+    text: String
+}
+
+input ReviewListRelationFilter {
+    every: ReviewWhereInput
+    none: ReviewWhereInput
+    some: ReviewWhereInput
+}
+
+input ReviewMaxOrderByAggregateInput {
+    creationDate: SortOrder
+    editDate: SortOrder
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    text: SortOrder
+    userId: SortOrder
+}
+
+input ReviewMinOrderByAggregateInput {
+    creationDate: SortOrder
+    editDate: SortOrder
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    text: SortOrder
+    userId: SortOrder
+}
+
+input ReviewOrderByRelationAggregateInput {
+    _count: SortOrder
+}
+
+input ReviewOrderByWithAggregationInput {
+    _avg: ReviewAvgOrderByAggregateInput
+    _count: ReviewCountOrderByAggregateInput
+    _max: ReviewMaxOrderByAggregateInput
+    _min: ReviewMinOrderByAggregateInput
+    _sum: ReviewSumOrderByAggregateInput
+    creationDate: SortOrder
+    editDate: SortOrder
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    text: SortOrder
+    userId: SortOrder
+}
+
+input ReviewOrderByWithRelationInput {
+    author: UserOrderByWithRelationInput
+    creationDate: SortOrder
+    editDate: SortOrder
+    food: FoodOrderByWithRelationInput
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    text: SortOrder
+    userId: SortOrder
+}
+
+input ReviewReview_User_Food_Unique_ConstraintCompoundUniqueInput {
+    foodId: Int!
+    userId: Int!
+}
+
+input ReviewScalarWhereInput {
+    AND: [ReviewScalarWhereInput!]
+    NOT: [ReviewScalarWhereInput!]
+    OR: [ReviewScalarWhereInput!]
+    creationDate: DateTimeFilter
+    editDate: DateTimeFilter
+    foodId: IntFilter
+    id: IntFilter
+    rating: IntFilter
+    text: StringNullableFilter
+    userId: IntFilter
+}
+
+input ReviewScalarWhereWithAggregatesInput {
+    AND: [ReviewScalarWhereWithAggregatesInput!]
+    NOT: [ReviewScalarWhereWithAggregatesInput!]
+    OR: [ReviewScalarWhereWithAggregatesInput!]
+    creationDate: DateTimeWithAggregatesFilter
+    editDate: DateTimeWithAggregatesFilter
+    foodId: IntWithAggregatesFilter
+    id: IntWithAggregatesFilter
+    rating: IntWithAggregatesFilter
+    text: StringNullableWithAggregatesFilter
+    userId: IntWithAggregatesFilter
+}
+
+input ReviewSumOrderByAggregateInput {
+    foodId: SortOrder
+    id: SortOrder
+    rating: SortOrder
+    userId: SortOrder
+}
+
+input ReviewUpdateInput {
+    author: UserUpdateOneRequiredWithoutReviewsInput
+    creationDate: DateTimeFieldUpdateOperationsInput
+    editDate: DateTimeFieldUpdateOperationsInput
+    food: FoodUpdateOneRequiredWithoutReviewsInput
+    rating: IntFieldUpdateOperationsInput
+    text: NullableStringFieldUpdateOperationsInput
+}
+
+input ReviewUpdateManyMutationInput {
+    creationDate: DateTimeFieldUpdateOperationsInput
+    editDate: DateTimeFieldUpdateOperationsInput
+    rating: IntFieldUpdateOperationsInput
+    text: NullableStringFieldUpdateOperationsInput
+}
+
+input ReviewUpdateManyWithWhereWithoutAuthorInput {
+    data: ReviewUpdateManyMutationInput!
+    where: ReviewScalarWhereInput!
+}
+
+input ReviewUpdateManyWithWhereWithoutFoodInput {
+    data: ReviewUpdateManyMutationInput!
+    where: ReviewScalarWhereInput!
+}
+
+input ReviewUpdateManyWithoutAuthorInput {
+    connect: [ReviewWhereUniqueInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutAuthorInput!]
+    create: [ReviewCreateWithoutAuthorInput!]
+    createMany: ReviewCreateManyAuthorInputEnvelope
+    delete: [ReviewWhereUniqueInput!]
+    deleteMany: [ReviewScalarWhereInput!]
+    disconnect: [ReviewWhereUniqueInput!]
+    set: [ReviewWhereUniqueInput!]
+    update: [ReviewUpdateWithWhereUniqueWithoutAuthorInput!]
+    updateMany: [ReviewUpdateManyWithWhereWithoutAuthorInput!]
+    upsert: [ReviewUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input ReviewUpdateManyWithoutFoodInput {
+    connect: [ReviewWhereUniqueInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutFoodInput!]
+    create: [ReviewCreateWithoutFoodInput!]
+    createMany: ReviewCreateManyFoodInputEnvelope
+    delete: [ReviewWhereUniqueInput!]
+    deleteMany: [ReviewScalarWhereInput!]
+    disconnect: [ReviewWhereUniqueInput!]
+    set: [ReviewWhereUniqueInput!]
+    update: [ReviewUpdateWithWhereUniqueWithoutFoodInput!]
+    updateMany: [ReviewUpdateManyWithWhereWithoutFoodInput!]
+    upsert: [ReviewUpsertWithWhereUniqueWithoutFoodInput!]
+}
+
+input ReviewUpdateWithWhereUniqueWithoutAuthorInput {
+    data: ReviewUpdateWithoutAuthorInput!
+    where: ReviewWhereUniqueInput!
+}
+
+input ReviewUpdateWithWhereUniqueWithoutFoodInput {
+    data: ReviewUpdateWithoutFoodInput!
+    where: ReviewWhereUniqueInput!
+}
+
+input ReviewUpdateWithoutAuthorInput {
+    creationDate: DateTimeFieldUpdateOperationsInput
+    editDate: DateTimeFieldUpdateOperationsInput
+    food: FoodUpdateOneRequiredWithoutReviewsInput
+    rating: IntFieldUpdateOperationsInput
+    text: NullableStringFieldUpdateOperationsInput
+}
+
+input ReviewUpdateWithoutFoodInput {
+    author: UserUpdateOneRequiredWithoutReviewsInput
+    creationDate: DateTimeFieldUpdateOperationsInput
+    editDate: DateTimeFieldUpdateOperationsInput
+    rating: IntFieldUpdateOperationsInput
+    text: NullableStringFieldUpdateOperationsInput
+}
+
+input ReviewUpsertWithWhereUniqueWithoutAuthorInput {
+    create: ReviewCreateWithoutAuthorInput!
+    update: ReviewUpdateWithoutAuthorInput!
+    where: ReviewWhereUniqueInput!
+}
+
+input ReviewUpsertWithWhereUniqueWithoutFoodInput {
+    create: ReviewCreateWithoutFoodInput!
+    update: ReviewUpdateWithoutFoodInput!
+    where: ReviewWhereUniqueInput!
+}
+
+input ReviewWhereInput {
+    AND: [ReviewWhereInput!]
+    NOT: [ReviewWhereInput!]
+    OR: [ReviewWhereInput!]
+    author: UserRelationFilter
+    creationDate: DateTimeFilter
+    editDate: DateTimeFilter
+    food: FoodRelationFilter
+    foodId: IntFilter
+    id: IntFilter
+    rating: IntFilter
+    text: StringNullableFilter
+    userId: IntFilter
+}
+
+input ReviewWhereUniqueInput {
+    Review_User_Food_Unique_Constraint: ReviewReview_User_Food_Unique_ConstraintCompoundUniqueInput
+    id: Int
+}
+
+input StringFieldUpdateOperationsInput {
+    set: String
+}
+
+input StringFilter {
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    mode: QueryMode
+    not: NestedStringFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input StringNullableFilter {
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    mode: QueryMode
+    not: NestedStringNullableFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input StringNullableListFilter {
+    equals: [String!]
+    has: String
+    hasEvery: [String!]
+    hasSome: [String!]
+    isEmpty: Boolean
+}
+
+input StringNullableWithAggregatesFilter {
+    _count: NestedIntNullableFilter
+    _max: NestedStringNullableFilter
+    _min: NestedStringNullableFilter
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    mode: QueryMode
+    not: NestedStringNullableWithAggregatesFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input StringWithAggregatesFilter {
+    _count: NestedIntFilter
+    _max: NestedStringFilter
+    _min: NestedStringFilter
+    contains: String
+    endsWith: String
+    equals: String
+    gt: String
+    gte: String
+    in: [String!]
+    lt: String
+    lte: String
+    mode: QueryMode
+    not: NestedStringWithAggregatesFilter
+    notIn: [String!]
+    search: String
+    startsWith: String
+}
+
+input UserAvgOrderByAggregateInput {
+    id: SortOrder
+}
+
+input UserCountOrderByAggregateInput {
+    email: SortOrder
+    firebaseId: SortOrder
+    id: SortOrder
+    name: SortOrder
+}
+
+input UserCreateInput {
+    email: String!
+    favoritesList: FoodCreateNestedManyWithoutUsersWithFavsInput
+    firebaseId: String!
+    name: String
+    profile: ProfileCreateNestedOneWithoutUserInput
+    reviews: ReviewCreateNestedManyWithoutAuthorInput
+    toTryList: FoodCreateNestedManyWithoutUsersWantTryInput
+}
+
+input UserCreateManyInput {
+    email: String!
+    firebaseId: String!
+    id: Int
+    name: String
+}
+
+input UserCreateNestedManyWithoutFavoritesListInput {
+    connect: [UserWhereUniqueInput!]
+    connectOrCreate: [UserCreateOrConnectWithoutFavoritesListInput!]
+    create: [UserCreateWithoutFavoritesListInput!]
+}
+
+input UserCreateNestedManyWithoutToTryListInput {
+    connect: [UserWhereUniqueInput!]
+    connectOrCreate: [UserCreateOrConnectWithoutToTryListInput!]
+    create: [UserCreateWithoutToTryListInput!]
+}
+
+input UserCreateNestedOneWithoutProfileInput {
+    connect: UserWhereUniqueInput
+    connectOrCreate: UserCreateOrConnectWithoutProfileInput
+    create: UserCreateWithoutProfileInput
+}
+
+input UserCreateNestedOneWithoutReviewsInput {
+    connect: UserWhereUniqueInput
+    connectOrCreate: UserCreateOrConnectWithoutReviewsInput
+    create: UserCreateWithoutReviewsInput
+}
+
+input UserCreateOrConnectWithoutFavoritesListInput {
+    create: UserCreateWithoutFavoritesListInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutProfileInput {
+    create: UserCreateWithoutProfileInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutReviewsInput {
+    create: UserCreateWithoutReviewsInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutToTryListInput {
+    create: UserCreateWithoutToTryListInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutFavoritesListInput {
+    email: String!
+    firebaseId: String!
+    name: String
+    profile: ProfileCreateNestedOneWithoutUserInput
+    reviews: ReviewCreateNestedManyWithoutAuthorInput
+    toTryList: FoodCreateNestedManyWithoutUsersWantTryInput
+}
+
+input UserCreateWithoutProfileInput {
+    email: String!
+    favoritesList: FoodCreateNestedManyWithoutUsersWithFavsInput
+    firebaseId: String!
+    name: String
+    reviews: ReviewCreateNestedManyWithoutAuthorInput
+    toTryList: FoodCreateNestedManyWithoutUsersWantTryInput
+}
+
+input UserCreateWithoutReviewsInput {
+    email: String!
+    favoritesList: FoodCreateNestedManyWithoutUsersWithFavsInput
+    firebaseId: String!
+    name: String
+    profile: ProfileCreateNestedOneWithoutUserInput
+    toTryList: FoodCreateNestedManyWithoutUsersWantTryInput
+}
+
+input UserCreateWithoutToTryListInput {
+    email: String!
+    favoritesList: FoodCreateNestedManyWithoutUsersWithFavsInput
+    firebaseId: String!
+    name: String
+    profile: ProfileCreateNestedOneWithoutUserInput
+    reviews: ReviewCreateNestedManyWithoutAuthorInput
+}
+
+input UserListRelationFilter {
+    every: UserWhereInput
+    none: UserWhereInput
+    some: UserWhereInput
+}
+
+input UserMaxOrderByAggregateInput {
+    email: SortOrder
+    firebaseId: SortOrder
+    id: SortOrder
+    name: SortOrder
+}
+
+input UserMinOrderByAggregateInput {
+    email: SortOrder
+    firebaseId: SortOrder
+    id: SortOrder
+    name: SortOrder
+}
+
+input UserOrderByRelationAggregateInput {
+    _count: SortOrder
+}
+
+input UserOrderByWithAggregationInput {
+    _avg: UserAvgOrderByAggregateInput
+    _count: UserCountOrderByAggregateInput
+    _max: UserMaxOrderByAggregateInput
+    _min: UserMinOrderByAggregateInput
+    _sum: UserSumOrderByAggregateInput
+    email: SortOrder
+    firebaseId: SortOrder
+    id: SortOrder
+    name: SortOrder
+}
+
+input UserOrderByWithRelationInput {
+    email: SortOrder
+    favoritesList: FoodOrderByRelationAggregateInput
+    firebaseId: SortOrder
+    id: SortOrder
+    name: SortOrder
+    profile: ProfileOrderByWithRelationInput
+    reviews: ReviewOrderByRelationAggregateInput
+    toTryList: FoodOrderByRelationAggregateInput
+}
+
+input UserRelationFilter {
+    is: UserWhereInput
+    isNot: UserWhereInput
+}
+
+input UserScalarWhereInput {
+    AND: [UserScalarWhereInput!]
+    NOT: [UserScalarWhereInput!]
+    OR: [UserScalarWhereInput!]
+    email: StringFilter
+    firebaseId: StringFilter
+    id: IntFilter
+    name: StringNullableFilter
+}
+
+input UserScalarWhereWithAggregatesInput {
+    AND: [UserScalarWhereWithAggregatesInput!]
+    NOT: [UserScalarWhereWithAggregatesInput!]
+    OR: [UserScalarWhereWithAggregatesInput!]
+    email: StringWithAggregatesFilter
+    firebaseId: StringWithAggregatesFilter
+    id: IntWithAggregatesFilter
+    name: StringNullableWithAggregatesFilter
+}
+
+input UserSumOrderByAggregateInput {
+    id: SortOrder
+}
+
+input UserUpdateInput {
+    email: StringFieldUpdateOperationsInput
+    favoritesList: FoodUpdateManyWithoutUsersWithFavsInput
+    firebaseId: StringFieldUpdateOperationsInput
+    name: NullableStringFieldUpdateOperationsInput
+    profile: ProfileUpdateOneWithoutUserInput
+    reviews: ReviewUpdateManyWithoutAuthorInput
+    toTryList: FoodUpdateManyWithoutUsersWantTryInput
+}
+
+input UserUpdateManyMutationInput {
+    email: StringFieldUpdateOperationsInput
+    firebaseId: StringFieldUpdateOperationsInput
+    name: NullableStringFieldUpdateOperationsInput
+}
+
+input UserUpdateManyWithWhereWithoutFavoritesListInput {
+    data: UserUpdateManyMutationInput!
+    where: UserScalarWhereInput!
+}
+
+input UserUpdateManyWithWhereWithoutToTryListInput {
+    data: UserUpdateManyMutationInput!
+    where: UserScalarWhereInput!
+}
+
+input UserUpdateManyWithoutFavoritesListInput {
+    connect: [UserWhereUniqueInput!]
+    connectOrCreate: [UserCreateOrConnectWithoutFavoritesListInput!]
+    create: [UserCreateWithoutFavoritesListInput!]
+    delete: [UserWhereUniqueInput!]
+    deleteMany: [UserScalarWhereInput!]
+    disconnect: [UserWhereUniqueInput!]
+    set: [UserWhereUniqueInput!]
+    update: [UserUpdateWithWhereUniqueWithoutFavoritesListInput!]
+    updateMany: [UserUpdateManyWithWhereWithoutFavoritesListInput!]
+    upsert: [UserUpsertWithWhereUniqueWithoutFavoritesListInput!]
+}
+
+input UserUpdateManyWithoutToTryListInput {
+    connect: [UserWhereUniqueInput!]
+    connectOrCreate: [UserCreateOrConnectWithoutToTryListInput!]
+    create: [UserCreateWithoutToTryListInput!]
+    delete: [UserWhereUniqueInput!]
+    deleteMany: [UserScalarWhereInput!]
+    disconnect: [UserWhereUniqueInput!]
+    set: [UserWhereUniqueInput!]
+    update: [UserUpdateWithWhereUniqueWithoutToTryListInput!]
+    updateMany: [UserUpdateManyWithWhereWithoutToTryListInput!]
+    upsert: [UserUpsertWithWhereUniqueWithoutToTryListInput!]
+}
+
+input UserUpdateOneRequiredWithoutProfileInput {
+    connect: UserWhereUniqueInput
+    connectOrCreate: UserCreateOrConnectWithoutProfileInput
+    create: UserCreateWithoutProfileInput
+    update: UserUpdateWithoutProfileInput
+    upsert: UserUpsertWithoutProfileInput
+}
+
+input UserUpdateOneRequiredWithoutReviewsInput {
+    connect: UserWhereUniqueInput
+    connectOrCreate: UserCreateOrConnectWithoutReviewsInput
+    create: UserCreateWithoutReviewsInput
+    update: UserUpdateWithoutReviewsInput
+    upsert: UserUpsertWithoutReviewsInput
+}
+
+input UserUpdateWithWhereUniqueWithoutFavoritesListInput {
+    data: UserUpdateWithoutFavoritesListInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutToTryListInput {
+    data: UserUpdateWithoutToTryListInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserUpdateWithoutFavoritesListInput {
+    email: StringFieldUpdateOperationsInput
+    firebaseId: StringFieldUpdateOperationsInput
+    name: NullableStringFieldUpdateOperationsInput
+    profile: ProfileUpdateOneWithoutUserInput
+    reviews: ReviewUpdateManyWithoutAuthorInput
+    toTryList: FoodUpdateManyWithoutUsersWantTryInput
+}
+
+input UserUpdateWithoutProfileInput {
+    email: StringFieldUpdateOperationsInput
+    favoritesList: FoodUpdateManyWithoutUsersWithFavsInput
+    firebaseId: StringFieldUpdateOperationsInput
+    name: NullableStringFieldUpdateOperationsInput
+    reviews: ReviewUpdateManyWithoutAuthorInput
+    toTryList: FoodUpdateManyWithoutUsersWantTryInput
+}
+
+input UserUpdateWithoutReviewsInput {
+    email: StringFieldUpdateOperationsInput
+    favoritesList: FoodUpdateManyWithoutUsersWithFavsInput
+    firebaseId: StringFieldUpdateOperationsInput
+    name: NullableStringFieldUpdateOperationsInput
+    profile: ProfileUpdateOneWithoutUserInput
+    toTryList: FoodUpdateManyWithoutUsersWantTryInput
+}
+
+input UserUpdateWithoutToTryListInput {
+    email: StringFieldUpdateOperationsInput
+    favoritesList: FoodUpdateManyWithoutUsersWithFavsInput
+    firebaseId: StringFieldUpdateOperationsInput
+    name: NullableStringFieldUpdateOperationsInput
+    profile: ProfileUpdateOneWithoutUserInput
+    reviews: ReviewUpdateManyWithoutAuthorInput
+}
+
+input UserUpsertWithWhereUniqueWithoutFavoritesListInput {
+    create: UserCreateWithoutFavoritesListInput!
+    update: UserUpdateWithoutFavoritesListInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutToTryListInput {
+    create: UserCreateWithoutToTryListInput!
+    update: UserUpdateWithoutToTryListInput!
+    where: UserWhereUniqueInput!
+}
+
+input UserUpsertWithoutProfileInput {
+    create: UserCreateWithoutProfileInput!
+    update: UserUpdateWithoutProfileInput!
+}
+
+input UserUpsertWithoutReviewsInput {
+    create: UserCreateWithoutReviewsInput!
+    update: UserUpdateWithoutReviewsInput!
+}
+
+input UserWhereInput {
+    AND: [UserWhereInput!]
+    NOT: [UserWhereInput!]
+    OR: [UserWhereInput!]
+    email: StringFilter
+    favoritesList: FoodListRelationFilter
+    firebaseId: StringFilter
+    id: IntFilter
+    name: StringNullableFilter
+    profile: ProfileRelationFilter
+    reviews: ReviewListRelationFilter
+    toTryList: FoodListRelationFilter
+}
+
+input UserWhereUniqueInput {
+    email: String
+    firebaseId: String
+    id: Int
+}
+
+
+"The javascript `Date` as string. Type represents date and time as the ISO Date string."
+scalar DateTime
