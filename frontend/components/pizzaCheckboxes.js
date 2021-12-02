@@ -13,7 +13,7 @@ import {Button} from "@mui/material";
 
 
 import { gql, useMutation } from "@apollo/client";
-import { useAuth } from "../context/AuthenticatedUserContext";
+import { useRouter } from 'next/router'
 
 const PIZZAS = {
   TOPPINGS: [
@@ -108,8 +108,9 @@ export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
     sauces: "You must pick at least 1 spread option.",
   });
 
+  const [sent, setSent] = useState(false)
   const [addPizza, {called, reset}] = useMutation(CREATE_PIZZA_REVIEW);
-
+  const router = useRouter()
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
@@ -161,21 +162,29 @@ export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
           name: reviewDataStr,
           rating: rating,
           text: reviewtext,
-          firebase_id: user.uid
-        }
-      }).then(/* Success */).catch(reason => console.error(reason))
+          firebase_id: user.uid,
+        },
+      })
+        .then(res => {
+          // Set the button to success
+          setSent(true)
+
+          // Refresh the page
+          setTimeout(() => router.reload(), 2000)
+        })
+        .catch(reason => console.error(reason))
     }
   };
 
 
   return (
     <>
-      <Box sx={{display: "flex"}}>
+      <Box sx={{ display: 'flex' }}>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -186,23 +195,23 @@ export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("cheeses", cheeses)}
-                      onChange={(event) => handleChange(event, "cheeses")}
+                      checked={checkExists('cheeses', cheeses)}
+                      onChange={event => handleChange(event, 'cheeses')}
                       name={cheeses}
                     />
                   }
                   label={cheeses}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["cheeses"]}</FormHelperText>
+          <FormHelperText>{error['cheeses']}</FormHelperText>
         </FormControl>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -213,23 +222,23 @@ export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("toppings", toppings)}
-                      onChange={(event) => handleChange(event, "toppings")}
+                      checked={checkExists('toppings', toppings)}
+                      onChange={event => handleChange(event, 'toppings')}
                       name={toppings}
                     />
                   }
                   label={toppings}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["toppings"]}</FormHelperText>
+          <FormHelperText>{error['toppings']}</FormHelperText>
         </FormControl>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To Three</FormLabel>
@@ -240,23 +249,23 @@ export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("add_ons", add_ons)}
-                      onChange={(event) => handleChange(event, "add_ons")}
+                      checked={checkExists('add_ons', add_ons)}
+                      onChange={event => handleChange(event, 'add_ons')}
                       name={add_ons}
                     />
                   }
                   label={add_ons}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["add_ons"]}</FormHelperText>
+          <FormHelperText>{error['add_ons']}</FormHelperText>
         </FormControl>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -267,33 +276,39 @@ export default function PizzaCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("sauces", sauces)}
-                      onChange={(event) => handleChange(event, "sauces")}
+                      checked={checkExists('sauces', sauces)}
+                      onChange={event => handleChange(event, 'sauces')}
                       name={sauces}
                     />
                   }
                   label={sauces}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["sauces"]}</FormHelperText>
+          <FormHelperText>{error['sauces']}</FormHelperText>
         </FormControl>
       </Box>
       <Box>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            paddingRight: "10px",
-            paddingBottom: "16px",
-          }}
-        >
-          <Button size="small" color="primary" onClick={post}>
-            Post
-          </Button>
-        </div>
+        {sent ? (
+          <Typography align="center" variant="body1" component="p">
+            Success!
+          </Typography>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              paddingRight: '10px',
+              paddingBottom: '16px',
+            }}
+          >
+            <Button size="small" color="primary" onClick={post}>
+              Post
+            </Button>
+          </div>
+        )}
       </Box>
     </>
-  );
+  )
 }

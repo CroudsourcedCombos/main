@@ -10,6 +10,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import {Button} from "@mui/material";
 import {gql, useMutation} from "@apollo/client";
+import { useRouter } from 'next/router'
 
 const Foods = {
   BREADS: ["Country Loaf", "Wheat Torpedo Hoagie Roll", "Whole Wheat Bread"],
@@ -112,7 +113,9 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
     spreads: "",
   });
 
+  const [set, sentSent] = useState(false)
   const [addSandwich, {called, reset}] = useMutation(CREATE_SANDWICH_REVIEW);
+  const router = useRouter()
 
   const handleChange = (event, type) => {
     // If it's already in the object, then remove the matching ingredient
@@ -164,20 +167,28 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
           name: reviewDataStr,
           rating: rating,
           text: reviewtext,
-          firebase_id: user.uid
-        }
-      }).then(/* Success */).catch(reason => console.error(reason))
+          firebase_id: user.uid,
+        },
+      })
+        .then(res => {
+          // Set the button to success
+          setSent(true)
+
+          // Refresh the page
+          setTimeout(() => router.reload(), 2000)
+        })
+        .catch(reason => console.error(reason))
     }
   };
 
   return (
     <>
-      <Box sx={{display: "flex"}}>
+      <Box sx={{ display: 'flex' }}>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose One</FormLabel>
@@ -188,24 +199,24 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("breads", bread)}
-                      onChange={(event) => handleChange(event, "breads")}
+                      checked={checkExists('breads', bread)}
+                      onChange={event => handleChange(event, 'breads')}
                       name={bread}
                     />
                   }
                   label={bread}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["breads"]}</FormHelperText>
+          <FormHelperText>{error['breads']}</FormHelperText>
         </FormControl>
 
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To One</FormLabel>
@@ -216,23 +227,23 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("cheeses", cheeses)}
-                      onChange={(event) => handleChange(event, "cheeses")}
+                      checked={checkExists('cheeses', cheeses)}
+                      onChange={event => handleChange(event, 'cheeses')}
                       name={cheeses}
                     />
                   }
                   label={cheeses}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["cheeses"]}</FormHelperText>
+          <FormHelperText>{error['cheeses']}</FormHelperText>
         </FormControl>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up to Two</FormLabel>
@@ -243,23 +254,23 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("toppings", toppings)}
-                      onChange={(event) => handleChange(event, "toppings")}
+                      checked={checkExists('toppings', toppings)}
+                      onChange={event => handleChange(event, 'toppings')}
                       name={toppings}
                     />
                   }
                   label={toppings}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["toppings"]}</FormHelperText>
+          <FormHelperText>{error['toppings']}</FormHelperText>
         </FormControl>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To Three</FormLabel>
@@ -270,23 +281,23 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("add_ons", add_ons)}
-                      onChange={(event) => handleChange(event, "add_ons")}
+                      checked={checkExists('add_ons', add_ons)}
+                      onChange={event => handleChange(event, 'add_ons')}
                       name={add_ons}
                     />
                   }
                   label={add_ons}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["add_ons"]}</FormHelperText>
+          <FormHelperText>{error['add_ons']}</FormHelperText>
         </FormControl>
         <FormControl
           required
           error={error}
           component="fieldset"
-          sx={{m: 3}}
+          sx={{ m: 3 }}
           variant="standard"
         >
           <FormLabel component="legend">Choose Up To Two</FormLabel>
@@ -297,33 +308,39 @@ export default function SandwichCheckboxesGroup({rating, reviewtext, user}) {
                   key={index}
                   control={
                     <Checkbox
-                      checked={checkExists("spreads", spreads)}
-                      onChange={(event) => handleChange(event, "spreads")}
+                      checked={checkExists('spreads', spreads)}
+                      onChange={event => handleChange(event, 'spreads')}
                       name={spreads}
                     />
                   }
                   label={spreads}
                 />
-              );
+              )
             })}
           </FormGroup>
-          <FormHelperText>{error["spreads"]}</FormHelperText>
+          <FormHelperText>{error['spreads']}</FormHelperText>
         </FormControl>
       </Box>
       <Box>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            paddingRight: "10px",
-            paddingBottom: "16px",
-          }}
-        >
-          <Button size="small" color="primary" onClick={post}>
-            Post
-          </Button>
-        </div>
+        {sent ? (
+          <Typography align="center" variant="body1" component="p">
+            Success!
+          </Typography>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              paddingRight: '10px',
+              paddingBottom: '16px',
+            }}
+          >
+            <Button size="small" color="primary" onClick={post}>
+              Post
+            </Button>
+          </div>
+        )}
       </Box>
     </>
-  );
+  )
 }
